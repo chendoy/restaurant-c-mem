@@ -23,6 +23,7 @@ string line;
  */
 int region=0;
 int numOfTable;
+int tableNum=0;
 
 try{
 
@@ -43,20 +44,35 @@ try{
                 //reading description
                 case 1: {
 
-                    const char *cString = line.c_str();
-                    cout << cString[0] << endl;
-                    while (numOfTable > 0) {
-                        cout << cString[2 * numOfTable - 1] << endl;
-                        numOfTable--;
+                    string delimiter=",";
+                    size_t pos=0;
+                    string token;
+                    while((pos=line.find(delimiter))!=string::npos){
+                        token=line.substr(0,pos);
+                        tableNum=stoul(token);
+                        tables.push_back(new Table(tableNum));
+                        line.erase(0,pos+delimiter.length());
+                    }
+                    tables.push_back(new Table(tableNum));
                     }
                     region++;
-                }
+
 
                     break;
 
                 //reading menu
                 case 2: {
+                    string delimiter=",";
+                    size_t pos=0;
+                    string token;
+                    while((pos=line.find(delimiter))!=string::npos){
+                        token=line.substr(0,pos);
 
+                        //something;
+                        line.erase(0,pos+delimiter.length());
+                    }
+                    token=line.substr(0,pos);
+                    //something;
                 }
                     break;
             }
