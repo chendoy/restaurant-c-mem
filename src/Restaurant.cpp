@@ -6,24 +6,41 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include "Dish.h"
 using namespace std;
 
 //empty ctor
 Restaurant::Restaurant():open(false), tables(),menu(),actionsLog() {}
 
-//ctor that takes config file
-Restaurant::Restaurant(const std::string &configFilePath):open(true) {
+//converts a string to fruit Enum defined in the header file
+DishType fruit_convert(const string& str)
+{
+    if(str == "VEG") return VEG;
+    else if(str == "SPC") return SPC;
+    else if(str == "BVG") return BVG;
+    else if(str == "ALC") return ALC;
+}
+
+
+Restaurant::Restaurant(const std::string &configFilePath) {
 ifstream inFile (configFilePath.c_str());
+
+//will hold current line in config file
 string line;
 
+
+
 /*
- * zero means haven't read number of table yet
- * one means already read number, but not desctiption
- * two means already read number and description, reading menu in progress
+ * 'region' variable meaning:
+ * zero means haven't read 'number of table' section yet
+ * one means already read 'number of table' section , but not description
+ * two means already read number and description, reading menu items is in progress
  */
 int region=0;
 int numOfTable;
 int tableNum=0;
+int runningId=0; //sequential number that will go from 0 to ["number of tables"]-1
+vector<string> currDish; //will hold the dishes when we will parse this section
 
 try{
 
@@ -31,8 +48,7 @@ try{
     {
         if(line[0]!='#')
         {
-            cout<<"the region is: "<<region<<endl;
-            cout<<"the line is: "<<line<<endl;
+
             switch (region)
             {
                 //reading numbers
@@ -67,12 +83,14 @@ try{
                     string token;
                     while((pos=line.find(delimiter))!=string::npos){
                         token=line.substr(0,pos);
-
-                        //something;
+                        currDish.push_back(token);
                         line.erase(0,pos+delimiter.length());
                     }
                     token=line.substr(0,pos);
-                    //something;
+                    currDish.push_back(token);
+                    Dish newDish(runningId,currDish[0],stoi(currDish[2]),fruit_convert(currDish[1]));
+                    runningId++;
+                    currDish.clear(); //clearing the vector for the next line (=dish) parsing
                 }
                     break;
             }
@@ -89,5 +107,7 @@ try{
 }
 
 void Restaurant::start() {
+    this->open=true;
     cout<<"Restaurant Is Now Open!"<<endl;
 }
+
