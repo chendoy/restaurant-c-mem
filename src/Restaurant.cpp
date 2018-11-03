@@ -37,8 +37,8 @@ string line;
  * two means already read number and description, reading menu items is in progress
  */
 int region=0;
-int numOfTable;
-int tableNum=0;
+int numOfTables=0;
+int tableCapacity=0;
 int runningId=0; //sequential number that will go from 0 to ["number of tables"]-1
 vector<string> currDish; //will hold the dishes when we will parse this section
 
@@ -53,7 +53,7 @@ try{
             {
                 //reading numbers
                 case 0: {
-                    numOfTable = stoul(line);
+                    numOfTables = stoul(line);
                     region++;
                 }
                     break;
@@ -65,11 +65,11 @@ try{
                     string token;
                     while((pos=line.find(delimiter))!=string::npos){
                         token=line.substr(0,pos);
-                        tableNum=stoul(token);
-                        tables.push_back(new Table(tableNum));
+                        tableCapacity=stoul(token);
+                        tables.push_back(new Table(tableCapacity));
                         line.erase(0,pos+delimiter.length());
                     }
-                    tables.push_back(new Table(tableNum));
+                    tables.push_back(new Table(tableCapacity));
                     }
                     region++;
 
@@ -93,12 +93,15 @@ try{
                     currDish.clear(); //clearing the vector for the next line (=dish) parsing
                 }
                     break;
+                default:
+                    break;
             }
 
         }
 
     }
     inFile.close();
+    this->numOfTables=numOfTables;
 
 }catch(const string & msg){
     if(inFile.is_open()) inFile.close();
@@ -110,4 +113,13 @@ void Restaurant::start() {
     this->open=true;
     cout<<"Restaurant Is Now Open!"<<endl;
 }
+
+
+int Restaurant::getNumOfTables() const {return numOfTables;}
+
+Table* Restaurant::getTable(int ind) {return this->tables[ind];}
+
+const vector<BaseAction*>& Restaurant::getActionsLog() const {return actionsLog;}
+
+vector<Dish>& Restaurant::getMenu() {return menu;}
 

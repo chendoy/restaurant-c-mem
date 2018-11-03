@@ -23,6 +23,7 @@ private:
     std::vector<Table*> tables;
     std::vector<Dish> menu;
     std::vector<BaseAction*> actionsLog;
+    int numOfTables;
 };
 
 #endif
