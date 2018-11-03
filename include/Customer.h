@@ -33,6 +33,7 @@ public:
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
 private:
+	bool canOrder; //needs to check in forum if adding members is possible
 };
 
 
@@ -42,6 +43,7 @@ public:
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
 private:
+	bool firstOrder; //needs to check in forum if adding members is possible
 };
 
 
@@ -51,6 +53,7 @@ public:
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
 private:
+	int threshold;
 };
 
 
