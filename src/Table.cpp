@@ -71,7 +71,7 @@ void Table::order(const std::vector<Dish> &menu) {
 
     }
 }
-//the function return an onbject (new one pass by value) of a dish from the menu by the dish Id
+// the function return an onbject (new one pass by value) of a dish from the menu by the dish Id
 Dish Table::getDishById(const std::vector<Dish> &menu, const int dishId) const {
     for (int i = 0; i < menu.size(); i = i + 1) {
         if (menu[i].getId() == dishId) {
