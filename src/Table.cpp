@@ -65,7 +65,10 @@ void Table::order(const std::vector<Dish> &menu) {
     //printing the order list to the screen
     for(int i=0;i<orderList.size();i=i+1)
     {
-        cout<<"customer "<<getCustomer(orderList[i].first)->getName()<<" ordered "<<orderList[i].second.getName();
+        Customer* cus= getCustomer(orderList[i].first);
+        cout<<"customer "<<cus->getName()<<" ordered "<<orderList[i].second.getName();
+        delete(cus);
+
     }
 }
 //the function return an onbject (new one pass by value) of a dish from the menu by the dish Id
@@ -76,15 +79,7 @@ Dish Table::getDishById(const std::vector<Dish> &menu, const int dishId) const {
         }
     }
 }
-//the function return an pointer to a Customer by the customer Id
-Customer* Table:: getCustomerById(const std::vector<Customer*> customerList,int customerId)
-{
-    for(int i=0;i<customerList.size();i=i+1)
-    {
-        if(customerList[i]->getId()==customerId)
-            return customerList[i];
-    }
-}
+
 
 
 

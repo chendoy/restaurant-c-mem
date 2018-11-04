@@ -28,7 +28,6 @@ private:
     std::vector<Customer*> customersList;
     std::vector<OrderPair> orderList; //A list of pairs for each order in a table - (dcustomer_id, Dish)
     Dish  getDishById(const std::vector<Dish> &menu, const int dishId) const ;
-    Customer* getCustomerById(const std::vector<Customer*> customerList,int customerId);
 };
 
 
