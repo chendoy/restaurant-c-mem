@@ -4,6 +4,7 @@
 #include "Customer.h"
 #include <string>
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -14,7 +15,7 @@ Customer::Customer(std::string c_name, int c_id): name(c_name),id(c_id){}
 VegetarianCustomer::VegetarianCustomer(string name, int id): Customer(name,id) {}
 CheapCustomer::CheapCustomer(string name, int id): Customer(name,id),canOrder(true) {}
 SpicyCustomer::SpicyCustomer(string name, int id): Customer(name,id),firstOrder(true) {}
-AlchoholicCustomer::AlchoholicCustomer(string name, int id): Customer(name,id),threshold(0) {}
+AlchoholicCustomer::AlchoholicCustomer(string name, int id): Customer(name,id),orderedMostExpensive(false),curAlcDrinkId(-1) {}
 
 //getId and getName
 
@@ -114,5 +115,61 @@ vector<int> SpicyCustomer::order(const std::vector<Dish> &menu) {
 }
 
 vector<int> AlchoholicCustomer::order(const std::vector<Dish> &menu) {
+    if(curAlcDrinkId)
     return vector<int>(); //not completed
 }
+
+//the function gets the current bevrage the customer own and returns the next expensive beverageId
+int AlchoholicCustomer::getTheNextAalcoholicBeverageId(const std::vector<Dish> &menu,Dish curAlcDrink) {
+
+    //the vector will contains the next avilable bevrages from the menu
+    std::vector<Dish>vector_nextAlcDrink;
+    for(int i=0;i<menu.size();i=i+1)
+    {
+        Dish nextDish=menu[i];
+        if(nextDish.getType()==ALC)
+        {
+            if(curAlcDrink.getId()==-1) //the alcoholic customer didn't ordered yet
+            {
+                vector_nextAlcDrink.push_back(nextDish);
+            }
+            else {
+                if(nextDish.getPrice()>curAlcDrink.getPrice())
+                {
+                    vector_nextAlcDrink.push_back(nextDish);
+                }
+            }
+
+        }
+
+    }
+    // iterating thourgh the nextExpensive vector and get the next cheapest beverage;
+    int minPriceIndex=0;
+    for(int i=1;i<vector_nextAlcDrink.size();i=i+1)
+    {
+
+        if(vector_nextAlcDrink[i].getPrice()<vector_nextAlcDrink[minPriceIndex].getPrice()||
+                vector_nextAlcDrink[i].getPrice()==vector_nextAlcDrink[minPriceIndex].getPrice()&&vector_nextAlcDrink[i].getId()<vector_nextAlcDrink[minPriceIndex].getId())
+        {
+            minPriceIndex=i;
+        }
+
+    }
+
+    if(vector_nextAlcDrink.size()==0)
+    {
+        //if the list of nextAlcDrink is empty it means the customer already ordered the most expensive drink
+        orderedMostExpensive=true;
+        return -2;
+    }
+    else
+    {
+
+    }
+
+
+
+
+}
+
+

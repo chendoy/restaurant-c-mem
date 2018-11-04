@@ -52,28 +52,33 @@ int Table::getBill(){
 //this function will preform order from each customer in the table (according his strategy). list of the orders will be printed to the screen
 void Table::order(const std::vector<Dish> &menu) {
     if(!open)
-        throw std::runtime_error("the table is not open yet, can't order");
-
-    //make the orders
-    for(int i=0;i<customersList.size();i=i+1)
     {
-        std::vector<int> customerDishes=customersList[i]->order(menu);
-        //add customer dishes to the pairs array
-        for(int i=0;i<customerDishes.size();i=i+1)
+        cout<<"the table is not open yet, can't order"<<endl;
+    }
+    else
+
+    {
+        //make the orders
+        for(int i=0;i<customersList.size();i=i+1)
         {
-            const OrderPair op(customersList[i]->getId(), getDishById(menu, customerDishes[i]));
-            orderList.push_back(op);
+            std::vector<int> customerDishes=customersList[i]->order(menu);
+            //add customer dishes to the pairs array
+            for(int i=0;i<customerDishes.size();i=i+1)
+            {
+                const OrderPair op(customersList[i]->getId(), getDishById(menu, customerDishes[i]));
+                orderList.push_back(op);
+            }
+
         }
+        //printing the order list to the screen
+        for(int i=0;i<orderList.size();i=i+1)
+        {
+            cout<<"customer "<<getCustomer(orderList[i].first)->getName()<<" ordered "<<orderList[i].second.getName();
 
+        }
     }
-    //printing the order list to the screen
-    for(int i=0;i<orderList.size();i=i+1)
-    {
-        Customer* cus= getCustomer(orderList[i].first);
-        cout<<"customer "<<cus->getName()<<" ordered "<<orderList[i].second.getName();
-        delete(cus);
 
-    }
+
 }
 // the function return an onbject (new one pass by value) of a dish from the menu by the dish Id
 Dish Table::getDishById(const std::vector<Dish> &menu, const int dishId) const {
@@ -82,6 +87,20 @@ Dish Table::getDishById(const std::vector<Dish> &menu, const int dishId) const {
             return menu[i];
         }
     }
+}
+
+//implementing the class Destructor
+Table::~Table () {
+    //if the table doesn't exist any more we can delete the the object of Customers that allocated for this table at the 'customerList'
+    //note that if this table closed because the customers moved to another table we will *copy* the list of customers and allocate them
+    // *new* space in the memory. thus, the deletion of the customer list is safe
+    for(int i=0;i<customersList.size();i=i+1)
+    {
+        delete customersList[i];
+        customersList[i]= nullptr;
+    }
+    //clean the list
+    customersList.clear();
 }
 
 

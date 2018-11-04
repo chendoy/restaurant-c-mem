@@ -22,6 +22,8 @@ public:
     void closeTable();
     int getBill();
     bool isOpen();
+    //Destructor
+    virtual ~Table();
 private:
     int capacity;
     bool open;

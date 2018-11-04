@@ -47,13 +47,16 @@ private:
 };
 
 
-class AlchoholicCustomer : public Customer {
-public:
+class AlchoholicCustomer : public Customer { public:
 	AlchoholicCustomer(std::string name, int id);
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
 private:
-	int threshold;
+
+	int getTheNextAalcoholicBeverageId(const std::vector<Dish> &menu,Dish curAlcDrink);
+	//int threshold;
+	bool orderedMostExpensive;
+	int curAlcDrinkId;
 };
 
 
