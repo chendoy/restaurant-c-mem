@@ -17,6 +17,7 @@ public:
     std::vector<Customer*>& getCustomers();
     std::vector<OrderPair>& getOrders();
     void order(const std::vector<Dish> &menu);
+
     void openTable();
     void closeTable();
     int getBill();
@@ -25,7 +26,9 @@ private:
     int capacity;
     bool open;
     std::vector<Customer*> customersList;
-    std::vector<OrderPair> orderList; //A list of pairs for each order in a table - (customer_id, Dish)
+    std::vector<OrderPair> orderList; //A list of pairs for each order in a table - (dcustomer_id, Dish)
+    Dish  getDishById(const std::vector<Dish> &menu, const int dishId) const ;
+    Customer* getCustomerById(const std::vector<Customer*> customerList,int customerId);
 };
 
 
