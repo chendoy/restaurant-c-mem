@@ -33,15 +33,19 @@ bool Table::isOpen() { return open;}
 
 //the function returns the sum of all dishes order at this table
 int Table::getBill(){
-    if(!open)
-        throw std::runtime_error("can't get bill from closed table");
-    //iterating thourgh orderlist and sum the dishes by their price
-    int sum=0;
-    for(int i=0;i<orderList.size();i=i+1)
-    {
-        sum=sum+orderList[i].second.getPrice();
+    if(!open){
+        cout<<"can't get bill from closed table"<<endl;
     }
-    return sum;
+    else {
+        //iterating thourgh orderlist and sum the dishes by their price
+        int sum=0;
+        for(int i=0;i<orderList.size();i=i+1)
+        {
+            sum=sum+orderList[i].second.getPrice();
+        }
+        return sum;
+    }
+
 }
 
 

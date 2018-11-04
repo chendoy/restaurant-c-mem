@@ -89,6 +89,7 @@ try{
                     token=line.substr(0,pos);
                     currDish.push_back(token);
                     Dish newDish(runningId,currDish[0],stoi(currDish[2]),fruit_convert(currDish[1]));
+                    menu.push_back(newDish);
                     runningId++;
                     currDish.clear(); //clearing the vector for the next line (=dish) parsing
                 }
