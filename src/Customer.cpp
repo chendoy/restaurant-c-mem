@@ -42,7 +42,6 @@ string AlchoholicCustomer::toString() const{
 }
 
 //implementations of 'order' for each customer type
-
 vector<int> VegetarianCustomer::order(const std::vector<Dish> &menu) {
     vector<int> orderedDishes;
     int orderedVeg=-1; //-1 means not found yet in iteration
@@ -160,7 +159,7 @@ void AlchoholicCustomer::setNextExpensiveDrinkId(const std::vector<Dish> &menu) 
                 Dish nextDish = menu[i];
                 if (nextDish.getType() == ALC) {
                     if (nextDish.getPrice() > curAlcDrink.getPrice() ||
-                        nextDish.getPrice() == curAlcDrink.getPrice() && nextDish.getId() > curAlcDrink.getId()) {
+                        nextDish.getPrice() == curAlcDrink.getPrice() & nextDish.getId() > curAlcDrink.getId()) {
                         vector_nextAlcDrink.push_back(nextDish);
                     }
                 }
@@ -169,8 +168,7 @@ void AlchoholicCustomer::setNextExpensiveDrinkId(const std::vector<Dish> &menu) 
 
         }
 
-        if (vector_nextAlcDrink.size() ==
-            0) //there are not Alc dishes on the menu or the customer ordered the most expensive alcoholic drink on the menu
+        if (vector_nextAlcDrink.size() == 0) //there are not Alc dishes on the menu or the customer ordered the most expensive alcoholic drink on the menu
         {
             orderedMostExpensive = true; //the customer can't order any more
             return;
@@ -179,7 +177,7 @@ void AlchoholicCustomer::setNextExpensiveDrinkId(const std::vector<Dish> &menu) 
             for (int i = 1; i < vector_nextAlcDrink.size(); i = i + 1) {
 
                 if (vector_nextAlcDrink[i].getPrice() < vector_nextAlcDrink[minPriceIndex].getPrice() ||
-                    vector_nextAlcDrink[i].getPrice() == vector_nextAlcDrink[minPriceIndex].getPrice() &&
+                    vector_nextAlcDrink[i].getPrice() == vector_nextAlcDrink[minPriceIndex].getPrice() &
                     vector_nextAlcDrink[i].getId() < vector_nextAlcDrink[minPriceIndex].getId()) {
                     minPriceIndex = i;
                 }

@@ -15,11 +15,31 @@ Table::Table(int t_capacity): capacity(t_capacity){
 
 int Table::getCapacity() const {return this->capacity;}
 
-void Table::addCustomer(Customer *customer) {this->customersList.push_back(customer);}
+void Table::addCustomer(Customer *customer) {
+    //add customer to the customerlist
+    this->customersList.push_back(customer);
+    //add customer's orders to the orders list
+    addCustomerOrders(customer->)
 
-void Table::removeCustomer(int id) {customersList.erase(customersList.begin()+id);}
+}
 
-Customer* Table::getCustomer(int id) {return this->customersList[id];}
+void Table::removeCustomer(int id) {
+    //removing customer from the customers vector, we will delete his OrderPair only on addCustomer
+    bool  isDeleted= false;
+    for(int i=0;i<customersList.size()&!isDeleted;i=i+1)
+    {
+        if(customersList[i]->getId()==id)
+        {
+            customersList.erase(customersList.begin()+i);
+            isDeleted= true;
+        }
+
+    }
+}
+
+Customer* Table::getCustomer(int id) {
+
+}
 
 vector<Customer*>& Table::getCustomers() {return this->customersList;}
 
@@ -62,13 +82,8 @@ void Table::order(const std::vector<Dish> &menu) {
         for(int i=0;i<customersList.size();i=i+1)
         {
             std::vector<int> customerDishes=customersList[i]->order(menu);
-            //add customer dishes to the pairs array
-            for(int i=0;i<customerDishes.size();i=i+1)
-            {
-                const OrderPair op(customersList[i]->getId(), getDishById(menu, customerDishes[i]));
-                orderList.push_back(op);
-            }
-
+            //add the customer dishes to the pair list
+            addCustomerOrders(customerDishes,menu);
         }
         //printing the order list to the screen
         for(int i=0;i<orderList.size();i=i+1)
@@ -78,9 +93,18 @@ void Table::order(const std::vector<Dish> &menu) {
         }
     }
 
-
 }
-// the function return an onbject (new one pass by value) of a dish from the menu by the dish Id
+void Table::addCustomerOrders(std::vector<int> csutomerDishes,const std::vector<Dish> &menu) {
+    //add customer dishes to the pairs array
+    for(int i=0;i<csutomerDishes.size();i=i+1)
+    {
+        const OrderPair op(customersList[i]->getId(), getDishById(menu, csutomerDishes[i]));
+        orderList.push_back(op);
+    }
+}
+
+
+// the function return an object (new one pass by value) of a dish from the menu by the dish Id
 Dish Table::getDishById(const std::vector<Dish> &menu, const int dishId) const {
     for (int i = 0; i < menu.size(); i = i + 1) {
         if (menu[i].getId() == dishId) {

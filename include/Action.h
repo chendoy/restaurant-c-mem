@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include "Customer.h"
+#include "Table.h"
 
 enum ActionStatus{
     PENDING, COMPLETED, ERROR
@@ -55,6 +56,7 @@ public:
     void act(Restaurant &restaurant);
     std::string toString() const;
 private:
+    bool isCustomerInTable(Table &originTable);
     const int srcTable;
     const int dstTable;
     const int id;
@@ -63,19 +65,20 @@ private:
 
 class Close : public BaseAction {
 public:
-    Close(int id);
-    void act(Restaurant &restaurant);
-    std::string toString() const;
+	Close(int id);
+	void act(Restaurant &restaurant);
+	std::string toString() const;
 private:
-    const int tableId;
+	const int tableId;
+	std::string stringLog;
 };
 
 
 class CloseAll : public BaseAction {
 public:
-    CloseAll();
-    void act(Restaurant &restaurant);
-    std::string toString() const;
+	CloseAll();
+	void act(Restaurant &restaurant);
+	std::string toString() const;
 private:
 };
 

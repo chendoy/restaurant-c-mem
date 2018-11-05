@@ -17,7 +17,7 @@ public:
     Table* getTable(int ind);
 	const std::vector<BaseAction*>& getActionsLog() const; // Return a reference to the history of actions
     std::vector<Dish>& getMenu();
-
+	virtual ~Restaurant();
 private:
     bool open;
     std::vector<Table*> tables;

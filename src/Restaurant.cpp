@@ -66,9 +66,11 @@ try{
                     while((pos=line.find(delimiter))!=string::npos){
                         token=line.substr(0,pos);
                         tableCapacity=stoul(token);
+                        //!!!delete this pointers!!
                         tables.push_back(new Table(tableCapacity));
                         line.erase(0,pos+delimiter.length());
                     }
+                    //!!!delete this pointers!!
                     tables.push_back(new Table(tableCapacity));
                     }
                     region++;
@@ -119,7 +121,30 @@ void Restaurant::start() {
 
 int Restaurant::getNumOfTables() const {return numOfTables;}
 
-Table* Restaurant::getTable(int ind) {return this->tables[ind];}
+//the function returns a pointer to table in the table vector
+//if the table doesn't exist in the vector the function will return a pointer to nullptr
+Table* Restaurant::getTable(int ind) {
+
+    if(ind>=tables.size())//not valid index
+    {
+        //return a pointer to nullptr
+        return nullptr;
+    } else {
+        return tables[ind];
+    }
+
+}
+
+Restaurant::~Restaurant () {
+//delete pointers to tables
+for(int i=0;i<tables.size();i=i+1)
+{
+    delete(tables[i]);
+    tables[i]= nullptr;
+}
+//clear the tables vector
+tables.clear();
+}
 
 const vector<BaseAction*>& Restaurant::getActionsLog() const {return actionsLog;}
 
