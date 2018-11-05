@@ -53,8 +53,8 @@ class AlchoholicCustomer : public Customer { public:
     std::string toString() const;
 private:
 
-	int getTheNextAalcoholicBeverageId(const std::vector<Dish> &menu,Dish curAlcDrink);
-	//int threshold;
+	void setNextExpensiveDrinkId(const std::vector<Dish> &menu);
+	Dish getDishById(int dishId,const std::vector<Dish> &menu);
 	bool orderedMostExpensive;
 	int curAlcDrinkId;
 };
