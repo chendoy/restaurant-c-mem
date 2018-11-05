@@ -135,7 +135,7 @@ Dish AlchoholicCustomer::getDishById(int dishId,const std::vector<Dish> &menu) {
     }
 }
 
-//the function updates 'curAlcDrinkId' field to the next expensive Alcoholic drink from the menu
+// the function updates 'curAlcDrinkId' field to the next expensive Alcoholic drink from the menu
 //if the customer already ordered the most expensive or there are not ALC drink in the menu the function will change 'orderMostExpensive' field to be true
 void AlchoholicCustomer::setNextExpensiveDrinkId(const std::vector<Dish> &menu) {
 
