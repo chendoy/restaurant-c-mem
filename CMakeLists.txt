@@ -13,4 +13,4 @@ add_executable(SPL_ass1
         include/Table.h
         config1.txt
         src/Main.cpp
-        src/Restaurant.cpp src/Table.cpp src/Dish.cpp src/Customer.cpp)
+        src/Restaurant.cpp src/Table.cpp src/Dish.cpp src/Customer.cpp src/Action.cpp)
