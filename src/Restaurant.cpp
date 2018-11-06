@@ -117,7 +117,57 @@ int Restaurant::getNumOfTables() const {return numOfTables;}
 
 void Restaurant::start() {
     this->open=true;
+    int curCustomerId=0;
     cout<<"Restaurant Is Now Open!"<<endl;
+    string nextAction;
+    cin>>nextAction;
+    while (nextAction!="closeall")
+    {
+        vector<string> splitBySpace=splitStringBytoken(nextAction," ");
+
+        if(splitBySpace[0]=="open") {
+            int tableId = stoul(splitBySpace[1]);
+            vector<string> customerNamesAndTypes = splitStringBytoken(splitBySpace[2], ",");
+            vector<Customer*>customersList;
+
+            for (int i = 0; i < customerNamesAndTypes.size(); i = i + 2) {
+                ///!!!delete this pointers !!!
+                Customer *customer;
+                if (customerNamesAndTypes[i + 1] == "veg") {
+                    customer=new VegetarianCustomer(customerNamesAndTypes[i],curCustomerId);
+
+                } else if (customerNamesAndTypes[i+1]=="chp") {
+                    customer=new CheapCustomer(customerNamesAndTypes[i],curCustomerId);
+
+                } else if(customerNamesAndTypes[i+1]=="spc") {
+                    customer=new SpicyCustomer(customerNamesAndTypes[i],curCustomerId);
+                } else { //it is alcoholic csutomer
+                    customer=new AlchoholicCustomer(customerNamesAndTypes[i],curCustomerId);
+                }
+                customersList.push_back(customer);
+                curCustomerId=curCustomerId+1;
+            }
+
+            ///!!!delete this pointer!!!
+            OpenTable* openTable=new OpenTable(tableId,customersList);
+
+
+
+        }
+        else if(splitBySpace[0]=="order"){
+
+        }
+        else if(splitBySpace[0]=="move") {
+
+        }
+        else if (splitBySpace[0]=="close")
+        {
+
+        }
+    }
+
+    //closeall action chosed
+
 
 }
 
@@ -137,6 +187,33 @@ Table* Restaurant::getTable(int ind) {
 
 }
 
+Restaurant& Restaurant::operator=(const Restaurant &rest)
+        {
+//check for "self assignment" and do nothing in that case
+if(this==&rest)
+    return *this;
+
+//assigning status
+open=rest.open;
+
+//assigning numOfTables
+numOfTables=rest.numOfTables;
+
+//assigning tables
+for(int i=0;i<tables.size();i++)
+    tables.push_back(rest.tables[i]->clone());
+
+//assigning menu
+for(int i=0;i<menu.size();i++)
+    menu.push_back(rest.menu[i]);
+
+//assigning actionsLog
+for(int i=0;i<actionsLog.size();i++)
+    actionsLog.push_back(rest.actionsLog[i]->clone());
+
+return *this;
+        }
+
 
 Restaurant::~Restaurant () {
 //delete pointers to tables
@@ -153,3 +230,18 @@ const vector<BaseAction*>& Restaurant::getActionsLog() const {return actionsLog;
 
 vector<Dish>& Restaurant::getMenu() {return menu;}
 
+void Restaurant::addToActionsLog(BaseAction * actionToAdd) {actionsLog.push_back(actionToAdd);}
+
+//the function return a vector of split string (by token)
+std::vector<string> splitStringBytoken(string myStr,string delimiter)
+{
+    vector<string>splittedString;
+    size_t pos=0;
+    string token;
+    while((pos=myStr.find(delimiter))!=string::npos){
+        token=myStr.substr(0,pos);
+        splittedString.push_back(token);
+        myStr.erase(0,pos+delimiter.length());
+    }
+    return splittedString;
+}

@@ -12,6 +12,7 @@ public:
     virtual std::string toString() const = 0;
     std::string getName() const;
     int getId() const;
+    Customer* clone();
 private:
     const std::string name;
     const int id;
@@ -24,6 +25,7 @@ public:
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
 private:
+	std::string getType() const; //???
 };
 
 
@@ -34,6 +36,7 @@ public:
     std::string toString() const;
 private:
 	bool canOrder;
+	std::string getType() const; //???
 };
 
 
@@ -44,6 +47,7 @@ public:
     std::string toString() const;
 private:
 	bool firstOrder;
+	std::string getType() const; //???
 };
 
 
@@ -57,6 +61,7 @@ private:
 	Dish getDishById(int dishId,const std::vector<Dish> &menu);
 	bool orderedMostExpensive;
 	int curAlcDrinkId;
+	std::string getType() const; //???
 };
 
 

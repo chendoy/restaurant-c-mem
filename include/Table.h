@@ -13,16 +13,21 @@ public:
     int getCapacity() const;
     void addCustomer(Customer* customer);
     void removeCustomer(int id);
-    Customer* getCustomer(int id);
+    Customer* getCustomerById(int id);
     std::vector<Customer*>& getCustomers();
     std::vector<OrderPair>& getOrders();
+    std::vector<OrderPair> getCustomerOrders(int customerId);
+    void addNewCustomerOrdersToBill(std::vector<OrderPair>&customerOrders);
     void order(const std::vector<Dish> &menu);
     bool isCustomerAtTable(int customerId);
+    Table* clone();
 
     void openTable();
     void closeTable();
     int getBill();
     bool isOpen();
+
+
     //Destructor
     virtual ~Table();
 private:

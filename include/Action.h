@@ -6,6 +6,8 @@
 #include "Customer.h"
 #include "Table.h"
 
+using namespace std;
+
 enum ActionStatus{
     PENDING, COMPLETED, ERROR
 };
@@ -19,6 +21,7 @@ public:
     ActionStatus getStatus() const;
     virtual void act(Restaurant& restaurant)=0;
     virtual std::string toString() const=0;
+	virtual BaseAction* clone()=0; //SHOULD BE PUBLIC OR PROTECTED??
 protected:
     void complete();
     void error(std::string errorMsg);
@@ -34,9 +37,11 @@ public:
     OpenTable(int id, std::vector<Customer *> &customersList);
     void act(Restaurant &restaurant);
     std::string toString() const;
+	OpenTable* clone();
 private:
 	const int tableId;
 	const std::vector<Customer *> customers;
+	string statusString;
 };
 
 
@@ -45,6 +50,7 @@ public:
     Order(int id);
     void act(Restaurant &restaurant);
     std::string toString() const;
+	Order* clone();
 private:
     const int tableId;
 };
@@ -55,6 +61,7 @@ public:
     MoveCustomer(int src, int dst, int customerId);
     void act(Restaurant &restaurant);
     std::string toString() const;
+	MoveCustomer* clone();
 private:
     
     const int srcTable;
@@ -68,6 +75,7 @@ public:
 	Close(int id);
 	void act(Restaurant &restaurant);
 	std::string toString() const;
+	Close* clone();
 private:
 	const int tableId;
 	std::string stringLog;
@@ -79,7 +87,9 @@ public:
 	CloseAll();
 	void act(Restaurant &restaurant);
 	std::string toString() const;
+	CloseAll* clone();
 private:
+    std::string stringLog;
 };
 
 
@@ -88,6 +98,7 @@ public:
     PrintMenu();
     void act(Restaurant &restaurant);
     std::string toString() const;
+	PrintMenu* clone();
 private:
 };
 
@@ -97,6 +108,7 @@ public:
     PrintTableStatus(int id);
     void act(Restaurant &restaurant);
     std::string toString() const;
+	PrintTableStatus* clone();
 private:
     const int tableId;
 };
@@ -107,6 +119,7 @@ public:
     PrintActionsLog();
     void act(Restaurant &restaurant);
     std::string toString() const;
+	PrintActionsLog* clone();
 private:
 };
 
@@ -116,6 +129,7 @@ public:
     BackupRestaurant();
     void act(Restaurant &restaurant);
     std::string toString() const;
+	BackupRestaurant* clone();
 private:
 };
 
@@ -125,7 +139,7 @@ public:
     RestoreResturant();
     void act(Restaurant &restaurant);
     std::string toString() const;
-
+	RestoreResturant* clone();
 };
 
 
