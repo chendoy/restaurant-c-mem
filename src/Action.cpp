@@ -2,8 +2,11 @@
 // Created by chendoy on 11/5/18.
 //
 #include "Action.h"
+#include "Restaurant.h"
+#include "Customer.h"
+#include "Table.h"
 #include <vector>
-#include <Table.h>
+
 
 using namespace std;
 
@@ -86,28 +89,25 @@ std::string Order::toString() const {
 MoveCustomer::MoveCustomer(int src, int dst, int customerId):BaseAction(),srcTable(src),dstTable(dst),id(customerId) {}
 
 void MoveCustomer ::act(Restaurant &restaurant) {
-    Table *srcTable=restaurant.getTable(src);
-    Table *dstTable=restaurant.getTable(dst);
-    if(srcTable== nullptr||dstTable==nullptr||!srcTable->isOpen()|!dstTable->isOpen()|!isCustomerInTable(*srcTable)|
-    dstTable->getCapacity()==dstTable->getCustomers().size())
+
+    Table *tblSrc=restaurant.getTable(srcTable);
+    //std::vector<OrderPair> tableOrders=tblSrc->getOrders();
+
+    Table *tblDest=restaurant.getTable(dstTable);
+    if(tblSrc== nullptr||tblDest==nullptr||!tblSrc->isOpen()|!tblDest->isOpen()|!tblSrc->isCustomerAtTable(id)|
+     tblDest->getCapacity()==tblDest->getCustomers().size())
     {
         cout<<"Cannt Move Customer"<<endl;
     }
-    else {
+    else {//can move customer
+
+        //copy customer order list
+
 
     }
 }
 
-bool MoveCustomer::isCustomerInTable(Table &originTable) {
-    std::vector<Customer*>& tblCustomer=originTable.getCustomers();
-    bool exist=false;
-    for(int i=0;i<tblCustomer.size()&!exist;i=i+1)
-    {
-        if(tblCustomer[i]->getId()==id)
-            exist=true;
-    }
-    return exist;
-}
+
 Close::Close(int id): tableId(id){}
 
 void Close::act(Restaurant &restaurant)

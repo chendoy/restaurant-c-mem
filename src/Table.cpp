@@ -16,25 +16,35 @@ Table::Table(int t_capacity): capacity(t_capacity){
 int Table::getCapacity() const {return this->capacity;}
 
 void Table::addCustomer(Customer *customer) {
-    //add customer to the customerlist
+
     this->customersList.push_back(customer);
+
     //add customer's orders to the orders list
-    addCustomerOrders(customer->)
+
 
 }
 
 void Table::removeCustomer(int id) {
-    //removing customer from the customers vector, we will delete his OrderPair only on addCustomer
-    bool  isDeleted= false;
-    for(int i=0;i<customersList.size()&!isDeleted;i=i+1)
+    //remove customer from the customer vector
+    vector<Customer*> newCustomerList;
+    for(int i=0;i<customersList.size();i=i+1)
     {
-        if(customersList[i]->getId()==id)
+        if(customersList[i]->getId()!=id)
         {
-            customersList.erase(customersList.begin()+i);
-            isDeleted= true;
+            newCustomerList.push_back(customersList[i]);
         }
 
     }
+    customersList=newCustomerList;
+
+    //remove customer orders from orderList
+    vector<OrderPair> newOrderList;
+    for(int i=0;i<orderList.size();i=i+1)
+    {
+        if (orderList[i].first!=id)
+            newOrderList.push_back(OrderPair(orderList[i].first,orderList[i].second));
+    }
+    orderList=newOrderList;
 }
 
 Customer* Table::getCustomer(int id) {
@@ -111,6 +121,16 @@ Dish Table::getDishById(const std::vector<Dish> &menu, const int dishId) const {
             return menu[i];
         }
     }
+}
+bool Table::isCustomerAtTable(int customerId) {
+    vector<Customer*>customers=getCustomers();
+    bool exist=false;
+    for(int i=0;i<customers.size()&!exist;i=i+1)
+    {
+        if(customers[i]->getId()==customerId)
+            exist=true;
+    }
+    return exist;
 }
 
 //implementing the class Destructor

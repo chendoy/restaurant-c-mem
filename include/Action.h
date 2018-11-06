@@ -56,7 +56,7 @@ public:
     void act(Restaurant &restaurant);
     std::string toString() const;
 private:
-    bool isCustomerInTable(Table &originTable);
+    
     const int srcTable;
     const int dstTable;
     const int id;

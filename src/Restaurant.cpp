@@ -112,6 +112,9 @@ try{
 }
 }
 
+int Restaurant::getNumOfTables() const {return numOfTables;}
+
+
 void Restaurant::start() {
     this->open=true;
     cout<<"Restaurant Is Now Open!"<<endl;
@@ -119,7 +122,6 @@ void Restaurant::start() {
 }
 
 
-int Restaurant::getNumOfTables() const {return numOfTables;}
 
 //the function returns a pointer to table in the table vector
 //if the table doesn't exist in the vector the function will return a pointer to nullptr
@@ -134,6 +136,7 @@ Table* Restaurant::getTable(int ind) {
     }
 
 }
+
 
 Restaurant::~Restaurant () {
 //delete pointers to tables

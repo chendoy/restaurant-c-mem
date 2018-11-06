@@ -17,6 +17,7 @@ public:
     std::vector<Customer*>& getCustomers();
     std::vector<OrderPair>& getOrders();
     void order(const std::vector<Dish> &menu);
+    bool isCustomerAtTable(int customerId);
 
     void openTable();
     void closeTable();
