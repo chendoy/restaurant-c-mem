@@ -21,6 +21,19 @@ DishType fruit_convert(const string& str)
     else if(str == "ALC") return ALC;
 }
 
+std::vector<string> Restaurant::splitStringBytoken(string myStr,string delimiter)
+{
+    vector<string>splittedString;
+    size_t pos=0;
+    string token;
+    while((pos=myStr.find(delimiter))!=string::npos){
+        token=myStr.substr(0,pos);
+        splittedString.push_back(token);
+        myStr.erase(0,pos+delimiter.length());
+    }
+    return splittedString;
+}
+
 
 Restaurant::Restaurant(const std::string &configFilePath) {
 ifstream inFile (configFilePath.c_str());
@@ -122,6 +135,7 @@ void Restaurant::start() {
     string nextAction;
     cin>>nextAction;
     vector<string> splitBySpace();
+
     while (nextAction!="closeall")
     {
 
@@ -246,15 +260,3 @@ vector<Dish>& Restaurant::getMenu() {return menu;}
 void Restaurant::addToActionsLog(BaseAction * actionToAdd) {actionsLog.push_back(actionToAdd);}
 
 //the function return a vector of split string (by token)
-std::vector<string> splitStringBytoken(string myStr,string delimiter)
-{
-    vector<string>splittedString;
-    size_t pos=0;
-    string token;
-    while((pos=myStr.find(delimiter))!=string::npos){
-        token=myStr.substr(0,pos);
-        splittedString.push_back(token);
-        myStr.erase(0,pos+delimiter.length());
-    }
-    return splittedString;
-}

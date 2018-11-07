@@ -260,4 +260,6 @@ void RestoreResturant::act(Restaurant &restaurant)
     restaurant=*backup;
 }
 
+string RestoreResturant::toString() const {return "Restore completed";}
+
 RestoreResturant* RestoreResturant::clone() {return new RestoreResturant(*this);}
