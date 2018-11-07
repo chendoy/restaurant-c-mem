@@ -188,12 +188,18 @@ void Restaurant::start() {
 
         }
         else if (nextAction=="close") {
-            int table_num=stoi(splitBySpace[1]);
+            int table_num=stol(splitBySpace[1]);
             Close closeAction(table_num);
             closeAction.act(*this);
         }
 
-        cin>>nextLine;
+        else if(nextAction=="menu")
+        {
+            //PrintMenu printMenuAction();
+            //printMenuAction.act(*this);
+        }
+
+        getline(cin,nextLine);
         splitBySpace.clear();
         splitBySpace=splitStringBytoken(nextLine," ");
         nextAction=splitBySpace[0];
