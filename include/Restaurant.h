@@ -2,13 +2,13 @@
 #define RESTAURANT_H_
 
 #include <vector>
-#include <string>
 #include "Dish.h"
 #include "Table.h"
 #include "Action.h"
+#include <string>
+using namespace std;
 
-
-class Restaurant{		
+class Restaurant{
 public:
 	Restaurant();
     Restaurant(const std::string &configFilePath);
@@ -24,6 +24,7 @@ private:
     std::vector<Dish> menu;
     std::vector<BaseAction*> actionsLog;
     int numOfTables;
+    std::vector<string> splitStringBytoken(string s,string token);
 };
 
 #endif

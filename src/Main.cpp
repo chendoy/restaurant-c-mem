@@ -1,7 +1,6 @@
 #include "Restaurant.h"
 #include <iostream>
 
-using namespace std;
 
 Restaurant* backup = nullptr;
 
@@ -10,7 +9,7 @@ int main(int argc, char** argv){
         std::cout << "usage: rest <config_path>" << std::endl;
         return 0;
     }
-    string configurationFile = argv[1];
+    std::string configurationFile = argv[1];
     Restaurant rest(configurationFile);
     rest.start();
     if(backup!=nullptr){

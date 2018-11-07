@@ -5,6 +5,7 @@
 #include "Restaurant.h"
 #include "Customer.h"
 #include "Table.h"
+#include "Dish.h"
 #include <vector>
 
 
@@ -31,7 +32,7 @@ void OpenTable::act(Restaurant &restaurant)
 {
 
     //table does not exist                   //table is already open
-    if(restaurant.getTable(tableId)==nullptr || restaurant.getTable(tableId)->isOpen()==true)
+    if(restaurant.getTable(tableId)==nullptr || restaurant.getTable(tableId)->isOpen())
         error("Table does not exist or is already open");
 
 
@@ -52,20 +53,11 @@ string OpenTable::toString() const
         toReturn.append(customers[i]->getName()) + ",";
         //toReturn.append(customers[i]->get + ","; //NEED TO COMPLETE THIS-APPEND THE CUSTOMER TYPE
     }
-    toReturn.append(statusString(getStatus()));
+
 }
 
 string BaseAction::getErrorMsg() const {return this->errorMsg;}
 
-OpenTable::OpenTable(int id, vector<Customer *> &customersList):tableId(id)
-//body will populate customers vector
-{
-    for(int i=0;i<customersList.size();i++)
-    {
-        customers.push_back(customersList[i]);
-
-    }
-}
 
 //Order START
 Order::Order(int id):BaseAction(),tableId(id){}
@@ -85,27 +77,29 @@ std::string Order::toString() const {
 }
 //Order END
 
-//MoveCustomer START
+////MoveCustomer START
 MoveCustomer::MoveCustomer(int src, int dst, int customerId):BaseAction(),srcTable(src),dstTable(dst),id(customerId) {}
 
 void MoveCustomer ::act(Restaurant &restaurant) {
 
     Table *tblSrc=restaurant.getTable(srcTable);
-    //std::vector<OrderPair> tableOrders=tblSrc->getOrders();
-
     Table *tblDest=restaurant.getTable(dstTable);
+
     if(tblSrc== nullptr||tblDest==nullptr||!tblSrc->isOpen()|!tblDest->isOpen()|!tblSrc->isCustomerAtTable(id)|
      tblDest->getCapacity()==tblDest->getCustomers().size())
     {
         cout<<"Cannt Move Customer"<<endl;
     }
     else {//can move customer
-
-        //copy customer order list
-
-
+        tblDest->addCustomer(tblSrc->getCustomerById(id));
+        //add costumer orders (from src table to dest table)
+        std::vector<OrderPair>customerOrders=tblSrc->getCustomerOrders(id);
+        tblDest->addNewCustomerOrdersToBill(customerOrders); //add customer orders to 'dest' orderList
+        //deleting the customer from the current table
+        tblSrc->removeCustomer(id);
     }
 }
+string MoveCustomer::toString() const {}
 
 
 Close::Close(int id): tableId(id){}
@@ -127,15 +121,15 @@ void Close::act(Restaurant &restaurant)
 }
 
 string Close::toString() const {return stringLog;}
-CloseAll::CloseAll() {}
-void CloseAll::act(Restaurant &restaurant)
-{
-    for(int i=0;i<restaurant.getNumOfTables();i++) {
-        if(restaurant.getTable(i)->isOpen()==false)
-            restaurant.getTable(i)->closeTable();
-    }
-    //NEED TO 'CLOSE THE RESTAURANT' ---HOW TO DO THIS?
-}
+//CloseAll::CloseAll() {}
+//void CloseAll::act(Restaurant &restaurant)
+//{
+//    for(int i=0;i<restaurant.getNumOfTables();i++) {
+//        if(restaurant.getTable(i)->isOpen()==false)
+//            restaurant.getTable(i)->closeTable();
+//    }
+//    //NEED TO 'CLOSE THE RESTAURANT' ---HOW TO DO THIS?
+//}
 
 
 

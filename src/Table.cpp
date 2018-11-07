@@ -15,45 +15,65 @@ Table::Table(int t_capacity): capacity(t_capacity){
 
 int Table::getCapacity() const {return this->capacity;}
 
-void Table::addCustomer(Customer *customer) {
-
-    this->customersList.push_back(customer);
-
-    //add customer's orders to the orders list
-
-
-}
+void Table::addCustomer(Customer *customer) { this->customersList.push_back(customer);}
 
 void Table::removeCustomer(int id) {
-    //remove customer from the customer vector
-    vector<Customer*> newCustomerList;
-    for(int i=0;i<customersList.size();i=i+1)
+    //remove customer from customer list
+    bool isDelted=false;
+    for(int i=0;i<customersList.size()&!isDelted;i=i+1)
     {
-        if(customersList[i]->getId()!=id)
+        if(customersList[i]->getId()==id)
         {
-            newCustomerList.push_back(customersList[i]);
+            customersList.erase(customersList.begin()+i);
+            isDelted= true;
         }
-
     }
-    customersList=newCustomerList;
 
     //remove customer orders from orderList
-    vector<OrderPair> newOrderList;
+    vector<OrderPair>newOrders;
     for(int i=0;i<orderList.size();i=i+1)
     {
-        if (orderList[i].first!=id)
-            newOrderList.push_back(OrderPair(orderList[i].first,orderList[i].second));
+        if(orderList[i].first!=id)
+        {
+            newOrders.push_back(orderList[i]);
+        }
     }
-    orderList=newOrderList;
+    orderList.clear();
+    for(int i=0;i<newOrders.size();i=i+1)
+    {
+        orderList.push_back(newOrders[i]);
+    }
 }
 
-Customer* Table::getCustomer(int id) {
-
+Customer* Table::getCustomerById(int id) {
+    for(int i=0;i<customersList.size();i=i+1)
+    {
+        if(customersList[i]->getId()==id)
+            return customersList[i];
+    }
+}
+void Table::addNewCustomerOrdersToBill(std::vector<OrderPair>&customerOrders) {
+    for(int i=0;i<customerOrders.size();i=i+1)
+    {
+        orderList.push_back(customerOrders[i]);
+    }
 }
 
 vector<Customer*>& Table::getCustomers() {return this->customersList;}
 
 vector<OrderPair>& Table::getOrders() {return this->orderList;}
+
+  vector<OrderPair>Table::getCustomerOrders(int customerId) {
+    vector<OrderPair> customerOrders;
+    for(int i=0;i<orderList.size();i=i+1)
+    {
+        if(orderList[i].first==customerId)
+        {
+            customerOrders.push_back(orderList[i]);
+        }
+    }
+    return customerOrders;
+}
 
 void Table:: openTable() {this->open= true;}
 
@@ -98,7 +118,7 @@ void Table::order(const std::vector<Dish> &menu) {
         //printing the order list to the screen
         for(int i=0;i<orderList.size();i=i+1)
         {
-            cout<<"customer "<<getCustomer(orderList[i].first)->getName()<<" ordered "<<orderList[i].second.getName();
+            cout<<"customer "<< getCustomerById(orderList[i].first)->getName()<<" ordered "<<orderList[i].second.getName();
 
         }
     }

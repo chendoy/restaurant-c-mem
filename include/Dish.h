@@ -10,7 +10,9 @@ enum DishType{
 class Dish{
 public:
     Dish(int d_id, std::string d_name, int d_price, DishType d_type);
-    int getId() const;
+	//copy constructor
+	Dish(const Dish &otherDish);
+	int getId() const;
     std::string getName() const;
     int getPrice() const;
     DishType getType() const;
