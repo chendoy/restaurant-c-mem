@@ -121,28 +121,30 @@ void Restaurant::start() {
     cout<<"Restaurant Is Now Open!"<<endl;
     string nextAction;
     cin>>nextAction;
+    vector<string> splitBySpace();
     while (nextAction!="closeall")
     {
+
         vector<string> splitBySpace=splitStringBytoken(nextAction," ");
 
         if(splitBySpace[0]=="open") {
             int tableId = stoul(splitBySpace[1]);
-            vector<string> customerNamesAndTypes = splitStringBytoken(splitBySpace[2], ",");
             vector<Customer*>customersList;
 
-            for (int i = 0; i < customerNamesAndTypes.size(); i = i + 2) {
+            for (int i = 2; i < splitBySpace.size(); i = i + 1) {
+                vector<string> customerNameAndType = splitStringBytoken(splitBySpace[i], ",");
                 ///!!!delete this pointers !!!
                 Customer *customer;
-                if (customerNamesAndTypes[i + 1] == "veg") {
-                    customer=new VegetarianCustomer(customerNamesAndTypes[i],curCustomerId);
+                if (customerNameAndType[1] == "veg") {
+                    customer=new VegetarianCustomer(customerNameAndType[0],curCustomerId);
 
-                } else if (customerNamesAndTypes[i+1]=="chp") {
-                    customer=new CheapCustomer(customerNamesAndTypes[i],curCustomerId);
+                } else if (customerNameAndType[1]=="chp") {
+                    customer=new CheapCustomer(customerNameAndType[0],curCustomerId);
 
-                } else if(customerNamesAndTypes[i+1]=="spc") {
-                    customer=new SpicyCustomer(customerNamesAndTypes[i],curCustomerId);
+                } else if(customerNameAndType[1]=="spc") {
+                    customer=new SpicyCustomer(customerNameAndType[0],curCustomerId);
                 } else { //it is alcoholic csutomer
-                    customer=new AlchoholicCustomer(customerNamesAndTypes[i],curCustomerId);
+                    customer=new AlchoholicCustomer(customerNameAndType[0],curCustomerId);
                 }
                 customersList.push_back(customer);
                 curCustomerId=curCustomerId+1;
@@ -150,23 +152,34 @@ void Restaurant::start() {
 
             ///!!!delete this pointer!!!
             OpenTable* openTable=new OpenTable(tableId,customersList);
-
+            openTable->act(*this);
 
 
         }
         else if(splitBySpace[0]=="order"){
+            int table_num=stoi(splitBySpace[1]);
+            Order orderAction(table_num);
+            orderAction.act(*this);
 
         }
         else if(splitBySpace[0]=="move") {
+            int src=stoi(splitBySpace[1]);
+            int dst=stoi(splitBySpace[2]);
+            int customerId=stoi(splitBySpace[3]);
+            MoveCustomer moveAction(src,dst,customerId);
+            moveAction.act(*this);
+
 
         }
         else if (splitBySpace[0]=="close")
         {
-
+            int table_num=stoi(splitBySpace[1]);
+            Close closeAction(table_num);
+            closeAction.act(*this);
         }
     }
 
-    //closeall action chosed
+    //'closeall' action was chosen
 
 
 }
