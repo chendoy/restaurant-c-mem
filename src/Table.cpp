@@ -17,6 +17,7 @@ int Table::getCapacity() const {return this->capacity;}
 
 void Table::addCustomer(Customer *customer) { this->customersList.push_back(customer);}
 
+
 void Table::removeCustomer(int id) {
     //remove customer from customer list
     bool isDelted=false;
@@ -52,6 +53,7 @@ Customer* Table::getCustomerById(int id) {
             return customersList[i];
     }
 }
+
 void Table::addNewCustomerOrdersToBill(std::vector<OrderPair>&customerOrders) {
     for(int i=0;i<customerOrders.size();i=i+1)
     {
@@ -59,11 +61,12 @@ void Table::addNewCustomerOrdersToBill(std::vector<OrderPair>&customerOrders) {
     }
 }
 
+
 vector<Customer*>& Table::getCustomers() {return this->customersList;}
 
 vector<OrderPair>& Table::getOrders() {return this->orderList;}
 
-  vector<OrderPair>Table::getCustomerOrders(int customerId) {
+vector<OrderPair>Table::getCustomerOrders(int customerId) {
     vector<OrderPair> customerOrders;
     for(int i=0;i<orderList.size();i=i+1)
     {
@@ -74,6 +77,7 @@ vector<OrderPair>& Table::getOrders() {return this->orderList;}
     }
     return customerOrders;
 }
+
 
 void Table:: openTable() {this->open= true;}
 
@@ -118,7 +122,7 @@ void Table::order(const std::vector<Dish> &menu) {
         //printing the order list to the screen
         for(int i=0;i<orderList.size();i=i+1)
         {
-            cout<<"customer "<< getCustomerById(orderList[i].first)->getName()<<" ordered "<<orderList[i].second.getName();
+            cout<<"customer "<<getCustomerById(orderList[i].first)->getName()<<" ordered "<<orderList[i].second.getName();
 
         }
     }
@@ -152,6 +156,8 @@ bool Table::isCustomerAtTable(int customerId) {
     }
     return exist;
 }
+
+Table* Table::clone() {return new Table(*this);}
 
 //implementing the class Destructor
 Table::~Table () {

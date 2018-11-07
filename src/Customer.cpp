@@ -23,6 +23,7 @@ string Customer::getName() const {return name;}
 
 int Customer::getId() const  {return id;}
 
+
 //implementations of 'toString' for each customer type
 
 string VegetarianCustomer::toString() const{
@@ -40,6 +41,16 @@ string SpicyCustomer::toString() const{
 string AlchoholicCustomer::toString() const{
     return to_string(getId())+" "+getName();
 }
+
+//implementation of 'getType' for each customer type
+
+string VegetarianCustomer::getType() const {return "veg";}
+
+string CheapCustomer::getType() const {return "chp";}
+
+string SpicyCustomer::getType() const {return "spc";}
+
+string AlchoholicCustomer::getType() const {return "alc";}
 
 //implementations of 'order' for each customer type
 vector<int> VegetarianCustomer::order(const std::vector<Dish> &menu) {

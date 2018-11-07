@@ -127,22 +127,22 @@ void Restaurant::start() {
 
         if(splitBySpace[0]=="open") {
             int tableId = stoul(splitBySpace[1]);
+            vector<string> customerNamesAndTypes = splitStringBytoken(splitBySpace[2], ",");
             vector<Customer*>customersList;
 
-            for (int i = 2; i < splitBySpace.size(); i = i + 1) {
-                vector<string> customerNameAndType = splitStringBytoken(splitBySpace[i], ",");
+            for (int i = 0; i < customerNamesAndTypes.size(); i = i + 2) {
                 ///!!!delete this pointers !!!
                 Customer *customer;
-                if (customerNameAndType[1] == "veg") {
-                    customer=new VegetarianCustomer(customerNameAndType[0],curCustomerId);
+                if (customerNamesAndTypes[i + 1] == "veg") {
+                    customer=new VegetarianCustomer(customerNamesAndTypes[i],curCustomerId);
 
-                } else if (customerNameAndType[1]=="chp") {
-                    customer=new CheapCustomer(customerNameAndType[0],curCustomerId);
+                } else if (customerNamesAndTypes[i+1]=="chp") {
+                    customer=new CheapCustomer(customerNamesAndTypes[i],curCustomerId);
 
-                } else if(customerNameAndType[1]=="spc") {
-                    customer=new SpicyCustomer(customerNameAndType[0],curCustomerId);
+                } else if(customerNamesAndTypes[i+1]=="spc") {
+                    customer=new SpicyCustomer(customerNamesAndTypes[i],curCustomerId);
                 } else { //it is alcoholic csutomer
-                    customer=new AlchoholicCustomer(customerNameAndType[0],curCustomerId);
+                    customer=new AlchoholicCustomer(customerNamesAndTypes[i],curCustomerId);
                 }
                 customersList.push_back(customer);
                 curCustomerId=curCustomerId+1;
@@ -150,34 +150,24 @@ void Restaurant::start() {
 
             ///!!!delete this pointer!!!
             OpenTable* openTable=new OpenTable(tableId,customersList);
-            openTable->act(*this);
+
 
 
         }
         else if(splitBySpace[0]=="order"){
-            int table_num=stoi(splitBySpace[1]);
-            Order orderAction(table_num);
-            orderAction.act(*this);
 
         }
         else if(splitBySpace[0]=="move") {
-            int src=stoi(splitBySpace[1]);
-            int dst=stoi(splitBySpace[2]);
-            int customerId=stoi(splitBySpace[3]);
-            MoveCustomer moveAction(src,dst,customerId);
-            moveAction.act(*this);
-
 
         }
         else if (splitBySpace[0]=="close")
         {
-            int table_num=stoi(splitBySpace[1]);
-            Close closeAction(table_num);
-            closeAction.act(*this);
+
         }
     }
 
-    //else the user write 'closeall' resturant destructor activate
+    //closeall action chosed
+
 
 }
 
@@ -197,6 +187,33 @@ Table* Restaurant::getTable(int ind) {
 
 }
 
+Restaurant& Restaurant::operator=(const Restaurant &rest)
+        {
+//check for "self assignment" and do nothing in that case
+if(this==&rest)
+    return *this;
+
+//assigning status
+open=rest.open;
+
+//assigning numOfTables
+numOfTables=rest.numOfTables;
+
+//assigning tables
+for(int i=0;i<tables.size();i++)
+    tables.push_back(rest.tables[i]->clone());
+
+//assigning menu
+for(int i=0;i<menu.size();i++)
+    menu.push_back(rest.menu[i]);
+
+//assigning actionsLog
+for(int i=0;i<actionsLog.size();i++)
+    actionsLog.push_back(rest.actionsLog[i]->clone());
+
+return *this;
+        }
+
 
 Restaurant::~Restaurant () {
 //delete pointers to tables
@@ -213,6 +230,8 @@ const vector<BaseAction*>& Restaurant::getActionsLog() const {return actionsLog;
 
 vector<Dish>& Restaurant::getMenu() {return menu;}
 
+void Restaurant::addToActionsLog(BaseAction * actionToAdd) {actionsLog.push_back(actionToAdd);}
+
 //the function return a vector of split string (by token)
 std::vector<string> splitStringBytoken(string myStr,string delimiter)
 {
@@ -226,4 +245,3 @@ std::vector<string> splitStringBytoken(string myStr,string delimiter)
     }
     return splittedString;
 }
-

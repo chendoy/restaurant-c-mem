@@ -20,11 +20,14 @@ public:
     void addNewCustomerOrdersToBill(std::vector<OrderPair>&customerOrders);
     void order(const std::vector<Dish> &menu);
     bool isCustomerAtTable(int customerId);
+    Table* clone();
 
     void openTable();
     void closeTable();
     int getBill();
     bool isOpen();
+
+
     //Destructor
     virtual ~Table();
 private:
