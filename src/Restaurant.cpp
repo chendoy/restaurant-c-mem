@@ -132,16 +132,16 @@ void Restaurant::start() {
     this->open=true;
     int curCustomerId=0;
     cout<<"Restaurant Is Now Open!"<<endl;
-    string nextAction;
-    cin>>nextAction;
-    vector<string> splitBySpace();
+
+    string nextLine;
+    cin>>nextLine;
+    vector<string> splitBySpace=splitStringBytoken(nextLine," ");
+    string nextAction=splitBySpace[0];
 
     while (nextAction!="closeall")
     {
 
-        vector<string> splitBySpace=splitStringBytoken(nextAction," ");
-
-        if(splitBySpace[0]=="open") {
+        if(nextAction=="open") {
             int tableId = stoul(splitBySpace[1]);
             vector<Customer*>customersList;
 
@@ -170,13 +170,13 @@ void Restaurant::start() {
 
 
         }
-        else if(splitBySpace[0]=="order"){
+        else if(nextAction=="order"){
             int table_num=stoi(splitBySpace[1]);
             Order orderAction(table_num);
             orderAction.act(*this);
 
         }
-        else if(splitBySpace[0]=="move") {
+        else if(nextAction=="move") {
             int src=stoi(splitBySpace[1]);
             int dst=stoi(splitBySpace[2]);
             int customerId=stoi(splitBySpace[3]);
@@ -185,12 +185,16 @@ void Restaurant::start() {
 
 
         }
-        else if (splitBySpace[0]=="close")
-        {
+        else if (nextAction=="close") {
             int table_num=stoi(splitBySpace[1]);
             Close closeAction(table_num);
             closeAction.act(*this);
         }
+
+        cin>>nextLine;
+        splitBySpace.clear();
+        splitBySpace=splitStringBytoken(nextLine," ");
+        nextAction=splitBySpace[0];
     }
 
     //'closeall' action was chosen
