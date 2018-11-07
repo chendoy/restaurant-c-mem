@@ -111,6 +111,7 @@ vector<int> SpicyCustomer::order(const std::vector<Dish> &menu) {
         }
         orderedDishes.push_back(orderedSpc);
         firstOrder = false;
+
     } else //already made an order, now will order cheapest non-alc bvg
     {
         int orderedBvgMinPriceIndex = 0;
