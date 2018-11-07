@@ -12,10 +12,10 @@ using namespace std;
 
 Customer::Customer(std::string c_name, int c_id): name(c_name),id(c_id){}
 
-VegetarianCustomer::VegetarianCustomer(string name, int id): Customer(name,id) {}
-CheapCustomer::CheapCustomer(string name, int id): Customer(name,id),canOrder(true) {}
-SpicyCustomer::SpicyCustomer(string name, int id): Customer(name,id),firstOrder(true) {}
-AlchoholicCustomer::AlchoholicCustomer(string name, int id): Customer(name,id),orderedMostExpensive(false),curAlcDrinkId() {}
+VegetarianCustomer::VegetarianCustomer(string name, int id): Customer(name,id), type("veg") {}
+CheapCustomer::CheapCustomer(string name, int id): Customer(name,id),canOrder(true), type("chp") {}
+SpicyCustomer::SpicyCustomer(string name, int id): Customer(name,id),firstOrder(true), type("spc") {}
+AlchoholicCustomer::AlchoholicCustomer(string name, int id): Customer(name,id),orderedMostExpensive(false),curAlcDrinkId(), type("veg") {}
 
 //getId and getName
 

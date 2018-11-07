@@ -11,11 +11,13 @@ public:
     virtual std::vector<int> order(const std::vector<Dish> &menu)=0;
     virtual std::string toString() const = 0;
     std::string getName() const;
+    virtual std::string getType() const=0;
     int getId() const;
     Customer* clone();
 private:
     const std::string name;
     const int id;
+
 };
 
 
@@ -24,8 +26,9 @@ public:
 	VegetarianCustomer(std::string name, int id);
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
+    std::string getType() const;
 private:
-	std::string getType() const; //???
+    const std::string type;
 };
 
 
@@ -34,9 +37,10 @@ public:
 	CheapCustomer(std::string name, int id);
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
+    std::string getType() const;
 private:
 	bool canOrder;
-	std::string getType() const; //???
+    const std::string type;
 };
 
 
@@ -45,9 +49,10 @@ public:
 	SpicyCustomer(std::string name, int id);
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
+    std::string getType() const;
 private:
 	bool firstOrder;
-	std::string getType() const; //???
+    const std::string type;
 };
 
 
@@ -55,13 +60,14 @@ class AlchoholicCustomer : public Customer { public:
 	AlchoholicCustomer(std::string name, int id);
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
+    std::string getType() const;
 private:
 
 	void setNextExpensiveDrinkId(const std::vector<Dish> &menu);
 	Dish getDishById(int dishId,const std::vector<Dish> &menu);
 	bool orderedMostExpensive;
 	int curAlcDrinkId;
-	std::string getType() const; //???
+    const std::string type;
 };
 
 

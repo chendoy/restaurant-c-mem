@@ -179,9 +179,9 @@ void Restaurant::start() {
 
         }
         else if(nextAction=="move") {
-            int src=stoi(splitBySpace[1]);
-            int dst=stoi(splitBySpace[2]);
-            int customerId=stoi(splitBySpace[3]);
+            int src=stoul(splitBySpace[1]);
+            int dst=stoul(splitBySpace[2]);
+            int customerId=stoul(splitBySpace[3]);
             MoveCustomer moveAction(src,dst,customerId);
             moveAction.act(*this);
 

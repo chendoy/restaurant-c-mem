@@ -53,14 +53,20 @@ void OpenTable::act(Restaurant &restaurant)
 
 string OpenTable::toString() const
 {
-    string toReturn="open "+tableId;
+    string toReturn="open ";
+    toReturn.append(to_string(tableId));
+    toReturn.append(" ");
 
     //appends the customers and their types
     for(int i=0;i<customers.size();i++) {
-        toReturn.append(customers[i]->getName()) + ",";
-        //toReturn.append(customers[i]->get + ","; //NEED TO COMPLETE THIS-APPEND THE CUSTOMER TYPE
+        toReturn.append(customers[i]->getName());
+        toReturn.append(",");
+        toReturn.append(customers[i]->getType());
+        toReturn.append(" ");
     }
-
+        toReturn=toReturn.substr(0,toReturn.length()-1);
+        toReturn.append("\n");
+        return toReturn;
 }
 
 OpenTable* OpenTable::clone() {return new OpenTable(*this);}
@@ -128,9 +134,11 @@ void Close::act(Restaurant &restaurant)
     if(restaurant.getNumOfTables()<=tableId || restaurant.getTable(tableId)->isOpen()==false)
         error("Table does not exist or is not open");
 
-    string toPrint="Table "+tableId;
-    toPrint.append(" was closed. Bill "+ restaurant.getTable(tableId)->getBill());
-    toPrint.append("NIS.");
+    string toPrint="Table ";
+    toPrint.append(to_string(tableId));
+    toPrint.append(" was closed. Bill ");
+    toPrint.append(to_string(restaurant.getTable(tableId)->getBill()));
+    toPrint.append(" NIS.");
     cout<<toPrint<<endl;
 
     stringLog=toPrint;
@@ -226,14 +234,14 @@ PrintActionsLog::PrintActionsLog():BaseAction() {}
 
 void PrintActionsLog::act(Restaurant &restaurant)
 {
-    restaurant.addToActionsLog(this);
+    //-1 because we don't want to print the actual "print action log" action (that we just typed)
+    for(int i=0;i<restaurant.getActionsLog().size();i++)
+        cout<<restaurant.getActionsLog()[i]->toString();
 
-    vector<BaseAction*> actionsLog=restaurant.getActionsLog();
-    for(int i=0;i<actionsLog.size();i++)
-        cout<<actionsLog[i]->toString();
+    restaurant.addToActionsLog(this);
 }
 
-string PrintActionsLog::toString() const {return "Actions log printed";}
+string PrintActionsLog::toString() const {return "Actions log printed\n";}
 
 PrintActionsLog* PrintActionsLog::clone() {return new PrintActionsLog(*this);}
 
