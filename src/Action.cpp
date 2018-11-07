@@ -39,7 +39,7 @@ void OpenTable::act(Restaurant &restaurant)
     restaurant.addToActionsLog(this);
 
     //table does not exist                   //table is already open
-    if(restaurant.getTable(tableId)==nullptr || restaurant.getTable(tableId)->isOpen()==true)
+    if(restaurant.getNumOfTables()<=tableId || restaurant.getTable(tableId)->isOpen()==true)
         error("Table does not exist or is already open");
 
 
@@ -48,7 +48,7 @@ void OpenTable::act(Restaurant &restaurant)
 
     //assigns the customers to it
     for(int i=0;i<customers.size();i++)
-        restaurant.getTable(tableId-1)->addCustomer(customers[i]);
+        restaurant.getTable(tableId)->addCustomer(customers[i]);
 }
 
 string OpenTable::toString() const
@@ -64,7 +64,6 @@ string OpenTable::toString() const
 }
 
 OpenTable* OpenTable::clone() {return new OpenTable(*this);}
-
 
 //Order START
 Order::Order(int id):BaseAction(),tableId(id){}
@@ -93,7 +92,7 @@ Order* Order::clone() {return new Order(*this);}
 ////MoveCustomer START
 MoveCustomer::MoveCustomer(int src, int dst, int customerId):BaseAction(),srcTable(src),dstTable(dst),id(customerId) {}
 
-void MoveCustomer ::act(Restaurant &restaurant) {
+void MoveCustomer::act(Restaurant &restaurant) {
 
     Table *tblSrc=restaurant.getTable(srcTable);
     Table *tblDest=restaurant.getTable(dstTable);
@@ -126,7 +125,7 @@ void Close::act(Restaurant &restaurant)
 
 
     //table does not exist                             //table is not open
-    if(restaurant.getTable(tableId)==nullptr || restaurant.getTable(tableId)->isOpen()==false)
+    if(restaurant.getNumOfTables()<=tableId || restaurant.getTable(tableId)->isOpen()==false)
         error("Table does not exist or is not open");
 
     string toPrint="Table "+tableId;

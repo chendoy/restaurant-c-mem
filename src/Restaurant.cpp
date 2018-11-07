@@ -193,10 +193,28 @@ void Restaurant::start() {
             closeAction.act(*this);
         }
 
-        else if(nextAction=="menu")
+        else if(nextAction=="menu") {
+            PrintMenu printMenuAction;
+            printMenuAction.act(*this);
+        }
+
+        else if(nextAction=="status")
         {
-            //PrintMenu printMenuAction();
-            //printMenuAction.act(*this);
+            int tableId=stol(splitBySpace[1]);
+            PrintTableStatus printTableStatusAction(tableId);
+            printTableStatusAction.act(*this);
+        }
+        else if(nextAction=="log"){
+            PrintActionsLog printActionsLogAction;
+            printActionsLogAction.act(*this);
+        }
+        else if(nextAction=="backup"){
+            BackupRestaurant backupAction;
+            backupAction.act(*this);
+        }
+        else if(nextAction=="restore"){
+            RestoreResturant restoreAction;
+            restoreAction.act(*this);
         }
 
         getline(cin,nextLine);
