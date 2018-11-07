@@ -31,6 +31,8 @@ std::vector<string> Restaurant::splitStringBytoken(string myStr,string delimiter
         splittedString.push_back(token);
         myStr.erase(0,pos+delimiter.length());
     }
+    token=myStr.substr(0,pos);
+    splittedString.push_back(token);
     return splittedString;
 }
 
@@ -134,7 +136,7 @@ void Restaurant::start() {
     cout<<"Restaurant Is Now Open!"<<endl;
 
     string nextLine;
-    cin>>nextLine;
+    getline(cin,nextLine);
     vector<string> splitBySpace=splitStringBytoken(nextLine," ");
     string nextAction=splitBySpace[0];
 
