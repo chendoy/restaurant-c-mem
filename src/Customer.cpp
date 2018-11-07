@@ -15,7 +15,7 @@ Customer::Customer(std::string c_name, int c_id): name(c_name),id(c_id){}
 VegetarianCustomer::VegetarianCustomer(string name, int id): Customer(name,id), type("veg") {}
 CheapCustomer::CheapCustomer(string name, int id): Customer(name,id),canOrder(true), type("chp") {}
 SpicyCustomer::SpicyCustomer(string name, int id): Customer(name,id),firstOrder(true), type("spc") {}
-AlchoholicCustomer::AlchoholicCustomer(string name, int id): Customer(name,id),orderedMostExpensive(false),curAlcDrinkId(), type("veg") {}
+AlchoholicCustomer::AlchoholicCustomer(string name, int id): Customer(name,id),orderedMostExpensive(false),curAlcDrinkId(-1), type("alc") {}
 
 //getId and getName
 
@@ -77,9 +77,10 @@ vector<int> VegetarianCustomer::order(const std::vector<Dish> &menu) {
 }
 
 vector<int> CheapCustomer::order(const std::vector<Dish> &menu) {
+    vector<int> orderedDishes;
     if(canOrder)
     {
-        vector<int> orderedDishes;
+
         int orderedDishId=0;
         int orderedDishPrice=menu[0].getPrice();
         for(int i=1;i<menu.size();i++)
@@ -93,6 +94,7 @@ vector<int> CheapCustomer::order(const std::vector<Dish> &menu) {
         orderedDishes.push_back(orderedDishId);
         return orderedDishes;
     }
+    return orderedDishes;
 }
 
 vector<int> SpicyCustomer::order(const std::vector<Dish> &menu) {
@@ -111,15 +113,14 @@ vector<int> SpicyCustomer::order(const std::vector<Dish> &menu) {
         firstOrder = false;
     } else //already made an order, now will order cheapest non-alc bvg
     {
-        int orderedBvgPrice = 0;
-        int orderedBvg = 0;
+        int orderedBvgMinPriceIndex = 0;
+
         for (int i = 1; i < menu.size(); i++) {
-            if (menu[i].getType() == BVG & menu[i].getPrice() < orderedBvgPrice) {
-                orderedBvgPrice = menu[i].getPrice();
-                orderedBvg = i;
+            if (menu[i].getType() == BVG & menu[i].getPrice() < menu[orderedBvgMinPriceIndex].getPrice()) {
+                orderedBvgMinPriceIndex = i;
             }
         }
-        orderedDishes.push_back(orderedBvg);
+        orderedDishes.push_back(menu[orderedBvgMinPriceIndex].getId());
     }
     return orderedDishes;
 }

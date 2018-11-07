@@ -117,25 +117,19 @@ void Table::order(const std::vector<Dish> &menu) {
         {
             std::vector<int> customerDishes=customersList[i]->order(menu);
             //add the customer dishes to the pair list
-            addCustomerOrders(customerDishes,menu);
-        }
-        //printing the order list to the screen
-        for(int i=0;i<orderList.size();i=i+1)
-        {
-            cout<<"customer "<<getCustomerById(orderList[i].first)->getName()<<" ordered "<<orderList[i].second.getName();
+            for(int j=0;j<customerDishes.size();j=j+1)
+            {
+                const OrderPair op(customersList[i]->getId(), getDishById(menu, customerDishes[j]));
+                orderList.push_back(op);
+                //print the orders to the screnn
+                cout<<customersList[i]->getName()<<" ordered "<<op.second.getName()<<endl;
+            }
 
         }
     }
 
 }
-void Table::addCustomerOrders(std::vector<int> csutomerDishes,const std::vector<Dish> &menu) {
-    //add customer dishes to the pairs array
-    for(int i=0;i<csutomerDishes.size();i=i+1)
-    {
-        const OrderPair op(customersList[i]->getId(), getDishById(menu, csutomerDishes[i]));
-        orderList.push_back(op);
-    }
-}
+
 
 
 // the function return an object (new one pass by value) of a dish from the menu by the dish Id
@@ -164,15 +158,14 @@ Table::~Table () {
     //if the table doesn't exist any more we can delete the the object of Customers that allocated for this table at the 'customerList'
     //note that if this table closed because the customers moved to another table we will *copy* the list of customers and allocate them
     // *new* space in the memory. thus, the deletion of the customer list is safe
-    for(int i=0;i<customersList.size();i=i+1)
-    {
-        delete customersList[i];
-        customersList[i]= nullptr;
-    }
-    //clean the list
-    customersList.clear();
+    //    for(int i=0;i<customersList.size();i=i+1)
+//    {
+//        delete customersList[i];
+//        customersList[i]= nullptr;
+//    }
+//    //clean the list
+//    customersList.clear();
 }
-
 
 
 

@@ -167,8 +167,8 @@ void Restaurant::start() {
             }
 
             ///!!!delete this pointer!!!
-            OpenTable* openTable=new OpenTable(tableId,customersList);
-            openTable->act(*this);
+            OpenTable openTable(tableId,customersList);
+            openTable.act(*this);
 
 
         }
@@ -179,13 +179,11 @@ void Restaurant::start() {
 
         }
         else if(nextAction=="move") {
-            int src=stoul(splitBySpace[1]);
-            int dst=stoul(splitBySpace[2]);
-            int customerId=stoul(splitBySpace[3]);
+            int src=stoi(splitBySpace[1]);
+            int dst=stoi(splitBySpace[2]);
+            int customerId=stoi(splitBySpace[3]);
             MoveCustomer moveAction(src,dst,customerId);
             moveAction.act(*this);
-
-
         }
         else if (nextAction=="close") {
             int table_num=stol(splitBySpace[1]);
