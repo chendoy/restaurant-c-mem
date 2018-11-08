@@ -12,6 +12,15 @@
 using namespace std;
 extern Restaurant* backup;
 
+//check if needed here
+string dishtypeToString(const DishType dishtype)
+{
+    if(dishtype == VEG) return "VEG";
+    else if(dishtype == SPC) return "SPC";
+    else if(dishtype == BVG) return "BVG";
+    else if(dishtype == ALC) return "ALC";
+}
+
 BaseAction::BaseAction() {}
 
 ActionStatus BaseAction::getStatus() const {return this->status;}
@@ -180,10 +189,11 @@ void PrintMenu::act(Restaurant &restaurant)
     string toPrint="";
     for(int i=0;i<restaurant.getMenu().size();i++)
     {
-        toPrint.append(restaurant.getMenu()[i].getName()+" ");
-        toPrint.append(restaurant.getMenu()[i].getType()+" ");
-        toPrint.append(restaurant.getMenu()[i].getPrice()+" ");
+        toPrint.append(restaurant.getMenu()[i].getName()+",");
+        toPrint.append(dishtypeToString(restaurant.getMenu()[i].getType())+",");
+        toPrint.append(to_string(restaurant.getMenu()[i].getPrice())+"\n");
     }
+    cout<<toPrint<<endl;
 }
 
 string PrintMenu::toString() const { return "";}
