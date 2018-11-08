@@ -8,6 +8,7 @@
 #include <vector>
 #include "Dish.h"
 #include <string>
+#include <typeinfo>
 using namespace std;
 extern Restaurant* backup;
 
@@ -238,7 +239,9 @@ void PrintActionsLog::act(Restaurant &restaurant)
 
     //-1 because we don't want to print the actual "print action log" action (that we just typed)
     for(int i=0;i<restaurant.getActionsLog().size();i++) {
-        cout << restaurant.getActionsLog()[i]->toString();
+        {
+            cout << restaurant.getActionsLog()[i]->toString();
+        }
     }
 
     restaurant.addToActionsLog(this);

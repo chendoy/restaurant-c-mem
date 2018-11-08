@@ -167,52 +167,52 @@ void Restaurant::start() {
             }
 
             ///!!!delete this pointer!!!
-            OpenTable openTable(tableId,customersList);
-            openTable.act(*this);
+            OpenTable* openTableAction=new OpenTable(tableId,customersList);
+            openTableAction->act(*this);
 
 
         }
         else if(nextAction=="order"){
             int table_num=stoi(splitBySpace[1]);
-            Order orderAction(table_num);
-            orderAction.act(*this);
+            Order* orderAction=new Order(table_num);
+            orderAction->act(*this);
 
         }
         else if(nextAction=="move") {
             int src=stoi(splitBySpace[1]);
             int dst=stoi(splitBySpace[2]);
             int customerId=stoi(splitBySpace[3]);
-            MoveCustomer moveAction(src,dst,customerId);
-            moveAction.act(*this);
+            MoveCustomer* moveAction=new MoveCustomer(src,dst,customerId);
+            moveAction->act(*this);
         }
         else if (nextAction=="close") {
             int table_num=stol(splitBySpace[1]);
-            Close closeAction(table_num);
-            closeAction.act(*this);
+            Close* closeAction=new Close(table_num);
+            closeAction->act(*this);
         }
 
         else if(nextAction=="menu") {
-            PrintMenu printMenuAction;
-            printMenuAction.act(*this);
+            PrintMenu* printMenuAction=new PrintMenu();
+            printMenuAction->act(*this);
         }
 
         else if(nextAction=="status")
         {
             int tableId=stol(splitBySpace[1]);
-            PrintTableStatus printTableStatusAction(tableId);
-            printTableStatusAction.act(*this);
+            PrintTableStatus* printTableStatusAction=new PrintTableStatus(tableId);
+            printTableStatusAction->act(*this);
         }
         else if(nextAction=="log"){
-            PrintActionsLog printActionsLogAction;
-            printActionsLogAction.act(*this);
+            PrintActionsLog* printActionsLogAction=new(PrintActionsLog);
+            printActionsLogAction->act(*this);
         }
         else if(nextAction=="backup"){
-            BackupRestaurant backupAction;
-            backupAction.act(*this);
+            BackupRestaurant* backupAction=new BackupRestaurant();
+            backupAction->act(*this);
         }
         else if(nextAction=="restore"){
-            RestoreResturant restoreAction;
-            restoreAction.act(*this);
+            RestoreResturant* restoreAction=new RestoreResturant();
+            restoreAction->act(*this);
         }
 
         getline(cin,nextLine);
