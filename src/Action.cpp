@@ -209,32 +209,37 @@ void PrintTableStatus::act(Restaurant &restaurant)
     string toPrint;
 
     //appending table status
-    toPrint.append("Table: "+tableId);
+    toPrint.append("Table ");
+    toPrint.append(to_string(tableId));
     if(!restaurant.getTable(tableId)->isOpen()) {
         toPrint.append(" status: closed");
         cout << toPrint << endl;
         return;
     }
 
-    toPrint.append(" status: open +\n+ Customers:");
+    toPrint.append(" status: open\nCustomers:\n");
 
     //appending customers list
     for(int i=0;i<restaurant.getTable(tableId)->getCustomers().size();i++)
     {
-        toPrint.append(restaurant.getTable(tableId)->getCustomers()[i]->getId()+" ");
+        toPrint.append(to_string(restaurant.getTable(tableId)->getCustomers()[i]->getId())+" ");
         toPrint.append(restaurant.getTable(tableId)->getCustomers()[i]->getName()+"\n");
     }
-
+    toPrint.append("Orders:\n");
     //appending orders
     for(int i=0;i<restaurant.getTable(tableId)->getOrders().size();i++)
     {
         toPrint.append(restaurant.getTable(tableId)->getOrders()[i].second.getName()+" ");
-        toPrint.append(restaurant.getTable(tableId)->getOrders()[i].second.getPrice()+"\n");
-        toPrint.append(restaurant.getTable(tableId)->getOrders()[i].first+"\n");
+        toPrint.append(to_string(restaurant.getTable(tableId)->getOrders()[i].second.getPrice()));
+        toPrint.append("NIS ");
+        toPrint.append(to_string(restaurant.getTable(tableId)->getOrders()[i].first)+"\n");
     }
 
     //appending bill
-    toPrint.append("Current bill: "+restaurant.getTable(tableId)->getBill());
+    toPrint.append("Current bill: ");
+    toPrint.append(to_string(restaurant.getTable(tableId)->getBill()));
+    toPrint.append(" NIS");
+    cout<<toPrint<<endl;
 }
 
 string PrintTableStatus::toString() const {return "Print table status: "+tableId;}
