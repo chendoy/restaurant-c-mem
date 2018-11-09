@@ -40,7 +40,7 @@ void BaseAction::complete()
 void BaseAction::error(std::string errorMsg)
 {
     this->status=ERROR;
-    errorMsg=(errorMsg);
+    this->errorMsg=(errorMsg);
 }
 
 
@@ -187,7 +187,6 @@ void Close::act(Restaurant &restaurant)
     toPrint.append(" NIS.");
     cout<<toPrint<<endl;
 
-    stringLog=toPrint;
     restaurant.getTable(tableId)->closeTable();
     complete();
 }
@@ -215,8 +214,12 @@ void CloseAll::act(Restaurant &restaurant)
     restaurant.addToActionsLog(this);
 
     for(int i=0;i<restaurant.getNumOfTables();i++) {
-        if(restaurant.getTable(i)->isOpen()==false)
-            restaurant.getTable(i)->closeTable();
+        if(restaurant.getTable(i)->isOpen())
+        {
+            Close* closeAction=new Close(i);
+            closeAction->act(restaurant);
+        }
+
     }
     //NEED TO 'CLOSE THE RESTAURANT' ---HOW TO DO THIS?
     complete();

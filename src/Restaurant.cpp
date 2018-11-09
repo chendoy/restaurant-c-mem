@@ -220,6 +220,8 @@ void Restaurant::start() {
         splitBySpace=splitStringBytoken(nextLine," ");
         nextAction=splitBySpace[0];
     }
+    CloseAll* closeAllAction=new CloseAll();
+    closeAllAction->act(*this);
 
     //'closeall' action was chosen
 
@@ -248,8 +250,8 @@ Restaurant& Restaurant::operator=(const Restaurant &rest)
 if(this==&rest)
     return *this;
 
-//assigning status
-open=rest.open;
+//assigning status - copied restaurant is always open
+open=true;
 
 //assigning numOfTables
 numOfTables=rest.numOfTables;
