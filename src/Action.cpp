@@ -21,6 +21,13 @@ string dishtypeToString(const DishType dishtype)
     else if(dishtype == ALC) return "ALC";
 }
 
+string actionStatusToString(const ActionStatus actionStatus)
+{
+    if(actionStatus==PENDING) return "Pending";
+    else if(actionStatus==COMPLETED) return "Completed";
+    else if(actionStatus==ERROR) return "Error: ";
+}
+
 BaseAction::BaseAction() {}
 
 ActionStatus BaseAction::getStatus() const {return this->status;}
@@ -33,7 +40,7 @@ void BaseAction::complete()
 void BaseAction::error(std::string errorMsg)
 {
     this->status=ERROR;
-    std::cout<<"Error: "+errorMsg<<endl;
+    errorMsg=(errorMsg);
 }
 
 
@@ -42,23 +49,27 @@ string BaseAction::getErrorMsg() const {return this->errorMsg;}
 
 
 
-OpenTable::OpenTable (int id, vector<Customer *> &customersList):tableId(id), BaseAction(), customers(customersList) {statusString="";}
+OpenTable::OpenTable (int id, vector<Customer *> &customersList):tableId(id), BaseAction(), customers(customersList) {}
 
 void OpenTable::act(Restaurant &restaurant)
 {
     restaurant.addToActionsLog(this);
 
     //table does not exist                   //table is already open
-    if(restaurant.getNumOfTables()<=tableId || restaurant.getTable(tableId)->isOpen()==true)
+    if(restaurant.getNumOfTables()<=tableId || restaurant.getTable(tableId)->isOpen()==true) {
         error("Table does not exist or is already open");
+        cout<<getErrorMsg()<<endl;
+        return ;}
 
 
-    //mark the table as open
-    restaurant.getTable(tableId)->openTable();
+        //mark the table as open
+        restaurant.getTable(tableId)->openTable();
 
-    //assigns the customers to it
-    for(int i=0;i<customers.size();i++)
-        restaurant.getTable(tableId)->addCustomer(customers[i]);
+        //assigns the customers to it
+        for (int i = 0; i < customers.size(); i++)
+            restaurant.getTable(tableId)->addCustomer(customers[i]);
+        complete();
+
 }
 
 string OpenTable::toString() const
@@ -72,9 +83,12 @@ string OpenTable::toString() const
         toReturn.append(customers[i]->getName());
         toReturn.append(",");
         toReturn.append(customers[i]->getType());
-        toReturn.append(" ");
+        toReturn.append(": ");
     }
-        toReturn=toReturn.substr(0,toReturn.length()-1);
+        //toReturn=toReturn.substr(0,toReturn.length()-1);
+
+        toReturn.append(actionStatusToString(getStatus()));
+        toReturn.append(getErrorMsg());
         toReturn.append("\n");
         return toReturn;
 }
@@ -96,9 +110,16 @@ void Order::act(Restaurant &restaurant) {
     } else{
         table->order(restaurant.getMenu());
     }
+    complete();
 }
 std::string Order::toString() const {
-    return "order "+tableId;
+    string toReturn;
+    toReturn.append("order ");
+    toReturn.append(to_string(tableId)+": ");
+    toReturn.append(actionStatusToString(getStatus()));
+    toReturn.append(getErrorMsg());
+    toReturn.append("\n");
+    return toReturn;
 }
 
 Order* Order::clone() {return new Order(*this);}
@@ -110,13 +131,15 @@ MoveCustomer::MoveCustomer(int src, int dst, int customerId):BaseAction(),srcTab
 
 void MoveCustomer::act(Restaurant &restaurant) {
 
+    restaurant.addToActionsLog(this);
+
     Table *tblSrc=restaurant.getTable(srcTable);
     Table *tblDest=restaurant.getTable(dstTable);
 
     if(tblSrc== nullptr||tblDest==nullptr||!tblSrc->isOpen()|!tblDest->isOpen()|!tblSrc->isCustomerAtTable(id)|
                                            tblDest->getCapacity()==tblDest->getCustomers().size())
     {
-        cout<<"Cannt Move Customer"<<endl;
+        cout<<"Cannot Move Customer"<<endl;
     }
     else {//can move customer
         tblDest->addCustomer(tblSrc->getCustomerById(id));
@@ -126,9 +149,22 @@ void MoveCustomer::act(Restaurant &restaurant) {
         //deleting the customer from the current table
         tblSrc->removeCustomer(id);
     }
+    complete();
 }
 
-string MoveCustomer::toString() const {return "";}
+string MoveCustomer::toString() const
+{
+    string toReturn;
+    toReturn.append("move ");
+    toReturn.append(to_string(srcTable)+" ");
+    toReturn.append(to_string(dstTable)+" ");
+    toReturn.append(to_string(id)+": ");
+    toReturn.append(actionStatusToString(getStatus()));
+    toReturn.append(getErrorMsg());
+    toReturn.append("\n");
+    return toReturn;
+}
+
 
 MoveCustomer* MoveCustomer::clone() {return new MoveCustomer(*this);}
 
@@ -153,9 +189,19 @@ void Close::act(Restaurant &restaurant)
 
     stringLog=toPrint;
     restaurant.getTable(tableId)->closeTable();
+    complete();
 }
 
-string Close::toString() const {return "Closed table: "+tableId;}
+string Close::toString() const {
+    string toReturn;
+    toReturn.append("Closed table: ");
+    toReturn.append(to_string(tableId));
+    toReturn.append(actionStatusToString(getStatus()));
+    toReturn.append(getErrorMsg());
+    toReturn.append("\n");
+    return toReturn;
+
+}
 
 Close* Close::clone() {return new Close(*this);}
 
@@ -173,6 +219,7 @@ void CloseAll::act(Restaurant &restaurant)
             restaurant.getTable(i)->closeTable();
     }
     //NEED TO 'CLOSE THE RESTAURANT' ---HOW TO DO THIS?
+    complete();
 }
 
 string CloseAll::toString() const {return stringLog;}
@@ -194,9 +241,19 @@ void PrintMenu::act(Restaurant &restaurant)
         toPrint.append(to_string(restaurant.getMenu()[i].getPrice())+"\n");
     }
     cout<<toPrint<<endl;
+    complete();
 }
 
-string PrintMenu::toString() const { return "";}
+string PrintMenu::toString() const {
+
+    string toReturn;
+    toReturn.append("Menu printed ");
+    toReturn.append(actionStatusToString(getStatus()));
+    toReturn.append(getErrorMsg());
+    toReturn.append("\n");
+    return toReturn;
+
+}
 
 PrintMenu* PrintMenu::clone() {return new PrintMenu(*this);}
 
@@ -240,9 +297,19 @@ void PrintTableStatus::act(Restaurant &restaurant)
     toPrint.append(to_string(restaurant.getTable(tableId)->getBill()));
     toPrint.append(" NIS");
     cout<<toPrint<<endl;
+    complete();
 }
 
-string PrintTableStatus::toString() const {return "Print table status: "+tableId;}
+string PrintTableStatus::toString() const
+{
+    string toReturn;
+    toReturn.append("status ");
+    toReturn.append(to_string(tableId)+":");
+    toReturn.append(actionStatusToString(getStatus()));
+    toReturn.append(getErrorMsg());
+    toReturn.append("\n");
+    return toReturn;
+}
 
 PrintTableStatus* PrintTableStatus::clone() {return new PrintTableStatus(*this);}
 
@@ -260,9 +327,18 @@ void PrintActionsLog::act(Restaurant &restaurant)
     }
 
     restaurant.addToActionsLog(this);
+    complete();
 }
 
-string PrintActionsLog::toString() const {return "Actions log printed\n";}
+string PrintActionsLog::toString() const
+{
+    string toReturn;
+    toReturn.append("Print actions log: ");
+    toReturn.append(actionStatusToString(getStatus()));
+    toReturn.append(getErrorMsg());
+    toReturn.append("\n");
+    return toReturn;
+}
 
 PrintActionsLog* PrintActionsLog::clone() {return new PrintActionsLog(*this);}
 
@@ -272,9 +348,18 @@ void BackupRestaurant::act(Restaurant &restaurant)
 {
     //using copy assignment operator
     *backup=restaurant;
+    complete();
 }
 
-string BackupRestaurant::toString() const {return "Backup completed";}
+string BackupRestaurant::toString() const
+{
+    string toReturn;
+    toReturn.append("Backup: ");
+    toReturn.append(actionStatusToString(getStatus()));
+    toReturn.append(getErrorMsg());
+    toReturn.append("\n");
+    return toReturn;
+}
 
 BackupRestaurant* BackupRestaurant::clone()
 {
@@ -286,8 +371,17 @@ void RestoreResturant::act(Restaurant &restaurant)
 {
     //using copy assignment operator
     restaurant=*backup;
+    complete();
 }
 
-string RestoreResturant::toString() const {return "Restore completed";}
+string RestoreResturant::toString() const
+{
+    string toReturn;
+    toReturn.append("Restore: ");
+    toReturn.append(actionStatusToString(getStatus()));
+    toReturn.append(getErrorMsg());
+    toReturn.append("\n");
+    return toReturn;
+}
 
 RestoreResturant* RestoreResturant::clone() {return new RestoreResturant(*this);}

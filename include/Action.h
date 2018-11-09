@@ -41,7 +41,6 @@ public:
 private:
 	const int tableId;
 	const std::vector<Customer *> customers;
-	string statusString;
 };
 
 
