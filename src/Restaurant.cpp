@@ -9,8 +9,25 @@
 #include "Dish.h"
 using namespace std;
 
+extern Restaurant* backup;
+
 //empty ctor
 Restaurant::Restaurant():open(false), tables(),menu(),actionsLog() {}
+
+//copy ctor
+Restaurant::Restaurant(const Restaurant &rest)
+{
+
+    numOfTables=rest.numOfTables;
+    open=rest.open;
+
+    //deep copying tables
+    for(int i=0;i<rest.numOfTables;i++)
+        tables.push_back(rest.tables[i]->clone());
+
+    //menu=rest.menu;
+    //actionsLog=rest.actionsLog;
+}
 
 //converts a string to fruit Enum defined in the header file
 DishType fruit_convert(const string& str)
@@ -244,30 +261,38 @@ Table* Restaurant::getTable(int ind) {
 
 }
 
+//copy ctor
 Restaurant& Restaurant::operator=(const Restaurant &rest)
         {
 //check for "self assignment" and do nothing in that case
 if(this==&rest)
     return *this;
 
-//assigning status - copied restaurant is always open
-open=true;
+//coppied restaurant is always open (no closed restaurant can perform "backup")
+this->open=true;
 
-//assigning numOfTables
-numOfTables=rest.numOfTables;
+this->numOfTables=rest.numOfTables;
 
+this->tables=rest.tables;
+
+//this->menu=rest.menu;
+
+//this->actionsLog=rest.actionsLog;
+
+/*
 //assigning tables
 for(int i=0;i<tables.size();i++)
-    tables.push_back(rest.tables[i]->clone());
+    copy.tables.push_back(rest.tables[i]->clone());
 
 //assigning menu
 for(int i=0;i<menu.size();i++)
-    menu.push_back(rest.menu[i]);
+    copy.menu.push_back(rest.menu[i]);
 
 //assigning actionsLog
 for(int i=0;i<actionsLog.size();i++)
-    actionsLog.push_back(rest.actionsLog[i]->clone());
+    copy.actionsLog.push_back(rest.actionsLog[i]->clone());
 
+ */
 return *this;
         }
 

@@ -1,7 +1,8 @@
 //
 // Created by chen on 11/2/18.
 //
-#include <Table.h>
+#include "Table.h"
+#include "Dish.h"
 #include <vector>
 #include <iostream>
 
@@ -11,6 +12,25 @@ using namespace std;
 Table::Table(int t_capacity): capacity(t_capacity){
     customersList=vector<Customer*>();
     orderList=vector<OrderPair>();
+}
+
+//copy ctor
+Table::Table(const Table &table)
+{
+    customersList=vector<Customer*>();
+    orderList=vector<OrderPair>();
+
+   capacity=table.capacity;
+   open=table.open;
+
+    for(int i=0;i<table.customersList.size();i++)
+        customersList.push_back(table.customersList[i]->clone());
+
+     for(int i=0;i<orderList.size();i++) {
+         orderList.push_back(table.orderList[i]);
+
+
+     }
 }
 
 int Table::getCapacity() const {return this->capacity;}

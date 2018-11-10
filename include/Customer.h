@@ -13,7 +13,7 @@ public:
     std::string getName() const;
     virtual std::string getType() const=0;
     int getId() const;
-    Customer* clone();
+    virtual Customer* clone() const=0;
 private:
     const std::string name;
     const int id;
@@ -24,9 +24,11 @@ private:
 class VegetarianCustomer : public Customer {
 public:
 	VegetarianCustomer(std::string name, int id);
+    VegetarianCustomer(const VegetarianCustomer &vegCustomer);
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
     std::string getType() const;
+    virtual VegetarianCustomer* clone() const;
 private:
     const std::string type;
 };
@@ -35,9 +37,11 @@ private:
 class CheapCustomer : public Customer {
 public:
 	CheapCustomer(std::string name, int id);
+    CheapCustomer(const CheapCustomer &chpCustomer);
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
     std::string getType() const;
+    virtual CheapCustomer* clone() const;
 private:
 	bool canOrder;
     const std::string type;
@@ -47,9 +51,11 @@ private:
 class SpicyCustomer : public Customer {
 public:
 	SpicyCustomer(std::string name, int id);
+    SpicyCustomer(const SpicyCustomer &spcCustomer);
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
     std::string getType() const;
+    virtual SpicyCustomer* clone() const;
 private:
 	bool firstOrder;
     const std::string type;
@@ -58,9 +64,11 @@ private:
 
 class AlchoholicCustomer : public Customer { public:
 	AlchoholicCustomer(std::string name, int id);
+    AlchoholicCustomer(const AlchoholicCustomer &alcCustomer);
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
     std::string getType() const;
+    virtual AlchoholicCustomer* clone() const;
 private:
 
 	void setNextExpensiveDrinkId(const std::vector<Dish> &menu);

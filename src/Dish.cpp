@@ -17,4 +17,4 @@ int Dish::getPrice() const {return price;}
 
 DishType Dish::getType() const {return type;}
 
-Dish* Dish::clone() {return new Dish(*this);}
+Dish* Dish::clone() const {return new Dish(*this);}

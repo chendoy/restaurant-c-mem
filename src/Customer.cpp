@@ -17,11 +17,32 @@ CheapCustomer::CheapCustomer(string name, int id): Customer(name,id),canOrder(tr
 SpicyCustomer::SpicyCustomer(string name, int id): Customer(name,id),firstOrder(true), type("spc") {}
 AlchoholicCustomer::AlchoholicCustomer(string name, int id): Customer(name,id),orderedMostExpensive(false),curAlcDrinkId(-1), type("alc") {}
 
+//copy ctors
+
+VegetarianCustomer::VegetarianCustomer(const VegetarianCustomer &vegCustomer):Customer(vegCustomer.getName(),vegCustomer.getId()), type("veg") {}
+
+CheapCustomer::CheapCustomer(const CheapCustomer &chpCustomer):Customer(chpCustomer.getName(),chpCustomer.getId()), type("chp"), canOrder(chpCustomer.canOrder) {}
+
+SpicyCustomer::SpicyCustomer(const SpicyCustomer &spcCustomer):Customer(spcCustomer.getName(),spcCustomer.getId()),firstOrder(spcCustomer.firstOrder) ,type("spc") {}
+
+AlchoholicCustomer::AlchoholicCustomer(const AlchoholicCustomer &alcCustomer):Customer(alcCustomer.getName(),alcCustomer.getId()), orderedMostExpensive(alcCustomer.orderedMostExpensive), curAlcDrinkId(alcCustomer.curAlcDrinkId) ,type("alc") {}
+
+
 //getId and getName
 
 string Customer::getName() const {return name;}
 
 int Customer::getId() const  {return id;}
+
+//implementation of clone functions
+
+VegetarianCustomer* VegetarianCustomer::clone() const {return new VegetarianCustomer(*this);}
+
+CheapCustomer* CheapCustomer::clone() const {return new CheapCustomer(*this);}
+
+SpicyCustomer* SpicyCustomer::clone() const {return new SpicyCustomer(*this);}
+
+AlchoholicCustomer* AlchoholicCustomer::clone() const {return new AlchoholicCustomer(*this);}
 
 
 //implementations of 'toString' for each customer type

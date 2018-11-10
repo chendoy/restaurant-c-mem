@@ -8,7 +8,7 @@
 #include <vector>
 #include "Dish.h"
 #include <string>
-#include <typeinfo>
+
 using namespace std;
 extern Restaurant* backup;
 
@@ -193,8 +193,9 @@ void Close::act(Restaurant &restaurant)
 
 string Close::toString() const {
     string toReturn;
-    toReturn.append("Closed table: ");
+    toReturn.append("Closed table ");
     toReturn.append(to_string(tableId));
+    toReturn.append(": ");
     toReturn.append(actionStatusToString(getStatus()));
     toReturn.append(getErrorMsg());
     toReturn.append("\n");
@@ -243,6 +244,7 @@ void PrintMenu::act(Restaurant &restaurant)
         toPrint.append(dishtypeToString(restaurant.getMenu()[i].getType())+",");
         toPrint.append(to_string(restaurant.getMenu()[i].getPrice())+"\n");
     }
+    toPrint=toPrint.substr(0,toPrint.length()-1); //removes last /n
     cout<<toPrint<<endl;
     complete();
 }
@@ -349,8 +351,9 @@ BackupRestaurant::BackupRestaurant():BaseAction() {}
 
 void BackupRestaurant::act(Restaurant &restaurant)
 {
+    restaurant.addToActionsLog(this);
     //using copy assignment operator
-    *backup=restaurant;
+    backup=new Restaurant(restaurant);
     complete();
 }
 
@@ -370,11 +373,16 @@ BackupRestaurant* BackupRestaurant::clone()
 
 RestoreResturant::RestoreResturant():BaseAction() {}
 
-void RestoreResturant::act(Restaurant &restaurant)
-{
+void RestoreResturant::act(Restaurant &restaurant) {
+    restaurant.addToActionsLog(this);
     //using copy assignment operator
-    restaurant=*backup;
-    complete();
+    if (backup != nullptr) {
+        restaurant = *backup;
+        complete();
+    } else {
+        error("No backup available");
+        cout<<getErrorMsg()<<endl;
+    }
 }
 
 string RestoreResturant::toString() const

@@ -16,7 +16,7 @@ public:
     std::string getName() const;
     int getPrice() const;
     DishType getType() const;
-    Dish* clone();
+    Dish* clone() const;
 private:
 	const int id;
     const std::string name;

@@ -14,6 +14,7 @@ public:
 
     Table* getTable(int ind);Restaurant();
 	Restaurant(const std::string &configFilePath);
+	Restaurant(const Restaurant &rest);
 	void start();
 	int getNumOfTables() const;
 	const std::vector<BaseAction*>& getActionsLog() const; // Return a reference to the history of actions
