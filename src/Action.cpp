@@ -8,6 +8,8 @@
 #include <vector>
 #include "Dish.h"
 #include <string>
+#include <Action.h>
+
 
 using namespace std;
 extern Restaurant* backup;
@@ -40,17 +42,39 @@ void BaseAction::complete()
 void BaseAction::error(std::string errorMsg)
 {
     this->status=ERROR;
-    this->errorMsg=(errorMsg);
+    this->errorMsg=errorMsg;
 }
 
 
 string BaseAction::getErrorMsg() const {return this->errorMsg;}
 
 
-//copy ctor
-OpenTable::OpenTable(const OpenTable &other):BaseAction(), tableId(other.tableId), {}
 
+//START----------------------------COPY CONSTRUCTORS----------------------
 
+BaseAction::BaseAction(const BaseAction &other):errorMsg(other.errorMsg), status(other.status) {}
+
+OpenTable::OpenTable(const OpenTable &other):BaseAction(other),tableId(other.tableId), customers(other.customers) {}
+
+Order::Order(const Order &other):BaseAction(other),tableId(other.tableId) {}
+
+MoveCustomer::MoveCustomer(const MoveCustomer &other):BaseAction(other),srcTable(other.srcTable), dstTable(other.dstTable), id(other.id) {}
+
+Close::Close(const Close &other):BaseAction(other),tableId(other.tableId) {}
+
+CloseAll::CloseAll(const CloseAll &other):BaseAction(other) {}
+
+PrintMenu::PrintMenu(const PrintMenu &other):BaseAction(other) {}
+
+PrintTableStatus::PrintTableStatus(const PrintTableStatus &other):BaseAction(other), tableId(other.tableId) {}
+
+PrintActionsLog::PrintActionsLog(const PrintActionsLog &other):BaseAction(other) {}
+
+BackupRestaurant::BackupRestaurant(const BackupRestaurant &other):BaseAction(other) {}
+
+RestoreResturant::RestoreResturant(const RestoreResturant &other):BaseAction(other) {}
+
+//END ----------------------------COPY CONSTRUCTORS----------------------
 
 OpenTable::OpenTable (int id, vector<Customer *> &customersList):tableId(id), BaseAction(), customers(customersList) {}
 
@@ -229,7 +253,7 @@ void CloseAll::act(Restaurant &restaurant)
     complete();
 }
 
-string CloseAll::toString() const {return stringLog;}
+string CloseAll::toString() const {return "Close all tables";}
 
 CloseAll* CloseAll::clone() {return new CloseAll(*this);}
 
@@ -400,3 +424,4 @@ string RestoreResturant::toString() const
 }
 
 RestoreResturant* RestoreResturant::clone() {return new RestoreResturant(*this);}
+

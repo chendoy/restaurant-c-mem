@@ -18,10 +18,11 @@ class Restaurant;
 class BaseAction{
 public:
     BaseAction();
+    BaseAction(const BaseAction &other);
     ActionStatus getStatus() const;
     virtual void act(Restaurant& restaurant)=0;
     virtual std::string toString() const=0;
-	virtual BaseAction* clone()=0; //SHOULD BE PUBLIC OR PROTECTED??
+	virtual BaseAction* clone()=0;
 protected:
     void complete();
     void error(std::string errorMsg);
@@ -48,7 +49,8 @@ private:
 class Order : public BaseAction {
 public:
     Order(int id);
-    void act(Restaurant &restaurant);
+	Order(const Order &other);
+	void act(Restaurant &restaurant);
     std::string toString() const;
 	Order* clone();
 private:
@@ -59,7 +61,8 @@ private:
 class MoveCustomer : public BaseAction {
 public:
     MoveCustomer(int src, int dst, int customerId);
-    void act(Restaurant &restaurant);
+	MoveCustomer(const MoveCustomer &other);
+	void act(Restaurant &restaurant);
     std::string toString() const;
 	MoveCustomer* clone();
 private:
@@ -73,29 +76,30 @@ private:
 class Close : public BaseAction {
 public:
 	Close(int id);
+	Close(const Close &other);
 	void act(Restaurant &restaurant);
 	std::string toString() const;
 	Close* clone();
 private:
 	const int tableId;
-	std::string stringLog;
 };
 
 
 class CloseAll : public BaseAction {
 public:
 	CloseAll();
+	CloseAll(const CloseAll &other);
 	void act(Restaurant &restaurant);
 	std::string toString() const;
 	CloseAll* clone();
 private:
-    std::string stringLog;
 };
 
 
 class PrintMenu : public BaseAction {
 public:
     PrintMenu();
+	PrintMenu(const PrintMenu &other);
     void act(Restaurant &restaurant);
     std::string toString() const;
 	PrintMenu* clone();
@@ -106,6 +110,7 @@ private:
 class PrintTableStatus : public BaseAction {
 public:
     PrintTableStatus(int id);
+	PrintTableStatus(const PrintTableStatus &other);
     void act(Restaurant &restaurant);
     std::string toString() const;
 	PrintTableStatus* clone();
@@ -117,6 +122,7 @@ private:
 class PrintActionsLog : public BaseAction {
 public:
     PrintActionsLog();
+	PrintActionsLog(const PrintActionsLog &other);
     void act(Restaurant &restaurant);
     std::string toString() const;
 	PrintActionsLog* clone();
@@ -127,6 +133,7 @@ private:
 class BackupRestaurant : public BaseAction {
 public:
     BackupRestaurant();
+	BackupRestaurant(const BackupRestaurant &other);
     void act(Restaurant &restaurant);
     std::string toString() const;
 	BackupRestaurant* clone();
@@ -137,6 +144,7 @@ private:
 class RestoreResturant : public BaseAction {
 public:
     RestoreResturant();
+	RestoreResturant(const RestoreResturant &other);
     void act(Restaurant &restaurant);
     std::string toString() const;
 	RestoreResturant* clone();

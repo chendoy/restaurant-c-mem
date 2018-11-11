@@ -268,36 +268,32 @@ Table* Restaurant::getTable(int ind) {
 //copy ctor
 Restaurant& Restaurant::operator=(const Restaurant &rest)
         {
+
 //check for "self assignment" and do nothing in that case
 if(this==&rest)
     return *this;
 
-//coppied restaurant is always open (no closed restaurant can perform "backup")
-this->open=true;
+tables.clear(); menu.clear(); actionsLog.clear();
+tables; menu; actionsLog;
 
-this->numOfTables=rest.numOfTables;
+open=rest.open;
 
-this->tables=rest.tables;
+numOfTables=rest.numOfTables;
 
-//this->menu=rest.menu;
+//deep copying tables
+for(int i=0;i<rest.tables.size();i++)
+    tables.push_back(rest.tables[i]->clone());
 
-//this->actionsLog=rest.actionsLog;
+//deep copying menu
+for(int i=0;i<rest.menu.size();i++)
+    menu.push_back(rest.menu[i].clone());
 
-/*
-//assigning tables
-for(int i=0;i<tables.size();i++)
-    copy.tables.push_back(rest.tables[i]->clone());
+//deep copying actionLog
+for(int i=0;i<rest.actionsLog.size();i++)
+    actionsLog.push_back(rest.actionsLog[i]->clone());
 
-//assigning menu
-for(int i=0;i<menu.size();i++)
-    copy.menu.push_back(rest.menu[i]);
-
-//assigning actionsLog
-for(int i=0;i<actionsLog.size();i++)
-    copy.actionsLog.push_back(rest.actionsLog[i]->clone());
-
- */
 return *this;
+
         }
 
 
