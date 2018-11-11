@@ -104,6 +104,7 @@ void OpenTable::act(Restaurant &restaurant)
 
 }
 
+
 string OpenTable::toString() const
 {
     string toReturn="open ";
@@ -126,6 +127,7 @@ string OpenTable::toString() const
 }
 
 OpenTable* OpenTable::clone() {return new OpenTable(*this);}
+
 
 //Order START
 Order::Order(int id):BaseAction(),tableId(id){}
