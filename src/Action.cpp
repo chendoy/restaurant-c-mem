@@ -146,6 +146,7 @@ void Order::act(Restaurant &restaurant) {
     }
     complete();
 }
+
 std::string Order::toString() const {
     string toReturn;
     toReturn.append("order ");
