@@ -15,9 +15,8 @@ extern Restaurant* backup;
 Restaurant::Restaurant():open(false), tables(),menu(),actionsLog() {}
 
 //copy ctor
-Restaurant::Restaurant(const Restaurant &rest)
+Restaurant::Restaurant(const Restaurant &rest):tables(), menu()
 {
-
     numOfTables=rest.numOfTables;
     open=rest.open;
 
@@ -25,8 +24,13 @@ Restaurant::Restaurant(const Restaurant &rest)
     for(int i=0;i<rest.numOfTables;i++)
         tables.push_back(rest.tables[i]->clone());
 
-    //menu=rest.menu;
-    //actionsLog=rest.actionsLog;
+    //deep copying dishes
+    for(int i=0;i<rest.menu.size();i++)
+        menu.push_back(rest.menu[i].clone());
+
+    //deep copying actions log
+    for(int i=0;i<rest.actionsLog.size();i++)
+        actionsLog.push_back(rest.actionsLog[i]->clone());
 }
 
 //converts a string to fruit Enum defined in the header file

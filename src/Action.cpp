@@ -309,7 +309,8 @@ string PrintTableStatus::toString() const
 {
     string toReturn;
     toReturn.append("status ");
-    toReturn.append(to_string(tableId)+":");
+    toReturn.append(to_string(tableId));
+    toReturn.append(": ");
     toReturn.append(actionStatusToString(getStatus()));
     toReturn.append(getErrorMsg());
     toReturn.append("\n");
