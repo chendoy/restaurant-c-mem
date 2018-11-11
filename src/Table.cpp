@@ -28,8 +28,6 @@ Table::Table(const Table &table)
 
      for(int i=0;i<orderList.size();i++) {
          orderList.push_back(table.orderList[i]);
-
-
      }
 }
 
@@ -101,7 +99,18 @@ vector<OrderPair>Table::getCustomerOrders(int customerId) {
 
 void Table:: openTable() {this->open= true;}
 
-void Table::closeTable() {this->open=false;}
+void Table::closeTable() {
+    this->open=false;
+
+    //we have to clean now the customers vector (and delete its customers)
+    for(int i=0;i<customersList.size();i=i+1) {
+        delete customersList[i];
+        customersList[i]= nullptr;
+    }
+    customersList.clear();
+    //cleaning the orderList
+    orderList.clear();
+}
 
 bool Table::isOpen() { return open;}
 
@@ -175,16 +184,8 @@ Table* Table::clone() {return new Table(*this);}
 
 //implementing the class Destructor
 Table::~Table () {
-    //if the table doesn't exist any more we can delete the the object of Customers that allocated for this table at the 'customerList'
-    //note that if this table closed because the customers moved to another table we will *copy* the list of customers and allocate them
-    // *new* space in the memory. thus, the deletion of the customer list is safe
-    //    for(int i=0;i<customersList.size();i=i+1)
-//    {
-//        delete customersList[i];
-//        customersList[i]= nullptr;
-//    }
-//    //clean the list
-//    customersList.clear();
+    //close the current table (if not already closed)
+    closeTable();
 }
 
 

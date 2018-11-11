@@ -88,6 +88,11 @@ void OpenTable::act(Restaurant &restaurant)
         cout<<getErrorMsg()<<endl;
         return ;}
 
+    //check if the user try to assign more customer to table than the table capacity
+    if(customers.size()>restaurant.getTable(tableId)->getCapacity()) {
+        error("you cant assign more customer to a table then the table capacity");
+        cout<<getErrorMsg()<<endl;
+        return;}
 
         //mark the table as open
         restaurant.getTable(tableId)->openTable();

@@ -306,6 +306,15 @@ for(int i=0;i<tables.size();i=i+1)
 }
 //clear the tables vector
 tables.clear();
+
+//delete pointer of BaseActions
+    for(int i=0;i<actionsLog.size();i=i+1)
+    {
+        delete(actionsLog[i]);
+        actionsLog[i]= nullptr;
+    }
+//clear the actionsLog vector
+    actionsLog.clear();
 }
 
 const vector<BaseAction*>& Restaurant::getActionsLog() const {return actionsLog;}
