@@ -5,6 +5,8 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
+#include <Customer.h>
+
 
 using namespace std;
 
@@ -17,7 +19,9 @@ CheapCustomer::CheapCustomer(string name, int id): Customer(name,id),canOrder(tr
 SpicyCustomer::SpicyCustomer(string name, int id): Customer(name,id),firstOrder(true), type("spc") {}
 AlchoholicCustomer::AlchoholicCustomer(string name, int id): Customer(name,id),orderedMostExpensive(false),curAlcDrinkId(-1), type("alc") {}
 
-//copy ctors
+//START--------------------COPY CONSTRUCTORS-------------------
+
+Customer::Customer(const Customer &otherCustomer):name(otherCustomer.getName()), id(otherCustomer.getId()) {}
 
 VegetarianCustomer::VegetarianCustomer(const VegetarianCustomer &vegCustomer):Customer(vegCustomer.getName(),vegCustomer.getId()), type("veg") {}
 
@@ -27,6 +31,7 @@ SpicyCustomer::SpicyCustomer(const SpicyCustomer &spcCustomer):Customer(spcCusto
 
 AlchoholicCustomer::AlchoholicCustomer(const AlchoholicCustomer &alcCustomer):Customer(alcCustomer.getName(),alcCustomer.getId()), orderedMostExpensive(alcCustomer.orderedMostExpensive), curAlcDrinkId(alcCustomer.curAlcDrinkId) ,type("alc") {}
 
+//END--------------------COPY CONSTRUCTORS-------------------
 
 //getId and getName
 
@@ -34,7 +39,7 @@ string Customer::getName() const {return name;}
 
 int Customer::getId() const  {return id;}
 
-//implementation of clone functions
+//START-----------------------CLONE-----------------------
 
 VegetarianCustomer* VegetarianCustomer::clone() const {return new VegetarianCustomer(*this);}
 
@@ -44,8 +49,10 @@ SpicyCustomer* SpicyCustomer::clone() const {return new SpicyCustomer(*this);}
 
 AlchoholicCustomer* AlchoholicCustomer::clone() const {return new AlchoholicCustomer(*this);}
 
+//END-----------------------CLONE-----------------------
 
-//implementations of 'toString' for each customer type
+
+//START---------------------TO_STRING-------------------
 
 string VegetarianCustomer::toString() const{
     return to_string(getId())+" "+getName();
@@ -58,6 +65,9 @@ string CheapCustomer::toString() const{
 string SpicyCustomer::toString() const{
     return to_string(getId())+" "+getName();
 }
+
+//END---------------------TOSTRING-------------------
+
 
 string AlchoholicCustomer::toString() const{
     return to_string(getId())+" "+getName();

@@ -311,6 +311,7 @@ void PrintTableStatus::act(Restaurant &restaurant)
     if(!restaurant.getTable(tableId)->isOpen()) {
         toPrint.append(" status: closed");
         cout << toPrint << endl;
+        complete();
         return;
     }
 
@@ -387,9 +388,9 @@ BackupRestaurant::BackupRestaurant():BaseAction() {}
 
 void BackupRestaurant::act(Restaurant &restaurant)
 {
-    restaurant.addToActionsLog(this);
     //using copy assignment operator
     backup=new Restaurant(restaurant);
+    restaurant.addToActionsLog(this);
     complete();
 }
 
@@ -410,10 +411,12 @@ BackupRestaurant* BackupRestaurant::clone()
 RestoreResturant::RestoreResturant():BaseAction() {}
 
 void RestoreResturant::act(Restaurant &restaurant) {
-    restaurant.addToActionsLog(this);
+
+
     //using copy assignment operator
     if (backup != nullptr) {
         restaurant = *backup;
+        restaurant.addToActionsLog(this);
         complete();
     } else {
         error("No backup available");

@@ -8,6 +8,7 @@
 class Customer{
 public:
     Customer(std::string c_name, int c_id);
+    Customer(const Customer &otherCustomer);
     virtual std::vector<int> order(const std::vector<Dish> &menu)=0;
     virtual std::string toString() const = 0;
     std::string getName() const;
@@ -69,6 +70,7 @@ class AlchoholicCustomer : public Customer { public:
     std::string toString() const;
     std::string getType() const;
     virtual AlchoholicCustomer* clone() const;
+
 private:
 
 	void setNextExpensiveDrinkId(const std::vector<Dish> &menu);

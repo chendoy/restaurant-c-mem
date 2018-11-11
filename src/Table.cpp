@@ -26,8 +26,8 @@ Table::Table(const Table &table)
     for(int i=0;i<table.customersList.size();i++)
         customersList.push_back(table.customersList[i]->clone());
 
-     for(int i=0;i<orderList.size();i++) {
-         orderList.push_back(table.orderList[i]);
+     for(int i=0;i<table.orderList.size();i++) {
+         orderList.push_back(OrderPair(table.orderList[i].first,table.orderList[i].second.clone()));
      }
 }
 

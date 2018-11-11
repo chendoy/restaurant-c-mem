@@ -34,19 +34,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /users/studs/bsc/2019/liavba/clion-2018.2.5/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /users/studs/bsc/2019/chendoy/clion-2018.2.5/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /users/studs/bsc/2019/liavba/clion-2018.2.5/bin/cmake/linux/bin/cmake -E remove -f
+RM = /users/studs/bsc/2019/chendoy/clion-2018.2.5/bin/cmake/linux/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1
+CMAKE_SOURCE_DIR = /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/cmake-build-debug
+CMAKE_BINARY_DIR = /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/SPL_ass1.dir/depend.make
@@ -59,81 +59,81 @@ include CMakeFiles/SPL_ass1.dir/flags.make
 
 CMakeFiles/SPL_ass1.dir/src/Main.cpp.o: CMakeFiles/SPL_ass1.dir/flags.make
 CMakeFiles/SPL_ass1.dir/src/Main.cpp.o: ../src/Main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/SPL_ass1.dir/src/Main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SPL_ass1.dir/src/Main.cpp.o -c /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/SPL_ass1.dir/src/Main.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SPL_ass1.dir/src/Main.cpp.o -c /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Main.cpp
 
 CMakeFiles/SPL_ass1.dir/src/Main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SPL_ass1.dir/src/Main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Main.cpp > CMakeFiles/SPL_ass1.dir/src/Main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Main.cpp > CMakeFiles/SPL_ass1.dir/src/Main.cpp.i
 
 CMakeFiles/SPL_ass1.dir/src/Main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SPL_ass1.dir/src/Main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Main.cpp -o CMakeFiles/SPL_ass1.dir/src/Main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Main.cpp -o CMakeFiles/SPL_ass1.dir/src/Main.cpp.s
 
 CMakeFiles/SPL_ass1.dir/src/Restaurant.cpp.o: CMakeFiles/SPL_ass1.dir/flags.make
 CMakeFiles/SPL_ass1.dir/src/Restaurant.cpp.o: ../src/Restaurant.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/SPL_ass1.dir/src/Restaurant.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SPL_ass1.dir/src/Restaurant.cpp.o -c /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Restaurant.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/SPL_ass1.dir/src/Restaurant.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SPL_ass1.dir/src/Restaurant.cpp.o -c /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Restaurant.cpp
 
 CMakeFiles/SPL_ass1.dir/src/Restaurant.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SPL_ass1.dir/src/Restaurant.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Restaurant.cpp > CMakeFiles/SPL_ass1.dir/src/Restaurant.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Restaurant.cpp > CMakeFiles/SPL_ass1.dir/src/Restaurant.cpp.i
 
 CMakeFiles/SPL_ass1.dir/src/Restaurant.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SPL_ass1.dir/src/Restaurant.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Restaurant.cpp -o CMakeFiles/SPL_ass1.dir/src/Restaurant.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Restaurant.cpp -o CMakeFiles/SPL_ass1.dir/src/Restaurant.cpp.s
 
 CMakeFiles/SPL_ass1.dir/src/Table.cpp.o: CMakeFiles/SPL_ass1.dir/flags.make
 CMakeFiles/SPL_ass1.dir/src/Table.cpp.o: ../src/Table.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/SPL_ass1.dir/src/Table.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SPL_ass1.dir/src/Table.cpp.o -c /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Table.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/SPL_ass1.dir/src/Table.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SPL_ass1.dir/src/Table.cpp.o -c /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Table.cpp
 
 CMakeFiles/SPL_ass1.dir/src/Table.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SPL_ass1.dir/src/Table.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Table.cpp > CMakeFiles/SPL_ass1.dir/src/Table.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Table.cpp > CMakeFiles/SPL_ass1.dir/src/Table.cpp.i
 
 CMakeFiles/SPL_ass1.dir/src/Table.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SPL_ass1.dir/src/Table.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Table.cpp -o CMakeFiles/SPL_ass1.dir/src/Table.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Table.cpp -o CMakeFiles/SPL_ass1.dir/src/Table.cpp.s
 
 CMakeFiles/SPL_ass1.dir/src/Dish.cpp.o: CMakeFiles/SPL_ass1.dir/flags.make
 CMakeFiles/SPL_ass1.dir/src/Dish.cpp.o: ../src/Dish.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/SPL_ass1.dir/src/Dish.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SPL_ass1.dir/src/Dish.cpp.o -c /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Dish.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/SPL_ass1.dir/src/Dish.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SPL_ass1.dir/src/Dish.cpp.o -c /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Dish.cpp
 
 CMakeFiles/SPL_ass1.dir/src/Dish.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SPL_ass1.dir/src/Dish.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Dish.cpp > CMakeFiles/SPL_ass1.dir/src/Dish.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Dish.cpp > CMakeFiles/SPL_ass1.dir/src/Dish.cpp.i
 
 CMakeFiles/SPL_ass1.dir/src/Dish.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SPL_ass1.dir/src/Dish.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Dish.cpp -o CMakeFiles/SPL_ass1.dir/src/Dish.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Dish.cpp -o CMakeFiles/SPL_ass1.dir/src/Dish.cpp.s
 
 CMakeFiles/SPL_ass1.dir/src/Customer.cpp.o: CMakeFiles/SPL_ass1.dir/flags.make
 CMakeFiles/SPL_ass1.dir/src/Customer.cpp.o: ../src/Customer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/SPL_ass1.dir/src/Customer.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SPL_ass1.dir/src/Customer.cpp.o -c /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Customer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/SPL_ass1.dir/src/Customer.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SPL_ass1.dir/src/Customer.cpp.o -c /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Customer.cpp
 
 CMakeFiles/SPL_ass1.dir/src/Customer.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SPL_ass1.dir/src/Customer.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Customer.cpp > CMakeFiles/SPL_ass1.dir/src/Customer.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Customer.cpp > CMakeFiles/SPL_ass1.dir/src/Customer.cpp.i
 
 CMakeFiles/SPL_ass1.dir/src/Customer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SPL_ass1.dir/src/Customer.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Customer.cpp -o CMakeFiles/SPL_ass1.dir/src/Customer.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Customer.cpp -o CMakeFiles/SPL_ass1.dir/src/Customer.cpp.s
 
 CMakeFiles/SPL_ass1.dir/src/Action.cpp.o: CMakeFiles/SPL_ass1.dir/flags.make
 CMakeFiles/SPL_ass1.dir/src/Action.cpp.o: ../src/Action.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/SPL_ass1.dir/src/Action.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SPL_ass1.dir/src/Action.cpp.o -c /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Action.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/SPL_ass1.dir/src/Action.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SPL_ass1.dir/src/Action.cpp.o -c /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Action.cpp
 
 CMakeFiles/SPL_ass1.dir/src/Action.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SPL_ass1.dir/src/Action.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Action.cpp > CMakeFiles/SPL_ass1.dir/src/Action.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Action.cpp > CMakeFiles/SPL_ass1.dir/src/Action.cpp.i
 
 CMakeFiles/SPL_ass1.dir/src/Action.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SPL_ass1.dir/src/Action.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Action.cpp -o CMakeFiles/SPL_ass1.dir/src/Action.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Action.cpp -o CMakeFiles/SPL_ass1.dir/src/Action.cpp.s
 
 # Object files for target SPL_ass1
 SPL_ass1_OBJECTS = \
@@ -155,7 +155,7 @@ SPL_ass1: CMakeFiles/SPL_ass1.dir/src/Customer.cpp.o
 SPL_ass1: CMakeFiles/SPL_ass1.dir/src/Action.cpp.o
 SPL_ass1: CMakeFiles/SPL_ass1.dir/build.make
 SPL_ass1: CMakeFiles/SPL_ass1.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable SPL_ass1"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable SPL_ass1"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/SPL_ass1.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -168,6 +168,6 @@ CMakeFiles/SPL_ass1.dir/clean:
 .PHONY : CMakeFiles/SPL_ass1.dir/clean
 
 CMakeFiles/SPL_ass1.dir/depend:
-	cd /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1 /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1 /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/cmake-build-debug /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/cmake-build-debug /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles/SPL_ass1.dir/DependInfo.cmake --color=$(COLOR)
+	cd /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1 /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1 /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/cmake-build-debug /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/cmake-build-debug /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles/SPL_ass1.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/SPL_ass1.dir/depend
 
