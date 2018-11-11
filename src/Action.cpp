@@ -47,6 +47,9 @@ void BaseAction::error(std::string errorMsg)
 string BaseAction::getErrorMsg() const {return this->errorMsg;}
 
 
+//copy ctor
+OpenTable::OpenTable(const OpenTable &other):BaseAction(), tableId(other.tableId), {}
+
 
 
 OpenTable::OpenTable (int id, vector<Customer *> &customersList):tableId(id), BaseAction(), customers(customersList) {}

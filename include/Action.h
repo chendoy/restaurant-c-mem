@@ -35,6 +35,7 @@ private:
 class OpenTable : public BaseAction {
 public:
     OpenTable(int id, std::vector<Customer *> &customersList);
+    OpenTable(const OpenTable &openTable);
     void act(Restaurant &restaurant);
     std::string toString() const;
 	OpenTable* clone();
