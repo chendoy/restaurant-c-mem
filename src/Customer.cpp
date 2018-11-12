@@ -168,7 +168,6 @@ Customer::~Customer() {}
 
 SpicyCustomer::~SpicyCustomer() {}
 
-
 VegetarianCustomer::~VegetarianCustomer() {}
 
 CheapCustomer::~CheapCustomer() {}

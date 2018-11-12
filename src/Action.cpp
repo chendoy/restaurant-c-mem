@@ -393,6 +393,7 @@ void CloseAll::act(Restaurant &restaurant)
         {
             Close* closeAction=new Close(i);
             closeAction->act(restaurant);
+            delete closeAction;
 
         }
 

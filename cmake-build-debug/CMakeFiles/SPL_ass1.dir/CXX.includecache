@@ -48,9 +48,9 @@ Customer.h
 Dish.h
 ../include/Dish.h
 
-/users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Restaurant.cpp
+/users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Restaurant.cpp
 Restaurant.h
-/users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Restaurant.h
+/users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Restaurant.h
 iostream
 -
 fstream
@@ -60,5 +60,5 @@ string
 vector
 -
 Dish.h
-/users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Dish.h
+/users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Dish.h
 

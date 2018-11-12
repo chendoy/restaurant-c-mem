@@ -226,7 +226,6 @@ void Restaurant::start() {
                 OpenTable* openTableAction=new OpenTable(tableId,customersList);
                 addToActionsLog(openTableAction);
                 openTableAction->act(*this);
-
                 //delete openTableAction;
             }
             else {
@@ -289,7 +288,7 @@ void Restaurant::start() {
             PrintTableStatus* printTableStatusAction=new PrintTableStatus(tableId);
             addToActionsLog(printTableStatusAction);
             printTableStatusAction->act(*this);
-
+            //delete printTableStatusAction;
             //delete printTableStatusAction;
             //PrintTableStatus printTableStatusAction(tableId);
             //printTableStatusAction.act(*this);
@@ -308,6 +307,7 @@ void Restaurant::start() {
             BackupRestaurant* backupAction=new BackupRestaurant();
             addToActionsLog(backupAction);
             backupAction->act(*this);
+            //delete backupAction; //adding this reduces the leaks from 5 to 3
 
             //delete backupAction;
             //BackupRestaurant backupAction;
@@ -317,6 +317,7 @@ void Restaurant::start() {
             RestoreResturant* restoreAction=new RestoreResturant();
             addToActionsLog(restoreAction);
             restoreAction->act(*this);
+            //delete restoreAction; //adding this reduces the leaks from 5 to 3
             //delete restoreAction;
             //RestoreResturant restoreAction;
             //restoreAction.act(*this);
@@ -377,6 +378,7 @@ for(int i=0;i<rest.tables.size();i++)
 for(int i=0;i<rest.menu.size();i++)
     menu.push_back(rest.menu[i].clone());
 
+
 //deep copying actionLog
 for(int i=0;i<rest.actionsLog.size();i++)
     actionsLog.push_back(rest.actionsLog[i]->clone());
@@ -424,28 +426,17 @@ Restaurant &Restaurant::operator=(Restaurant&& otherRest) {
 Restaurant::~Restaurant () {
 //delete pointers to tables
     for (int i = 0; i < tables.size(); i = i + 1) {
-        if (tables[i] != nullptr) {
             delete (tables[i]);
             tables[i] = nullptr;
-        }
     }
-//clear the tables vector
-    tables.clear();
 
 //delete pointer of BaseActions
     for (int i = 0; i < actionsLog.size(); i = i + 1) {
-        if (tables[i] != nullptr) {
-
-            if (actionsLog[i] != nullptr) {
-                delete (actionsLog[i]);
-                actionsLog[i] = nullptr;
-
-            }
-        }
-//clear the actionsLog vector
-        actionsLog.clear();
+        delete (actionsLog[i]);
+        actionsLog[i] = nullptr;
     }
 }
+
 
 const vector<BaseAction*>& Restaurant::getActionsLog() const {return actionsLog;}
 
