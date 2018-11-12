@@ -192,10 +192,10 @@ OpenTable::OpenTable (int id, vector<Customer *> &customersList):tableId(id), Ba
 
 void OpenTable::act(Restaurant &restaurant)
 {
-    restaurant.addToActionsLog(this);
+    //restaurant.addToActionsLog(this);
 
     //table does not exist                   //table is already open
-    if(restaurant.getNumOfTables()<=tableId || restaurant.getTable(tableId)->isOpen()==true) {
+    if(restaurant.getNumOfTables()<=tableId || restaurant.getTable(tableId)->isOpen()) {
         error("Table does not exist or is already open");
         cout<<getErrorMsg()<<endl;
         return ;}
@@ -254,7 +254,7 @@ Order::Order(int id):BaseAction(),tableId(id){}
 void Order::act(Restaurant &restaurant) {
 
 
-    restaurant.addToActionsLog(this);
+    //restaurant.addToActionsLog(this);
 
     Table* table=restaurant.getTable(tableId);
     if(table== nullptr || !table->isOpen())
@@ -289,7 +289,7 @@ MoveCustomer::MoveCustomer(int src, int dst, int customerId):BaseAction(),srcTab
 
 void MoveCustomer::act(Restaurant &restaurant) {
 
-    restaurant.addToActionsLog(this);
+    //restaurant.addToActionsLog(this);
 
     Table *tblSrc=restaurant.getTable(srcTable);
     Table *tblDest=restaurant.getTable(dstTable);
@@ -343,7 +343,7 @@ Close::Close(int id): tableId(id){}
 void Close::act(Restaurant &restaurant)
 {
 
-    restaurant.addToActionsLog(this);
+    //restaurant.addToActionsLog(this);
 
 
     //table does not exist                             //table is not open
@@ -386,9 +386,9 @@ CloseAll::CloseAll():BaseAction() {}
 void CloseAll::act(Restaurant &restaurant)
 {
 
-    restaurant.addToActionsLog(this);
+    //restaurant.addToActionsLog(this);
 
-    for(int i=0;i<restaurant.getNumOfTables();i++) {
+    for(int i=0;i<restaurant.getAllTables().size();i++) {
         if(restaurant.getTable(i)->isOpen())
         {
             Close* closeAction=new Close(i);
@@ -410,7 +410,7 @@ PrintMenu::PrintMenu():BaseAction() {}
 void PrintMenu::act(Restaurant &restaurant)
 {
 
-    restaurant.addToActionsLog(this);
+    //restaurant.addToActionsLog(this);
 
     string toPrint="";
     for(int i=0;i<restaurant.getMenu().size();i++)
@@ -442,7 +442,7 @@ PrintTableStatus::PrintTableStatus(int id):BaseAction(), tableId(id) {}
 void PrintTableStatus::act(Restaurant &restaurant)
 {
 
-    restaurant.addToActionsLog(this);
+    //restaurant.addToActionsLog(this);
     string toPrint;
 
     //appending table status
@@ -512,7 +512,7 @@ void PrintActionsLog::act(Restaurant &restaurant)
         }
     }
 
-    restaurant.addToActionsLog(this);
+    //restaurant.addToActionsLog(this);
     complete();
 }
 
@@ -534,7 +534,7 @@ void BackupRestaurant::act(Restaurant &restaurant)
 {
     //using copy assignment operator
     backup=new Restaurant(restaurant);
-    restaurant.addToActionsLog(this);
+    //restaurant.addToActionsLog(this);
     complete();
 }
 
@@ -560,7 +560,7 @@ void RestoreResturant::act(Restaurant &restaurant) {
     //using copy assignment operator
     if (backup != nullptr) {
         restaurant = *backup;
-        restaurant.addToActionsLog(this);
+        //restaurant.addToActionsLog(this);
         complete();
     } else {
         error("No backup available");

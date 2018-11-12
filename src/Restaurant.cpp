@@ -222,54 +222,104 @@ void Restaurant::start() {
                 customersList.push_back(customer);
                 curCustomerId=curCustomerId+1;
             }
+            if(getTable(tableId)->isOpen()==false) {
+                OpenTable* openTableAction=new OpenTable(tableId,customersList);
+                addToActionsLog(openTableAction);
+                openTableAction->act(*this);
 
-            ///!!!delete this pointer!!!
-            OpenTable* openTableAction=new OpenTable(tableId,customersList);
-            openTableAction->act(*this);
+                //delete openTableAction;
+            }
+            else {
+                for (int i = 0; i < customersList.size(); i = i + 1) {
+                    delete customersList[i];
+                    customersList[i] = nullptr;
+                }
+            }
+            }
 
-
-        }
         else if(nextAction=="order"){
             int table_num=stoi(splitBySpace[1]);
             Order* orderAction=new Order(table_num);
+            addToActionsLog(orderAction);
             orderAction->act(*this);
 
+
+            //delete orderAction;
+            //Order orderAction(table_num);
+            //orderAction.act(*this);
         }
         else if(nextAction=="move") {
             int src=stoi(splitBySpace[1]);
             int dst=stoi(splitBySpace[2]);
             int customerId=stoi(splitBySpace[3]);
             MoveCustomer* moveAction=new MoveCustomer(src,dst,customerId);
+            addToActionsLog(moveAction);
             moveAction->act(*this);
+
+            //delete moveAction;
+            //MoveCustomer moveAction(src,dst,curCustomerId);
+            //moveAction.act(*this);
+
         }
         else if (nextAction=="close") {
             int table_num=stol(splitBySpace[1]);
             Close* closeAction=new Close(table_num);
+            addToActionsLog(closeAction);
             closeAction->act(*this);
+
+            //delete closeAction;
+            //Close closeAction(table_num);
+            //closeAction.act(*this);
+
         }
 
         else if(nextAction=="menu") {
             PrintMenu* printMenuAction=new PrintMenu();
+            addToActionsLog(printMenuAction);
             printMenuAction->act(*this);
+
+            //delete printMenuAction;
+            //PrintMenu printMenuAction;
+            //printMenuAction.act(*this);
         }
 
         else if(nextAction=="status")
         {
             int tableId=stol(splitBySpace[1]);
             PrintTableStatus* printTableStatusAction=new PrintTableStatus(tableId);
+            addToActionsLog(printTableStatusAction);
             printTableStatusAction->act(*this);
+
+            //delete printTableStatusAction;
+            //PrintTableStatus printTableStatusAction(tableId);
+            //printTableStatusAction.act(*this);
+
         }
         else if(nextAction=="log"){
             PrintActionsLog* printActionsLogAction=new(PrintActionsLog);
+            addToActionsLog(printActionsLogAction);
             printActionsLogAction->act(*this);
+
+            //delete printActionsLogAction;
+            //PrintActionsLog printActionsLogAction;
+            //printActionsLogAction.act(*this);
         }
         else if(nextAction=="backup"){
             BackupRestaurant* backupAction=new BackupRestaurant();
+            addToActionsLog(backupAction);
             backupAction->act(*this);
+
+            //delete backupAction;
+            //BackupRestaurant backupAction;
+            //backupAction.act(*this);
         }
         else if(nextAction=="restore"){
             RestoreResturant* restoreAction=new RestoreResturant();
+            addToActionsLog(restoreAction);
             restoreAction->act(*this);
+            //delete restoreAction;
+            //RestoreResturant restoreAction;
+            //restoreAction.act(*this);
         }
 
         getline(cin,nextLine);
@@ -277,8 +327,11 @@ void Restaurant::start() {
         splitBySpace=splitStringBytoken(nextLine," ");
         nextAction=splitBySpace[0];
     }
-    CloseAll* closeAllAction=new CloseAll();
-    closeAllAction->act(*this);
+    //CloseAll* closeAllAction=new CloseAll();
+    //closeAllAction->act(*this);
+    //delete closeAllAction;
+    CloseAll closeAllAction;
+    closeAllAction.act(*this);
 
     //'closeall' action was chosen
 
@@ -370,27 +423,28 @@ Restaurant &Restaurant::operator=(Restaurant&& otherRest) {
 
 Restaurant::~Restaurant () {
 //delete pointers to tables
-for(int i=0;i<tables.size();i=i+1)
-{
-    if(tables[i]!= nullptr) {
-        delete(tables[i]);
-        tables[i]= nullptr;
-    }
-
-}
-//clear the tables vector
-tables.clear();
-
-//delete pointer of BaseActions
-    for(int i=0;i<actionsLog.size();i=i+1)
-    {
-        if(actionsLog[i]!= nullptr) {
-            delete(actionsLog[i]);
-            actionsLog[i]= nullptr;
+    for (int i = 0; i < tables.size(); i = i + 1) {
+        if (tables[i] != nullptr) {
+            delete (tables[i]);
+            tables[i] = nullptr;
         }
     }
+//clear the tables vector
+    tables.clear();
+
+//delete pointer of BaseActions
+    for (int i = 0; i < actionsLog.size(); i = i + 1) {
+        if (tables[i] != nullptr) {
+
+            if (actionsLog[i] != nullptr) {
+                delete (actionsLog[i]);
+                actionsLog[i] = nullptr;
+
+            }
+        }
 //clear the actionsLog vector
-    actionsLog.clear();
+        actionsLog.clear();
+    }
 }
 
 const vector<BaseAction*>& Restaurant::getActionsLog() const {return actionsLog;}
