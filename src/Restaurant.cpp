@@ -15,10 +15,9 @@ extern Restaurant* backup;
 Restaurant::Restaurant():open(false), tables(),menu(),actionsLog() {}
 
 //copy ctor
-Restaurant::Restaurant(const Restaurant &rest):tables(), menu()
+Restaurant::Restaurant(const Restaurant &rest):open(rest.isOpen())
 {
     numOfTables=rest.numOfTables;
-    open=rest.open;
 
     //deep copying tables
     for(int i=0;i<rest.numOfTables;i++)
@@ -31,6 +30,43 @@ Restaurant::Restaurant(const Restaurant &rest):tables(), menu()
     //deep copying actions log
     for(int i=0;i<rest.actionsLog.size();i++)
         actionsLog.push_back(rest.actionsLog[i]->clone());
+}
+
+//move ctor
+Restaurant::Restaurant(Restaurant &&otherRest):open(otherRest.isOpen()),menu(otherRest.getMenu()),numOfTables(otherRest.getNumOfTables()) {
+
+    //copy vector of pointers to table
+    tables=otherRest.getAllTables();
+    //changing otherRest table's pointers to point to nullptr
+    for(int i=0;i<tables.size();i=i+1) {
+        otherRest.setTablePointer(nullptr,i);
+    }
+
+    //copy vector of pointers to BaseActions to actionsLog
+    actionsLog=otherRest.getAllBaseActions();
+    //changing otherRest actionLog's pointers to point to nullptr
+    for(int i=0;i<actionsLog.size();i=i+1) {
+        otherRest.setActionLogsPointer(nullptr,i);
+    }
+}
+
+bool Restaurant::isOpen() const {
+    return open;
+}
+vector<Dish> Restaurant::getDishes() const {
+    return menu;
+}
+vector<Table*> Restaurant::getAllTables() const {
+    return tables;
+}
+void Restaurant::setTablePointer(Table *tablePtr,int index) {
+    tables[index]=tablePtr;
+}
+vector<BaseAction*> Restaurant::getAllBaseActions() const {
+    return actionsLog;
+}
+void Restaurant::setActionLogsPointer(BaseAction *baseAction, int index) {
+    actionsLog[index]=baseAction;
 }
 
 //converts a string to fruit Enum defined in the header file
@@ -58,7 +94,7 @@ std::vector<string> Restaurant::splitStringBytoken(string myStr,string delimiter
 }
 
 
-Restaurant::Restaurant(const std::string &configFilePath) {
+Restaurant::Restaurant(const std::string &configFilePath):open(true)  {
 ifstream inFile (configFilePath.c_str());
 
 //will hold current line in config file
@@ -186,54 +222,105 @@ void Restaurant::start() {
                 customersList.push_back(customer);
                 curCustomerId=curCustomerId+1;
             }
+            if(getTable(tableId)->isOpen()==false) {
+                OpenTable* openTableAction=new OpenTable(tableId,customersList);
+                addToActionsLog(openTableAction);
+                openTableAction->act(*this);
+                //delete openTableAction;
+            }
+            else {
+                for (int i = 0; i < customersList.size(); i = i + 1) {
+                    delete customersList[i];
+                    customersList[i] = nullptr;
+                }
+            }
+            }
 
-            ///!!!delete this pointer!!!
-            OpenTable* openTableAction=new OpenTable(tableId,customersList);
-            openTableAction->act(*this);
-
-
-        }
         else if(nextAction=="order"){
             int table_num=stoi(splitBySpace[1]);
             Order* orderAction=new Order(table_num);
+            addToActionsLog(orderAction);
             orderAction->act(*this);
 
+
+            //delete orderAction;
+            //Order orderAction(table_num);
+            //orderAction.act(*this);
         }
         else if(nextAction=="move") {
             int src=stoi(splitBySpace[1]);
             int dst=stoi(splitBySpace[2]);
             int customerId=stoi(splitBySpace[3]);
             MoveCustomer* moveAction=new MoveCustomer(src,dst,customerId);
+            addToActionsLog(moveAction);
             moveAction->act(*this);
+
+            //delete moveAction;
+            //MoveCustomer moveAction(src,dst,curCustomerId);
+            //moveAction.act(*this);
+
         }
         else if (nextAction=="close") {
             int table_num=stol(splitBySpace[1]);
             Close* closeAction=new Close(table_num);
+            addToActionsLog(closeAction);
             closeAction->act(*this);
+
+            //delete closeAction;
+            //Close closeAction(table_num);
+            //closeAction.act(*this);
+
         }
 
         else if(nextAction=="menu") {
             PrintMenu* printMenuAction=new PrintMenu();
+            addToActionsLog(printMenuAction);
             printMenuAction->act(*this);
+
+            //delete printMenuAction;
+            //PrintMenu printMenuAction;
+            //printMenuAction.act(*this);
         }
 
         else if(nextAction=="status")
         {
             int tableId=stol(splitBySpace[1]);
             PrintTableStatus* printTableStatusAction=new PrintTableStatus(tableId);
+            addToActionsLog(printTableStatusAction);
             printTableStatusAction->act(*this);
+            //delete printTableStatusAction;
+            //delete printTableStatusAction;
+            //PrintTableStatus printTableStatusAction(tableId);
+            //printTableStatusAction.act(*this);
+
         }
         else if(nextAction=="log"){
             PrintActionsLog* printActionsLogAction=new(PrintActionsLog);
+            addToActionsLog(printActionsLogAction);
             printActionsLogAction->act(*this);
+
+            //delete printActionsLogAction;
+            //PrintActionsLog printActionsLogAction;
+            //printActionsLogAction.act(*this);
         }
         else if(nextAction=="backup"){
             BackupRestaurant* backupAction=new BackupRestaurant();
+            addToActionsLog(backupAction);
             backupAction->act(*this);
+            //delete backupAction; //adding this reduces the leaks from 5 to 3
+
+            //delete backupAction;
+            //BackupRestaurant backupAction;
+            //backupAction.act(*this);
         }
         else if(nextAction=="restore"){
             RestoreResturant* restoreAction=new RestoreResturant();
+            addToActionsLog(restoreAction);
             restoreAction->act(*this);
+            //delete restoreAction; //adding this reduces the leaks from 5 to 3
+            //delete restoreAction;
+            //RestoreResturant restoreAction;
+            //restoreAction.act(*this);
         }
 
         getline(cin,nextLine);
@@ -241,8 +328,11 @@ void Restaurant::start() {
         splitBySpace=splitStringBytoken(nextLine," ");
         nextAction=splitBySpace[0];
     }
-    CloseAll* closeAllAction=new CloseAll();
-    closeAllAction->act(*this);
+    //CloseAll* closeAllAction=new CloseAll();
+    //closeAllAction->act(*this);
+    //delete closeAllAction;
+    CloseAll closeAllAction;
+    closeAllAction.act(*this);
 
     //'closeall' action was chosen
 
@@ -257,7 +347,7 @@ Table* Restaurant::getTable(int ind) {
 
     if(ind>=tables.size())//not valid index
     {
-        //return a pointer to nullptr
+        //return  a pointer to nullptr
         return nullptr;
     } else {
         return tables[ind];
@@ -265,52 +355,88 @@ Table* Restaurant::getTable(int ind) {
 
 }
 
-//copy ctor
+//assigmnet operator
 Restaurant& Restaurant::operator=(const Restaurant &rest)
         {
+
 //check for "self assignment" and do nothing in that case
 if(this==&rest)
     return *this;
 
-//coppied restaurant is always open (no closed restaurant can perform "backup")
-this->open=true;
+tables.clear(); menu.clear(); actionsLog.clear();
+tables; menu; actionsLog;
 
-this->numOfTables=rest.numOfTables;
+open=rest.open;
 
-this->tables=rest.tables;
+numOfTables=rest.numOfTables;
 
-//this->menu=rest.menu;
+//deep copying tables
+for(int i=0;i<rest.tables.size();i++)
+    tables.push_back(rest.tables[i]->clone());
 
-//this->actionsLog=rest.actionsLog;
+//deep copying menu
+for(int i=0;i<rest.menu.size();i++)
+    menu.push_back(rest.menu[i].clone());
 
-/*
-//assigning tables
-for(int i=0;i<tables.size();i++)
-    copy.tables.push_back(rest.tables[i]->clone());
 
-//assigning menu
-for(int i=0;i<menu.size();i++)
-    copy.menu.push_back(rest.menu[i]);
+//deep copying actionLog
+for(int i=0;i<rest.actionsLog.size();i++)
+    actionsLog.push_back(rest.actionsLog[i]->clone());
 
-//assigning actionsLog
-for(int i=0;i<actionsLog.size();i++)
-    copy.actionsLog.push_back(rest.actionsLog[i]->clone());
-
- */
 return *this;
+
         }
+
+//move assignment operator
+Restaurant &Restaurant::operator=(Restaurant&& otherRest) {
+
+    //need to implement this!=other ? how to do it ?
+
+    //destroy old resources
+    for(int i=0;i<tables.size();i=i+1) {
+        if(tables[i]!= nullptr)
+            delete tables[i];
+
+        tables[i]= nullptr;
+    }
+    for(int i=0;i<actionsLog.size();i=i+1) {
+        if(actionsLog[i]!= nullptr)
+            delete actionsLog[i];
+
+        actionsLog[i]= nullptr;
+    }
+    menu.clear();
+    //copy other's data fields
+    tables=otherRest.getAllTables();
+    actionsLog=otherRest.getAllBaseActions();
+    menu=otherRest.getDishes();
+    numOfTables=otherRest.getNumOfTables();
+    //Detache resources from other
+    for(int i=0;i<otherRest.getNumOfTables();i=i+1) {
+        otherRest.setTablePointer(nullptr,i);
+    }
+    for(int i=0;i<otherRest.getAllBaseActions().size();i=i+1) {
+        otherRest.setActionLogsPointer(nullptr,i);
+    }
+
+    return *this;
+}
 
 
 Restaurant::~Restaurant () {
 //delete pointers to tables
-for(int i=0;i<tables.size();i=i+1)
-{
-    delete(tables[i]);
-    tables[i]= nullptr;
+    for (int i = 0; i < tables.size(); i = i + 1) {
+            delete (tables[i]);
+            tables[i] = nullptr;
+    }
+
+//delete pointer of BaseActions
+    for (int i = 0; i < actionsLog.size(); i = i + 1) {
+        delete (actionsLog[i]);
+        actionsLog[i] = nullptr;
+    }
 }
-//clear the tables vector
-tables.clear();
-}
+
 
 const vector<BaseAction*>& Restaurant::getActionsLog() const {return actionsLog;}
 
