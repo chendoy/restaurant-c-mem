@@ -49,6 +49,32 @@ void BaseAction::error(std::string errorMsg)
 string BaseAction::getErrorMsg() const {return this->errorMsg;}
 
 
+//START---------------------------DESTRUCTORS-----------------------------
+
+BaseAction::~BaseAction() {}
+
+OpenTable::~OpenTable() {}
+
+Order::~Order() {}
+
+MoveCustomer::~MoveCustomer() {}
+
+Close::~Close() {}
+
+CloseAll::~CloseAll() {}
+
+PrintMenu::~PrintMenu() {}
+
+PrintTableStatus::~PrintTableStatus() {}
+
+PrintActionsLog::~PrintActionsLog() {}
+
+BackupRestaurant::~BackupRestaurant() {}
+
+RestoreResturant::~RestoreResturant() {}
+
+//END-----------------------------DESTRUCTORS-----------------------------
+
 
 //START----------------------------COPY CONSTRUCTORS----------------------
 
@@ -75,6 +101,92 @@ BackupRestaurant::BackupRestaurant(const BackupRestaurant &other):BaseAction(oth
 RestoreResturant::RestoreResturant(const RestoreResturant &other):BaseAction(other) {}
 
 //END ----------------------------COPY CONSTRUCTORS----------------------
+
+//START---------------------------MOVE CONSTRUCTORS-----------------------------
+
+BaseAction::BaseAction(BaseAction &&baseAction): errorMsg(baseAction.getErrorMsg()),status(baseAction.getStatus()) {}
+
+OpenTable::OpenTable(OpenTable &&openTable):BaseAction(openTable),tableId(openTable.getTableId()),   customers(openTable.getCustomers()) {}
+
+Order::Order(Order &&order):BaseAction(order), tableId(order.getTableId()) {}
+
+MoveCustomer::MoveCustomer(MoveCustomer &&moveCustomer):BaseAction(moveCustomer),srcTable(moveCustomer.getSrcTable()), dstTable(moveCustomer.getDstTable()), id(moveCustomer.getId())  {}
+
+Close::Close(Close &&close):BaseAction(close), tableId(close.getTableId()) {}
+
+CloseAll::CloseAll(CloseAll &&closeAll):BaseAction(closeAll) {}
+
+PrintMenu::PrintMenu(PrintMenu &&printMenu):BaseAction(printMenu) {}
+
+PrintTableStatus::PrintTableStatus(PrintTableStatus &&printTableStatus):BaseAction(printTableStatus), tableId(printTableStatus.getTableId()) {}
+
+PrintActionsLog::PrintActionsLog(PrintActionsLog &&printActionsLog):BaseAction(printActionsLog) {}
+
+BackupRestaurant::BackupRestaurant(BackupRestaurant &&backupRestaurant):BaseAction(backupRestaurant) {}
+
+RestoreResturant::RestoreResturant(RestoreResturant &&restoreResturant):BaseAction(restoreResturant) {}
+
+//END-----------------------------MOVE CONSTRUCTORS-----------------------------
+
+//START-----------------------------MOVE ASSIGNMENT OPERATORS-----------------------------
+
+BaseAction &BaseAction::operator=(BaseAction &&baseAction)
+{
+    errorMsg=baseAction.getErrorMsg();
+    status=baseAction.getStatus();
+}
+
+
+//END-------------------------------MOVE ASSIGNMENT OPERATORS-----------------------------
+
+//START----------------------------COPY ASSIGNMENT OPERATORS----------------------
+
+BaseAction &BaseAction::operator=(const BaseAction &baseAction) {
+
+    //check for "self assignment" and do nothing in that case
+    if(this==&baseAction)
+        return *this;
+
+    errorMsg.clear(); //clears whatever errorMsg *this holds
+    errorMsg=baseAction.getErrorMsg();
+    status=baseAction.getStatus();
+
+    return *this;
+}
+
+
+CloseAll &CloseAll::operator=(const CloseAll &closeAll)
+{
+    BaseAction::operator=(closeAll);
+    return *this;
+}
+
+PrintMenu &PrintMenu::operator=(const PrintMenu &printMenu)
+{
+    BaseAction::operator=(printMenu);
+    return *this;
+}
+
+PrintActionsLog &PrintActionsLog::operator=(const PrintActionsLog &printActionsLog)
+{
+    BaseAction::operator=(printActionsLog);
+    return *this;
+}
+
+BackupRestaurant &BackupRestaurant::operator=(const BackupRestaurant &backupRestaurant)
+{
+    BaseAction::operator=(backupRestaurant);
+    return *this;
+}
+
+RestoreResturant &RestoreResturant::operator=(const RestoreResturant &restoreResturant)
+{
+    BaseAction::operator=(restoreResturant);
+    return *this;
+}
+
+//END------------------------------COPY ASSIGNMENT OPERATORS----------------------
+
 
 OpenTable::OpenTable (int id, vector<Customer *> &customersList):tableId(id), BaseAction(), customers(customersList) {}
 
@@ -118,7 +230,6 @@ string OpenTable::toString() const
         toReturn.append(customers[i]->getType());
         toReturn.append(": ");
     }
-        //toReturn=toReturn.substr(0,toReturn.length()-1);
 
         toReturn.append(actionStatusToString(getStatus()));
         toReturn.append(getErrorMsg());
@@ -127,6 +238,14 @@ string OpenTable::toString() const
 }
 
 OpenTable* OpenTable::clone() {return new OpenTable(*this);}
+
+int OpenTable::getTableId() const {
+    return tableId;
+}
+
+std::vector<Customer *> OpenTable::getCustomers() {
+    return customers;
+}
 
 
 //Order START
@@ -158,6 +277,10 @@ std::string Order::toString() const {
 }
 
 Order* Order::clone() {return new Order(*this);}
+
+int Order::getTableId() const {
+    return tableId;
+}
 
 //Order END
 
@@ -203,6 +326,18 @@ string MoveCustomer::toString() const
 
 MoveCustomer* MoveCustomer::clone() {return new MoveCustomer(*this);}
 
+int MoveCustomer::getSrcTable() const {
+    return srcTable;
+}
+
+int MoveCustomer::getDstTable() const {
+    return dstTable;
+}
+
+int MoveCustomer::getId() const {
+    return id;
+}
+
 Close::Close(int id): tableId(id){}
 
 void Close::act(Restaurant &restaurant)
@@ -240,6 +375,10 @@ string Close::toString() const {
 
 Close* Close::clone() {return new Close(*this);}
 
+int Close::getTableId() const {
+    return tableId;
+}
+
 
 CloseAll::CloseAll():BaseAction() {}
 
@@ -254,6 +393,7 @@ void CloseAll::act(Restaurant &restaurant)
         {
             Close* closeAction=new Close(i);
             closeAction->act(restaurant);
+
         }
 
     }
@@ -354,6 +494,10 @@ string PrintTableStatus::toString() const
 }
 
 PrintTableStatus* PrintTableStatus::clone() {return new PrintTableStatus(*this);}
+
+int PrintTableStatus::getTableId() const {
+    return tableId;
+}
 
 PrintActionsLog::PrintActionsLog():BaseAction() {}
 

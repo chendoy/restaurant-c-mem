@@ -15,6 +15,7 @@ public:
     virtual std::string getType() const=0;
     int getId() const;
     virtual Customer* clone() const=0;
+    virtual ~Customer();
 private:
     const std::string name;
     const int id;
@@ -30,6 +31,7 @@ public:
     std::string toString() const;
     std::string getType() const;
     virtual VegetarianCustomer* clone() const;
+    virtual ~VegetarianCustomer();
 private:
     const std::string type;
 };
@@ -43,6 +45,8 @@ public:
     std::string toString() const;
     std::string getType() const;
     virtual CheapCustomer* clone() const;
+    virtual ~CheapCustomer();
+	bool isCanOrder() const;
 private:
 	bool canOrder;
     const std::string type;
@@ -57,6 +61,8 @@ public:
     std::string toString() const;
     std::string getType() const;
     virtual SpicyCustomer* clone() const;
+    virtual ~SpicyCustomer();
+	bool isFirstOrder() const ;
 private:
 	bool firstOrder;
     const std::string type;
@@ -70,7 +76,9 @@ class AlchoholicCustomer : public Customer { public:
     std::string toString() const;
     std::string getType() const;
     virtual AlchoholicCustomer* clone() const;
-
+    virtual ~AlchoholicCustomer();
+	bool isorderedMostExpensive() const ;
+	int getCurDrinkId()const;
 private:
 
 	void setNextExpensiveDrinkId(const std::vector<Dish> &menu);

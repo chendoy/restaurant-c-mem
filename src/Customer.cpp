@@ -25,11 +25,11 @@ Customer::Customer(const Customer &otherCustomer):name(otherCustomer.getName()),
 
 VegetarianCustomer::VegetarianCustomer(const VegetarianCustomer &vegCustomer):Customer(vegCustomer.getName(),vegCustomer.getId()), type("veg") {}
 
-CheapCustomer::CheapCustomer(const CheapCustomer &chpCustomer):Customer(chpCustomer.getName(),chpCustomer.getId()), type("chp"), canOrder(chpCustomer.canOrder) {}
+CheapCustomer::CheapCustomer(const CheapCustomer &chpCustomer):Customer(chpCustomer.getName(),chpCustomer.getId()), type("chp"), canOrder(chpCustomer.isCanOrder()) {}
 
-SpicyCustomer::SpicyCustomer(const SpicyCustomer &spcCustomer):Customer(spcCustomer.getName(),spcCustomer.getId()),firstOrder(spcCustomer.firstOrder) ,type("spc") {}
+SpicyCustomer::SpicyCustomer(const SpicyCustomer &spcCustomer):Customer(spcCustomer.getName(),spcCustomer.getId()),firstOrder(spcCustomer.isFirstOrder()) ,type("spc") {}
 
-AlchoholicCustomer::AlchoholicCustomer(const AlchoholicCustomer &alcCustomer):Customer(alcCustomer.getName(),alcCustomer.getId()), orderedMostExpensive(alcCustomer.orderedMostExpensive), curAlcDrinkId(alcCustomer.curAlcDrinkId) ,type("alc") {}
+AlchoholicCustomer::AlchoholicCustomer(const AlchoholicCustomer &alcCustomer):Customer(alcCustomer.getName(),alcCustomer.getId()), orderedMostExpensive(alcCustomer.isorderedMostExpensive()), curAlcDrinkId(alcCustomer.getCurDrinkId()) ,type("alc") {}
 
 //END--------------------COPY CONSTRUCTORS-------------------
 
@@ -51,8 +51,13 @@ AlchoholicCustomer* AlchoholicCustomer::clone() const {return new AlchoholicCust
 
 //END-----------------------CLONE-----------------------
 
+bool CheapCustomer::isCanOrder() const { return canOrder; }
+bool SpicyCustomer::isFirstOrder() const { return firstOrder;}
+bool AlchoholicCustomer::isorderedMostExpensive() const { return orderedMostExpensive;}
+int AlchoholicCustomer::getCurDrinkId() const { return curAlcDrinkId;}
 
-//START---------------------TO_STRING-------------------
+
+//START---------------------TO STRING-------------------
 
 string VegetarianCustomer::toString() const{
     return to_string(getId())+" "+getName();
@@ -66,7 +71,7 @@ string SpicyCustomer::toString() const{
     return to_string(getId())+" "+getName();
 }
 
-//END---------------------TOSTRING-------------------
+//END---------------------TOS STRING-------------------
 
 
 string AlchoholicCustomer::toString() const{
@@ -156,6 +161,21 @@ vector<int> SpicyCustomer::order(const std::vector<Dish> &menu) {
     }
     return orderedDishes;
 }
+
+//START----------------------DESTRUCTORS------------------
+
+Customer::~Customer() {}
+
+SpicyCustomer::~SpicyCustomer() {}
+
+
+VegetarianCustomer::~VegetarianCustomer() {}
+
+CheapCustomer::~CheapCustomer() {}
+
+AlchoholicCustomer::~AlchoholicCustomer() {}
+
+//END----------------------DESTRUCTORS------------------
 
 vector<int> AlchoholicCustomer::order(const std::vector<Dish> &menu) {
     vector<int> nextAlcDish;

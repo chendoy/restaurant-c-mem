@@ -112,7 +112,7 @@ void Table::closeTable() {
     orderList.clear();
 }
 
-bool Table::isOpen() { return open;}
+bool Table::isOpen() const { return open;}
 
 //the function returns the sum of all dishes order at this table
 int Table::getBill(){

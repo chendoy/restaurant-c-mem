@@ -15,10 +15,9 @@ extern Restaurant* backup;
 Restaurant::Restaurant():open(false), tables(),menu(),actionsLog() {}
 
 //copy ctor
-Restaurant::Restaurant(const Restaurant &rest):tables(), menu()
+Restaurant::Restaurant(const Restaurant &rest):open(rest.isOpen())
 {
     numOfTables=rest.numOfTables;
-    open=rest.open;
 
     //deep copying tables
     for(int i=0;i<rest.numOfTables;i++)
@@ -31,6 +30,43 @@ Restaurant::Restaurant(const Restaurant &rest):tables(), menu()
     //deep copying actions log
     for(int i=0;i<rest.actionsLog.size();i++)
         actionsLog.push_back(rest.actionsLog[i]->clone());
+}
+
+//move ctor
+Restaurant::Restaurant(Restaurant &&otherRest):open(otherRest.isOpen()),menu(otherRest.getMenu()),numOfTables(otherRest.getNumOfTables()) {
+
+    //copy vector of pointers to table
+    tables=otherRest.getAllTables();
+    //changing otherRest table's pointers to point to nullptr
+    for(int i=0;i<tables.size();i=i+1) {
+        otherRest.setTablePointer(nullptr,i);
+    }
+
+    //copy vector of pointers to BaseActions to actionsLog
+    actionsLog=otherRest.getAllBaseActions();
+    //changing otherRest actionLog's pointers to point to nullptr
+    for(int i=0;i<actionsLog.size();i=i+1) {
+        otherRest.setActionLogsPointer(nullptr,i);
+    }
+}
+
+bool Restaurant::isOpen() const {
+    return open;
+}
+vector<Dish> Restaurant::getDishes() const {
+    return menu;
+}
+vector<Table*> Restaurant::getAllTables() const {
+    return tables;
+}
+void Restaurant::setTablePointer(Table *tablePtr,int index) {
+    tables[index]=tablePtr;
+}
+vector<BaseAction*> Restaurant::getAllBaseActions() const {
+    return actionsLog;
+}
+void Restaurant::setActionLogsPointer(BaseAction *baseAction, int index) {
+    actionsLog[index]=baseAction;
 }
 
 //converts a string to fruit Enum defined in the header file
@@ -58,7 +94,7 @@ std::vector<string> Restaurant::splitStringBytoken(string myStr,string delimiter
 }
 
 
-Restaurant::Restaurant(const std::string &configFilePath) {
+Restaurant::Restaurant(const std::string &configFilePath):open(true)  {
 ifstream inFile (configFilePath.c_str());
 
 //will hold current line in config file
@@ -257,7 +293,7 @@ Table* Restaurant::getTable(int ind) {
 
     if(ind>=tables.size())//not valid index
     {
-        //return a pointer to nullptr
+        //return  a pointer to nullptr
         return nullptr;
     } else {
         return tables[ind];
@@ -265,7 +301,7 @@ Table* Restaurant::getTable(int ind) {
 
 }
 
-//copy ctor
+//assigmnet operator
 Restaurant& Restaurant::operator=(const Restaurant &rest)
         {
 
@@ -296,13 +332,51 @@ return *this;
 
         }
 
+//move assignment operator
+Restaurant &Restaurant::operator=(Restaurant&& otherRest) {
+
+    //need to implement this!=other ? how to do it ?
+
+    //destroy old resources
+    for(int i=0;i<tables.size();i=i+1) {
+        if(tables[i]!= nullptr)
+            delete tables[i];
+
+        tables[i]= nullptr;
+    }
+    for(int i=0;i<actionsLog.size();i=i+1) {
+        if(actionsLog[i]!= nullptr)
+            delete actionsLog[i];
+
+        actionsLog[i]= nullptr;
+    }
+    menu.clear();
+    //copy other's data fields
+    tables=otherRest.getAllTables();
+    actionsLog=otherRest.getAllBaseActions();
+    menu=otherRest.getDishes();
+    numOfTables=otherRest.getNumOfTables();
+    //Detache resources from other
+    for(int i=0;i<otherRest.getNumOfTables();i=i+1) {
+        otherRest.setTablePointer(nullptr,i);
+    }
+    for(int i=0;i<otherRest.getAllBaseActions().size();i=i+1) {
+        otherRest.setActionLogsPointer(nullptr,i);
+    }
+
+    return *this;
+}
+
 
 Restaurant::~Restaurant () {
 //delete pointers to tables
 for(int i=0;i<tables.size();i=i+1)
 {
-    delete(tables[i]);
-    tables[i]= nullptr;
+    if(tables[i]!= nullptr) {
+        delete(tables[i]);
+        tables[i]= nullptr;
+    }
+
 }
 //clear the tables vector
 tables.clear();
@@ -310,8 +384,10 @@ tables.clear();
 //delete pointer of BaseActions
     for(int i=0;i<actionsLog.size();i=i+1)
     {
-        delete(actionsLog[i]);
-        actionsLog[i]= nullptr;
+        if(actionsLog[i]!= nullptr) {
+            delete(actionsLog[i]);
+            actionsLog[i]= nullptr;
+        }
     }
 //clear the actionsLog vector
     actionsLog.clear();

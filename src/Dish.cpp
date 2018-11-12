@@ -18,3 +18,7 @@ int Dish::getPrice() const {return price;}
 DishType Dish::getType() const {return type;}
 
 Dish Dish::clone() const {return Dish(*this);}
+
+Dish::~Dish() {}
+
+Dish::Dish(Dish &&dish): id(dish.getId()),name(dish.getName()),price(dish.getPrice()),type(dish.getType()) {}
