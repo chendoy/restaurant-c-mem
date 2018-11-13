@@ -85,7 +85,7 @@ OpenTable::OpenTable(const OpenTable &other):BaseAction(other),tableId(other.tab
     for(int i=0;i<other.customers.size();i++)
     {
         if(other.customers[i]!=nullptr)
-            customers.push_back(other.customers[i]);
+            customers.push_back(other.customers[i]->clone());
     }
 }
 

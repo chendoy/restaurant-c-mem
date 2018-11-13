@@ -386,11 +386,11 @@ for(int i=0;i<tables.size();i++) {
     }
 
 
-tables.clear(); menu.clear(); actionsLog.clear();
+tables.clear();menu.clear(); actionsLog.clear();
 
-open=rest.open;
+open=rest.isOpen();
 
-numOfTables=rest.numOfTables;
+numOfTables=rest.getNumOfTables();
 
 //deep copying tables
 for(int i=0;i<rest.tables.size();i++)
