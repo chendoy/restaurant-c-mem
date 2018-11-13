@@ -9,7 +9,7 @@
 using namespace std;
 
 
-Table::Table(int t_capacity): capacity(t_capacity){
+Table::Table(int t_capacity): capacity(t_capacity),open(false){
     customersList=vector<Customer*>();
     orderList=vector<OrderPair>();
 }
