@@ -53,7 +53,18 @@ string BaseAction::getErrorMsg() const {return this->errorMsg;}
 
 BaseAction::~BaseAction() {}
 
-OpenTable::~OpenTable() {}
+OpenTable::~OpenTable()
+{
+    for(int i=0;i<customers.size();i++)
+    {
+        if(customers[i]!=nullptr)
+        {
+        delete customers[i];
+        customers[i]=nullptr;
+        }
+    }
+    customers.clear();
+}
 
 Order::~Order() {}
 
@@ -75,12 +86,12 @@ RestoreResturant::~RestoreResturant() {}
 
 //END-----------------------------DESTRUCTORS-----------------------------
 
-
 //START----------------------------COPY CONSTRUCTORS----------------------
 
 BaseAction::BaseAction(const BaseAction &other):errorMsg(other.errorMsg), status(other.status) {}
 
-OpenTable::OpenTable(const OpenTable &other):BaseAction(other),tableId(other.tableId) {
+OpenTable::OpenTable(const OpenTable &other):BaseAction(other),tableId(other.tableId)
+{
     int size=other.customers.size();
     for(int i=0;i<other.customers.size();i++)
     {
@@ -195,7 +206,10 @@ RestoreResturant &RestoreResturant::operator=(const RestoreResturant &restoreRes
 //END------------------------------COPY ASSIGNMENT OPERATORS----------------------
 
 
-OpenTable::OpenTable (int id, vector<Customer *> &customersList):tableId(id), BaseAction(), customers(customersList) {}
+OpenTable::OpenTable (int id, vector<Customer *> &customersList):tableId(id), BaseAction(), customers(customersList)
+{
+
+}
 
 void OpenTable::act(Restaurant &restaurant)
 {
@@ -226,7 +240,7 @@ void OpenTable::act(Restaurant &restaurant)
 
         //assigns the customers to it
         for (int i = 0; i < customers.size(); i++)
-            restaurant.getTable(tableId)->addCustomer(customers[i]);
+            restaurant.getTable(tableId)->addCustomer(customers[i]->clone());
         complete();
 
 }

@@ -23,13 +23,13 @@ AlchoholicCustomer::AlchoholicCustomer(string name, int id): Customer(name,id),o
 
 Customer::Customer(const Customer &otherCustomer):name(otherCustomer.getName()), id(otherCustomer.getId()) {}
 
-VegetarianCustomer::VegetarianCustomer(const VegetarianCustomer &vegCustomer):Customer(vegCustomer.getName(),vegCustomer.getId()), type("veg") {}
+VegetarianCustomer::VegetarianCustomer(const VegetarianCustomer &vegCustomer):Customer(vegCustomer), type("veg") {}
 
-CheapCustomer::CheapCustomer(const CheapCustomer &chpCustomer):Customer(chpCustomer.getName(),chpCustomer.getId()), type("chp"), canOrder(chpCustomer.isCanOrder()) {}
+CheapCustomer::CheapCustomer(const CheapCustomer &chpCustomer):Customer(chpCustomer), type("chp"), canOrder(chpCustomer.isCanOrder()) {}
 
-SpicyCustomer::SpicyCustomer(const SpicyCustomer &spcCustomer):Customer(spcCustomer.getName(),spcCustomer.getId()),firstOrder(spcCustomer.isFirstOrder()) ,type("spc") {}
+SpicyCustomer::SpicyCustomer(const SpicyCustomer &spcCustomer):Customer(spcCustomer),firstOrder(spcCustomer.isFirstOrder()) ,type("spc") {}
 
-AlchoholicCustomer::AlchoholicCustomer(const AlchoholicCustomer &alcCustomer):Customer(alcCustomer.getName(),alcCustomer.getId()), orderedMostExpensive(alcCustomer.isorderedMostExpensive()), curAlcDrinkId(alcCustomer.getCurDrinkId()) ,type("alc") {}
+AlchoholicCustomer::AlchoholicCustomer(const AlchoholicCustomer &alcCustomer):Customer(alcCustomer), orderedMostExpensive(alcCustomer.isorderedMostExpensive()), curAlcDrinkId(alcCustomer.getCurDrinkId()) ,type("alc") {}
 
 //END--------------------COPY CONSTRUCTORS-------------------
 
