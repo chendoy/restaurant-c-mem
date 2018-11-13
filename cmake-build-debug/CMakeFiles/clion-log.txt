@@ -1,4 +1,4 @@
-/users/studs/bsc/2019/liavba/clion-2018.2.5/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1
+/users/studs/bsc/2019/chendoy/clion-2018.2.5/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1
 -- Configuring done
 -- Generating done
--- Build files have been written to: /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/cmake-build-debug
+-- Build files have been written to: /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/cmake-build-debug

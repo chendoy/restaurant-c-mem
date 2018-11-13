@@ -222,25 +222,35 @@ void Restaurant::start() {
                 customersList.push_back(customer);
                 curCustomerId=curCustomerId+1;
             }
-            if(getTable(tableId)->isOpen()==false) {
-                OpenTable* openTableAction=new OpenTable(tableId,customersList);
-                addToActionsLog(openTableAction);
+
+            if(getTable(tableId)->isOpen()) {
+                OpenTable *openTableAction = new OpenTable(tableId, customersList);
                 openTableAction->act(*this);
-                //delete openTableAction;
-            }
-            else {
+
                 for (int i = 0; i < customersList.size(); i = i + 1) {
                     delete customersList[i];
                     customersList[i] = nullptr;
                 }
+                customersList.clear();
+                addToActionsLog(openTableAction);
+
+
             }
+            else {
+                OpenTable *openTableAction = new OpenTable(tableId, customersList);
+                openTableAction->act(*this);
+                addToActionsLog(openTableAction);
+            }
+
+
+
             }
 
         else if(nextAction=="order"){
             int table_num=stoi(splitBySpace[1]);
             Order* orderAction=new Order(table_num);
-            addToActionsLog(orderAction);
             orderAction->act(*this);
+            addToActionsLog(orderAction);
 
 
             //delete orderAction;
@@ -252,8 +262,8 @@ void Restaurant::start() {
             int dst=stoi(splitBySpace[2]);
             int customerId=stoi(splitBySpace[3]);
             MoveCustomer* moveAction=new MoveCustomer(src,dst,customerId);
-            addToActionsLog(moveAction);
             moveAction->act(*this);
+            addToActionsLog(moveAction);
 
             //delete moveAction;
             //MoveCustomer moveAction(src,dst,curCustomerId);
@@ -263,8 +273,8 @@ void Restaurant::start() {
         else if (nextAction=="close") {
             int table_num=stol(splitBySpace[1]);
             Close* closeAction=new Close(table_num);
-            addToActionsLog(closeAction);
             closeAction->act(*this);
+            addToActionsLog(closeAction);
 
             //delete closeAction;
             //Close closeAction(table_num);
@@ -274,8 +284,8 @@ void Restaurant::start() {
 
         else if(nextAction=="menu") {
             PrintMenu* printMenuAction=new PrintMenu();
-            addToActionsLog(printMenuAction);
             printMenuAction->act(*this);
+            addToActionsLog(printMenuAction);
 
             //delete printMenuAction;
             //PrintMenu printMenuAction;
@@ -286,8 +296,8 @@ void Restaurant::start() {
         {
             int tableId=stol(splitBySpace[1]);
             PrintTableStatus* printTableStatusAction=new PrintTableStatus(tableId);
-            addToActionsLog(printTableStatusAction);
             printTableStatusAction->act(*this);
+            addToActionsLog(printTableStatusAction);
             //delete printTableStatusAction;
             //delete printTableStatusAction;
             //PrintTableStatus printTableStatusAction(tableId);
@@ -296,8 +306,8 @@ void Restaurant::start() {
         }
         else if(nextAction=="log"){
             PrintActionsLog* printActionsLogAction=new(PrintActionsLog);
-            addToActionsLog(printActionsLogAction);
             printActionsLogAction->act(*this);
+            addToActionsLog(printActionsLogAction);
 
             //delete printActionsLogAction;
             //PrintActionsLog printActionsLogAction;
@@ -305,8 +315,8 @@ void Restaurant::start() {
         }
         else if(nextAction=="backup"){
             BackupRestaurant* backupAction=new BackupRestaurant();
-            addToActionsLog(backupAction);
             backupAction->act(*this);
+            addToActionsLog(backupAction);
             //delete backupAction; //adding this reduces the leaks from 5 to 3
 
             //delete backupAction;
@@ -315,8 +325,8 @@ void Restaurant::start() {
         }
         else if(nextAction=="restore"){
             RestoreResturant* restoreAction=new RestoreResturant();
-            addToActionsLog(restoreAction);
             restoreAction->act(*this);
+            addToActionsLog(restoreAction);
             //delete restoreAction; //adding this reduces the leaks from 5 to 3
             //delete restoreAction;
             //RestoreResturant restoreAction;
@@ -363,8 +373,20 @@ Restaurant& Restaurant::operator=(const Restaurant &rest)
 if(this==&rest)
     return *this;
 
+//deleting old tables
+for(int i=0;i<tables.size();i++) {
+    delete tables[i];
+    tables[i]=nullptr;
+}
+
+//deleting old action log
+    for(int i=0;i<actionsLog.size();i++) {
+        delete actionsLog[i];
+        actionsLog[i]=nullptr;
+    }
+
+
 tables.clear(); menu.clear(); actionsLog.clear();
-tables; menu; actionsLog;
 
 open=rest.open;
 
@@ -390,7 +412,6 @@ return *this;
 //move assignment operator
 Restaurant &Restaurant::operator=(Restaurant&& otherRest) {
 
-    //need to implement this!=other ? how to do it ?
 
     //destroy old resources
     for(int i=0;i<tables.size();i=i+1) {
@@ -426,15 +447,21 @@ Restaurant &Restaurant::operator=(Restaurant&& otherRest) {
 Restaurant::~Restaurant () {
 //delete pointers to tables
     for (int i = 0; i < tables.size(); i = i + 1) {
+        if(tables[i]!=nullptr) {
             delete (tables[i]);
             tables[i] = nullptr;
+        }
     }
+    tables.clear();
 
 //delete pointer of BaseActions
     for (int i = 0; i < actionsLog.size(); i = i + 1) {
-        delete (actionsLog[i]);
-        actionsLog[i] = nullptr;
+        if(actionsLog[i]!=nullptr) {
+            delete (actionsLog[i]);
+            actionsLog[i] = nullptr;
+        }
     }
+    actionsLog.clear();
 }
 
 

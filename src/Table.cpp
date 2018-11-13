@@ -20,8 +20,8 @@ Table::Table(const Table &table)
     customersList=vector<Customer*>();
     orderList=vector<OrderPair>();
 
-   capacity=table.capacity;
-   open=table.open;
+   capacity=table.getCapacity();
+   open=table.isOpen();
 
     for(int i=0;i<table.customersList.size();i++)
         customersList.push_back(table.customersList[i]->clone());

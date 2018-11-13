@@ -80,7 +80,14 @@ RestoreResturant::~RestoreResturant() {}
 
 BaseAction::BaseAction(const BaseAction &other):errorMsg(other.errorMsg), status(other.status) {}
 
-OpenTable::OpenTable(const OpenTable &other):BaseAction(other),tableId(other.tableId), customers(other.customers) {}
+OpenTable::OpenTable(const OpenTable &other):BaseAction(other),tableId(other.tableId) {
+    int size=other.customers.size();
+    for(int i=0;i<other.customers.size();i++)
+    {
+        if(other.customers[i]!=nullptr)
+            customers.push_back(other.customers[i]);
+    }
+}
 
 Order::Order(const Order &other):BaseAction(other),tableId(other.tableId) {}
 
@@ -196,7 +203,15 @@ void OpenTable::act(Restaurant &restaurant)
 
     //table does not exist                   //table is already open
     if(restaurant.getNumOfTables()<=tableId || restaurant.getTable(tableId)->isOpen()) {
-        error("Table does not exist or is already open");
+        string errorMsg;
+        for(int i=0;i<customers.size();i++) {
+            errorMsg.append(customers[i]->getName());
+            errorMsg.append(",");
+            errorMsg.append(customers[i]->getType()+" ");
+            customers[i]=nullptr;
+        }
+        errorMsg.append("Table does not exist or is already open");
+        error(errorMsg);
         cout<<getErrorMsg()<<endl;
         return ;}
 
@@ -223,12 +238,16 @@ string OpenTable::toString() const
     toReturn.append(to_string(tableId));
     toReturn.append(" ");
 
+
     //appends the customers and their types
     for(int i=0;i<customers.size();i++) {
+        if(customers[i]!=nullptr) {
+            cout<<customers[i]->getName()<<endl;
         toReturn.append(customers[i]->getName());
         toReturn.append(",");
         toReturn.append(customers[i]->getType());
         toReturn.append(": ");
+        }
     }
 
         toReturn.append(actionStatusToString(getStatus()));
