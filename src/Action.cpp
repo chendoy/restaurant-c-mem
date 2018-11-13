@@ -256,7 +256,6 @@ string OpenTable::toString() const
     //appends the customers and their types
     for(int i=0;i<customers.size();i++) {
         if(customers[i]!=nullptr) {
-            cout<<customers[i]->getName()<<endl;
         toReturn.append(customers[i]->getName());
         toReturn.append(",");
         toReturn.append(customers[i]->getType());
