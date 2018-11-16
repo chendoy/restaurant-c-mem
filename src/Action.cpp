@@ -592,6 +592,11 @@ BackupRestaurant::BackupRestaurant():BaseAction() {}
 
 void BackupRestaurant::act(Restaurant &restaurant)
 {
+    //deleting older backup (if exists)
+    if(backup!=nullptr){
+        delete backup;
+        backup = nullptr;
+    }
     //using copy assignment operator
     backup=new Restaurant(restaurant);
     //restaurant.addToActionsLog(this);
