@@ -119,7 +119,7 @@ try{
 
     while(getline(inFile,line))
     {
-        if(line!="\r" && line[0]!='#')
+        if(line !="" && line!="\r" && line[0]!='#')
         {
 
             switch (region)
