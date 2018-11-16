@@ -62,6 +62,10 @@ void Table::removeCustomer(int id) {
     {
         orderList.push_back(newOrders[i]);
     }
+
+    if(customersList.size()==0) {
+        closeTable();
+    }
 }
 
 Customer* Table::getCustomerById(int id) {
