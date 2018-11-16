@@ -21,6 +21,7 @@ string dishtypeToString(const DishType dishtype)
     else if(dishtype == SPC) return "SPC";
     else if(dishtype == BVG) return "BVG";
     else if(dishtype == ALC) return "ALC";
+    return "";
 }
 
 string actionStatusToString(const ActionStatus actionStatus)
@@ -28,6 +29,7 @@ string actionStatusToString(const ActionStatus actionStatus)
     if(actionStatus==PENDING) return " Pending";
     else if(actionStatus==COMPLETED) return " Completed";
     else if(actionStatus==ERROR) return " Error: ";
+    return "";
 }
 
 BaseAction::BaseAction():status(PENDING) {}
@@ -55,7 +57,7 @@ BaseAction::~BaseAction() {}
 
 OpenTable::~OpenTable()
 {
-    for(int i=0;i<customers.size();i++)
+    for(size_t i=0;i<customers.size();i++)
     {
         if(customers[i]!=nullptr)
         {
@@ -92,8 +94,7 @@ BaseAction::BaseAction(const BaseAction &other):errorMsg(other.errorMsg), status
 
 OpenTable::OpenTable(const OpenTable &other):BaseAction(other),tableId(other.tableId)
 {
-    int size=other.customers.size();
-    for(int i=0;i<other.customers.size();i++)
+    for(size_t i=0;i<other.customers.size();i++)
     {
         if(other.customers[i]!=nullptr)
             customers.push_back(other.customers[i]->clone());
@@ -216,7 +217,7 @@ void OpenTable::act(Restaurant &restaurant)
     //table does not exist       --OR--        //table is already open
     if(restaurant.getNumOfTables()<=tableId || restaurant.getTable(tableId)->isOpen()) {
         string toPrint;
-        for(int i=0;i<customers.size();i++) {
+        for(size_t i=0;i<customers.size();i++) {
             toPrint.append(customers[i]->getName());
             toPrint.append(",");
             toPrint.append(customers[i]->getType()+" ");
@@ -234,7 +235,7 @@ void OpenTable::act(Restaurant &restaurant)
         return ;}
 
     //checks if the user try to assign more customer to table than the table capacity
-    if(customers.size()>restaurant.getTable(tableId)->getCapacity()) {
+    if((size_t)customers.size()>(size_t)restaurant.getTable(tableId)->getCapacity()) {
         error("you cant assign more customer to a table then the table capacity");
         cout<<getErrorMsg()<<endl;
         return;}
@@ -243,7 +244,7 @@ void OpenTable::act(Restaurant &restaurant)
         restaurant.getTable(tableId)->openTable();
 
         //assigns the customers to it
-        for (int i = 0; i < customers.size(); i++)
+        for (size_t i = 0; i < customers.size(); i++)
             restaurant.getTable(tableId)->addCustomer(customers[i]->clone());
         complete();
 
@@ -258,7 +259,7 @@ string OpenTable::toString() const
 
 
     //appends the customers and their types
-    for(int i=0;i<customers.size();i++) {
+    for(size_t i=0;i<customers.size();i++) {
         if(customers[i]!=nullptr) {
         toReturn.append(customers[i]->getName());
         toReturn.append(",");
@@ -295,11 +296,18 @@ void Order::act(Restaurant &restaurant) {
     Table* table=restaurant.getTable(tableId);
     if(table== nullptr || !table->isOpen())
     {
-        cout<<"Table does not exist or is not open"<<endl;
+        error("Table does not exist or is not open");
+        string toPrint;
+        toPrint.append(actionStatusToString(getStatus()));
+        toPrint.append(getErrorMsg());
+        toPrint=toPrint.substr(1,toPrint.length()-1);
+        cout<<toPrint<<endl;
+
     } else{
         table->order(restaurant.getMenu());
+        complete();
     }
-    complete();
+
 }
 
 std::string Order::toString() const {
@@ -330,10 +338,15 @@ void MoveCustomer::act(Restaurant &restaurant) {
     Table *tblSrc=restaurant.getTable(srcTable);
     Table *tblDest=restaurant.getTable(dstTable);
 
-    if(tblSrc== nullptr||tblDest==nullptr||!tblSrc->isOpen()|!tblDest->isOpen()|!tblSrc->isCustomerAtTable(id)|
-                                           tblDest->getCapacity()==tblDest->getCustomers().size())
+    if((tblSrc== nullptr)||(tblDest==nullptr)||(!tblSrc->isOpen())|(!tblDest->isOpen())|(!tblSrc->isCustomerAtTable(id))|
+                                                       ((size_t)tblDest->getCapacity()==(size_t)tblDest->getCustomers().size()))
     {
-        cout<<"Cannot Move Customer"<<endl;
+        error("Cannot move customer");
+        string toPrint;
+        toPrint.append(actionStatusToString(getStatus()));
+        toPrint.append(getErrorMsg());
+        toPrint=toPrint.substr(1,toPrint.length()-1);
+        cout<<toPrint<<endl;
     }
     else {//can move customer
         tblDest->addCustomer(tblSrc->getCustomerById(id));
@@ -344,6 +357,7 @@ void MoveCustomer::act(Restaurant &restaurant) {
         tblSrc->removeCustomer(id);
     }
     complete();
+
 }
 
 string MoveCustomer::toString() const
@@ -383,18 +397,27 @@ void Close::act(Restaurant &restaurant)
 
 
     //table does not exist                             //table is not open
-    if(restaurant.getNumOfTables()<=tableId || restaurant.getTable(tableId)->isOpen()==false)
+    if(restaurant.getNumOfTables()<=tableId || restaurant.getTable(tableId)->isOpen()==false) {
         error("Table does not exist or is not open");
+        string toPrint;
+        toPrint.append(actionStatusToString(getStatus()));
+        toPrint.append(getErrorMsg());
+        toPrint=toPrint.substr(1,toPrint.length()-1);
+        cout<<toPrint<<endl;
 
-    string toPrint="Table ";
-    toPrint.append(to_string(tableId));
-    toPrint.append(" was closed. Bill ");
-    toPrint.append(to_string(restaurant.getTable(tableId)->getBill()));
-    toPrint.append("NIS");
-    cout<<toPrint<<endl;
+    }
+    else {
 
-    restaurant.getTable(tableId)->closeTable();
-    complete();
+        string toPrint = "Table ";
+        toPrint.append(to_string(tableId));
+        toPrint.append(" was closed. Bill ");
+        toPrint.append(to_string(restaurant.getTable(tableId)->getBill()));
+        toPrint.append("NIS");
+        cout << toPrint << endl;
+
+        restaurant.getTable(tableId)->closeTable();
+        complete();
+    }
 }
 
 string Close::toString() const {
@@ -424,7 +447,7 @@ void CloseAll::act(Restaurant &restaurant)
 
     //restaurant.addToActionsLog(this);
 
-    for(int i=0;i<restaurant.getAllTables().size();i++) {
+    for(size_t i=0;i<restaurant.getAllTables().size();i++) {
         if(restaurant.getTable(i)->isOpen())
         {
             Close* closeAction=new Close(i);
@@ -450,11 +473,12 @@ void PrintMenu::act(Restaurant &restaurant)
     //restaurant.addToActionsLog(this);
 
     string toPrint="";
-    for(int i=0;i<restaurant.getMenu().size();i++)
+    for(size_t i=0;i<restaurant.getMenu().size();i++)
     {
-        toPrint.append(restaurant.getMenu()[i].getName()+",");
-        toPrint.append(dishtypeToString(restaurant.getMenu()[i].getType())+",");
-        toPrint.append(to_string(restaurant.getMenu()[i].getPrice())+"\n");
+        toPrint.append(restaurant.getMenu()[i].getName()+" ");
+        toPrint.append(dishtypeToString(restaurant.getMenu()[i].getType())+" ");
+        toPrint.append(to_string(restaurant.getMenu()[i].getPrice()));
+        toPrint.append("NIS+\n");
     }
     toPrint=toPrint.substr(0,toPrint.length()-1); //removes last /n
     cout<<toPrint<<endl;
@@ -495,14 +519,14 @@ void PrintTableStatus::act(Restaurant &restaurant)
     toPrint.append(" status: open\nCustomers:\n");
 
     //appending customers list
-    for(int i=0;i<restaurant.getTable(tableId)->getCustomers().size();i++)
+    for(size_t i=0;i<restaurant.getTable(tableId)->getCustomers().size();i++)
     {
         toPrint.append(to_string(restaurant.getTable(tableId)->getCustomers()[i]->getId())+" ");
         toPrint.append(restaurant.getTable(tableId)->getCustomers()[i]->getName()+"\n");
     }
     toPrint.append("Orders:\n");
     //appending orders
-    for(int i=0;i<restaurant.getTable(tableId)->getOrders().size();i++)
+    for(size_t i=0;i<restaurant.getTable(tableId)->getOrders().size();i++)
     {
         toPrint.append(restaurant.getTable(tableId)->getOrders()[i].second.getName()+" ");
         toPrint.append(to_string(restaurant.getTable(tableId)->getOrders()[i].second.getPrice()));
@@ -542,7 +566,7 @@ void PrintActionsLog::act(Restaurant &restaurant)
 
 
     //-1 because we don't want to print the actual "print action log" action (that we just typed)
-    for(int i=0;i<restaurant.getActionsLog().size();i++) {
+    for(size_t i=0;i<restaurant.getActionsLog().size();i++) {
         {
             cout << restaurant.getActionsLog()[i]->toString();
         }

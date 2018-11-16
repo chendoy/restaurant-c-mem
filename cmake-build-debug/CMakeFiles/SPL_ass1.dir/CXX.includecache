@@ -48,21 +48,17 @@ Customer.h
 Dish.h
 ../include/Dish.h
 
-/users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Action.cpp
-Action.h
-/users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Action.h
+/users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Restaurant.cpp
 Restaurant.h
 /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Restaurant.h
-Customer.h
-/users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Customer.h
-Table.h
-/users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Table.h
+iostream
+-
+fstream
+-
+string
+-
 vector
 -
 Dish.h
 /users/studs/bsc/2019/chendoy/CLionProjects/SPL_ass1/src/Dish.h
-string
--
-Action.h
--
 
