@@ -118,7 +118,7 @@ try{
 
     while(getline(inFile,line))
     {
-        if(line[0]!='#')
+        if(!line.empty() && line[0]!='#')
         {
 
             switch (region)
@@ -190,7 +190,7 @@ int Restaurant::getNumOfTables() const {return numOfTables;}
 void Restaurant::start() {
     this->open=true;
     int curCustomerId=0;
-    cout<<"Restaurant Is Now Open!"<<endl;
+    cout<<"Restaurant is now open!"<<endl;
 
     string nextLine;
     getline(cin,nextLine);

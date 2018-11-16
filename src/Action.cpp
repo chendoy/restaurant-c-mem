@@ -25,12 +25,12 @@ string dishtypeToString(const DishType dishtype)
 
 string actionStatusToString(const ActionStatus actionStatus)
 {
-    if(actionStatus==PENDING) return "Pending";
-    else if(actionStatus==COMPLETED) return "Completed";
-    else if(actionStatus==ERROR) return "Error: ";
+    if(actionStatus==PENDING) return " Pending";
+    else if(actionStatus==COMPLETED) return " Completed";
+    else if(actionStatus==ERROR) return " Error: ";
 }
 
-BaseAction::BaseAction() {}
+BaseAction::BaseAction():status(PENDING) {}
 
 ActionStatus BaseAction::getStatus() const {return this->status;}
 
@@ -213,23 +213,27 @@ OpenTable::OpenTable (int id, vector<Customer *> &customersList):tableId(id), Ba
 
 void OpenTable::act(Restaurant &restaurant)
 {
-    //restaurant.addToActionsLog(this);
-
-    //table does not exist                   //table is already open
+    //table does not exist       --OR--        //table is already open
     if(restaurant.getNumOfTables()<=tableId || restaurant.getTable(tableId)->isOpen()) {
-        string errorMsg;
+        string toPrint;
         for(int i=0;i<customers.size();i++) {
-            errorMsg.append(customers[i]->getName());
-            errorMsg.append(",");
-            errorMsg.append(customers[i]->getType()+" ");
+            toPrint.append(customers[i]->getName());
+            toPrint.append(",");
+            toPrint.append(customers[i]->getType()+" ");
             customers[i]=nullptr;
         }
-        errorMsg.append("Table does not exist or is already open");
-        error(errorMsg);
-        cout<<getErrorMsg()<<endl;
+        string errorMsgToPrint;
+        errorMsgToPrint.append("Table does not exist or is already open");
+        error(errorMsgToPrint);
+        toPrint.append(actionStatusToString(getStatus()));
+        toPrint.append(getErrorMsg());
+        toPrint.append("\n");
+        errorMsgToPrint.insert(0,actionStatusToString(getStatus()));
+        errorMsgToPrint=errorMsgToPrint.substr(1,errorMsgToPrint.length()-1);
+        cout<<errorMsgToPrint<<endl;
         return ;}
 
-    //check if the user try to assign more customer to table than the table capacity
+    //checks if the user try to assign more customer to table than the table capacity
     if(customers.size()>restaurant.getTable(tableId)->getCapacity()) {
         error("you cant assign more customer to a table then the table capacity");
         cout<<getErrorMsg()<<endl;
@@ -259,10 +263,10 @@ string OpenTable::toString() const
         toReturn.append(customers[i]->getName());
         toReturn.append(",");
         toReturn.append(customers[i]->getType());
-        toReturn.append(": ");
+        toReturn.append(" ");
         }
     }
-
+        toReturn=toReturn.substr(0,toReturn.length()-1);
         toReturn.append(actionStatusToString(getStatus()));
         toReturn.append(getErrorMsg());
         toReturn.append("\n");
@@ -301,7 +305,7 @@ void Order::act(Restaurant &restaurant) {
 std::string Order::toString() const {
     string toReturn;
     toReturn.append("order ");
-    toReturn.append(to_string(tableId)+": ");
+    toReturn.append(to_string(tableId));
     toReturn.append(actionStatusToString(getStatus()));
     toReturn.append(getErrorMsg());
     toReturn.append("\n");
@@ -348,7 +352,7 @@ string MoveCustomer::toString() const
     toReturn.append("move ");
     toReturn.append(to_string(srcTable)+" ");
     toReturn.append(to_string(dstTable)+" ");
-    toReturn.append(to_string(id)+": ");
+    toReturn.append(to_string(id));
     toReturn.append(actionStatusToString(getStatus()));
     toReturn.append(getErrorMsg());
     toReturn.append("\n");
@@ -386,7 +390,7 @@ void Close::act(Restaurant &restaurant)
     toPrint.append(to_string(tableId));
     toPrint.append(" was closed. Bill ");
     toPrint.append(to_string(restaurant.getTable(tableId)->getBill()));
-    toPrint.append(" NIS.");
+    toPrint.append("NIS");
     cout<<toPrint<<endl;
 
     restaurant.getTable(tableId)->closeTable();
@@ -397,7 +401,7 @@ string Close::toString() const {
     string toReturn;
     toReturn.append("Closed table ");
     toReturn.append(to_string(tableId));
-    toReturn.append(": ");
+    toReturn.append(" ");
     toReturn.append(actionStatusToString(getStatus()));
     toReturn.append(getErrorMsg());
     toReturn.append("\n");
@@ -507,9 +511,9 @@ void PrintTableStatus::act(Restaurant &restaurant)
     }
 
     //appending bill
-    toPrint.append("Current bill: ");
+    toPrint.append("Current Bill: ");
     toPrint.append(to_string(restaurant.getTable(tableId)->getBill()));
-    toPrint.append(" NIS");
+    toPrint.append("NIS");
     cout<<toPrint<<endl;
     complete();
 }
@@ -519,7 +523,6 @@ string PrintTableStatus::toString() const
     string toReturn;
     toReturn.append("status ");
     toReturn.append(to_string(tableId));
-    toReturn.append(": ");
     toReturn.append(actionStatusToString(getStatus()));
     toReturn.append(getErrorMsg());
     toReturn.append("\n");
@@ -574,7 +577,7 @@ void BackupRestaurant::act(Restaurant &restaurant)
 string BackupRestaurant::toString() const
 {
     string toReturn;
-    toReturn.append("Backup: ");
+    toReturn.append("backup");
     toReturn.append(actionStatusToString(getStatus()));
     toReturn.append(getErrorMsg());
     toReturn.append("\n");
@@ -604,7 +607,7 @@ void RestoreResturant::act(Restaurant &restaurant) {
 string RestoreResturant::toString() const
 {
     string toReturn;
-    toReturn.append("Restore: ");
+    toReturn.append("restore");
     toReturn.append(actionStatusToString(getStatus()));
     toReturn.append(getErrorMsg());
     toReturn.append("\n");
