@@ -357,8 +357,9 @@ void MoveCustomer::act(Restaurant &restaurant) {
         tblDest->addNewCustomerOrdersToBill(customerOrders); //add customer orders to 'dest' orderList
         //deleting the customer from the current table
         tblSrc->removeCustomer(id);
+        complete();
     }
-    complete();
+
 
 }
 

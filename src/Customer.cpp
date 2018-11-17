@@ -135,7 +135,7 @@ vector<int> CheapCustomer::order(const std::vector<Dish> &menu) {
 
 vector<int> SpicyCustomer::order(const std::vector<Dish> &menu) {
     vector<int> orderedDishes;
-    if (firstOrder) //means this spicy customer hasn't order yet, spicy dish will be picked
+    if (firstOrder==true) //means this spicy customer hasn't order yet, spicy dish will be picked
     {
         int orderedSpcPrice = -1; //'dummy' beverage
         int orderedSpc = -1;
@@ -143,10 +143,11 @@ vector<int> SpicyCustomer::order(const std::vector<Dish> &menu) {
             if ((menu[i].getType() == SPC) & (menu[i].getPrice() > orderedSpcPrice)) {
                 orderedSpcPrice = menu[i].getPrice();
                 orderedSpc = i;
+                firstOrder = false;
+                orderedDishes.push_back(orderedSpc);
             }
         }
-        orderedDishes.push_back(orderedSpc);
-        firstOrder = false;
+
 
     } else //already made an order, now will order cheapest non-alc bvg
     {
@@ -155,9 +156,10 @@ vector<int> SpicyCustomer::order(const std::vector<Dish> &menu) {
         for (size_t i = 1; i < menu.size(); i++) {
             if ((menu[i].getType() == BVG) & (menu[i].getPrice() < menu[orderedBvgMinPriceIndex].getPrice())) {
                 orderedBvgMinPriceIndex = i;
+                orderedDishes.push_back(menu[orderedBvgMinPriceIndex].getId());
             }
         }
-        orderedDishes.push_back(menu[orderedBvgMinPriceIndex].getId());
+
     }
     return orderedDishes;
 }
