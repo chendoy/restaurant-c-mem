@@ -305,7 +305,7 @@ void Order::act(Restaurant &restaurant) {
         toPrint=toPrint.substr(1,toPrint.length()-1);
         cout<<toPrint<<endl;
 
-    } else{
+    } else if(!restaurant.getMenu().empty()){
         table->order(restaurant.getMenu());
         complete();
     }
@@ -425,9 +425,8 @@ void Close::act(Restaurant &restaurant)
 
 string Close::toString() const {
     string toReturn;
-    toReturn.append("Closed table ");
+    toReturn.append("close ");
     toReturn.append(to_string(tableId));
-    toReturn.append(" ");
     toReturn.append(actionStatusToString(getStatus()));
     toReturn.append(getErrorMsg());
     toReturn.append("\n");

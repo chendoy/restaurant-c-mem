@@ -105,10 +105,10 @@ vector<int> VegetarianCustomer::order(const std::vector<Dish> &menu) {
             orderedBvg = i;
         }
     }
-    if((orderedVeg==-1) | (orderedBvg==-1))
-        cout<<"Error: customer "<<getName()<<" couldn't complete his order"<<endl;
-    orderedDishes.push_back(orderedVeg);
-    orderedDishes.push_back(orderedBvg);
+    if((orderedBvg!=-1) & (orderedVeg!=-1)) {
+        orderedDishes.push_back(orderedVeg);
+        orderedDishes.push_back(orderedBvg);
+    }
     return orderedDishes;
 }
 
