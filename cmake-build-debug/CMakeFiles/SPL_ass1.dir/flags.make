@@ -6,5 +6,5 @@ CXX_FLAGS = -g   -std=gnu++14
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/liavb/CLionProjects/SPL_ass1/include 
+CXX_INCLUDES = -I/home/chen/CLionProjects/SPL_ass1/include 
 

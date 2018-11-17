@@ -223,7 +223,7 @@ void OpenTable::act(Restaurant &restaurant)
             toPrint.append(customers[i]->getName());
             toPrint.append(",");
             toPrint.append(customers[i]->getType()+" ");
-            customers[i]=nullptr;
+            //customers[i]=nullptr;
         }
         string errorMsgToPrint;
         errorMsgToPrint.append("Table does not exist or is already open");

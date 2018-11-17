@@ -139,11 +139,9 @@ try{
                     while((pos=line.find(delimiter))!=string::npos){
                         token=line.substr(0,pos);
                         tableCapacity=stoul(token);
-                        //!!!delete this pointers!!
                         tables.push_back(new Table(tableCapacity));
                         line.erase(0,pos+delimiter.length());
                     }
-                    //!!!delete this pointers!!
                     tables.push_back(new Table(tableCapacity));
                     }
                     region++;
@@ -207,7 +205,6 @@ void Restaurant::start() {
 
             for (size_t i = 2; i < splitBySpace.size(); i = i + 1) {
                 vector<string> customerNameAndType = splitStringBytoken(splitBySpace[i], ",");
-                ///!!!delete this pointers !!!
                 Customer *customer;
                 if (customerNameAndType[1] == "veg") {
                     customer=new VegetarianCustomer(customerNameAndType[0],curCustomerId);
@@ -224,20 +221,20 @@ void Restaurant::start() {
                 curCustomerId=curCustomerId+1;
             }
 
-            if(tableId<=numOfTables && getTable(tableId)->isOpen()) {
+            if((tableId>=numOfTables) || ((getTable(tableId)!=nullptr) && (getTable(tableId)->isOpen()))) { //openTable is going to fail
                 OpenTable *openTableAction = new OpenTable(tableId, customersList);
                 openTableAction->act(*this);
 
-                for (size_t i = 0; i < customersList.size(); i = i + 1) {
+                /*for (size_t i = 0; i < customersList.size(); i = i + 1) {
                     delete customersList[i];
                     customersList[i] = nullptr;
-                }
+                }*/
                 customersList.clear();
                 addToActionsLog(openTableAction);
 
 
             }
-            else {
+            else { //openTable is going to succeed
                 OpenTable *openTableAction = new OpenTable(tableId, customersList);
                 openTableAction->act(*this);
                 addToActionsLog(openTableAction);
@@ -253,10 +250,6 @@ void Restaurant::start() {
             orderAction->act(*this);
             addToActionsLog(orderAction);
 
-
-            //delete orderAction;
-            //Order orderAction(table_num);
-            //orderAction.act(*this);
         }
         else if(nextAction=="move") {
             int src=stoi(splitBySpace[1]);
@@ -266,10 +259,6 @@ void Restaurant::start() {
             moveAction->act(*this);
             addToActionsLog(moveAction);
 
-            //delete moveAction;
-            //MoveCustomer moveAction(src,dst,curCustomerId);
-            //moveAction.act(*this);
-
         }
         else if (nextAction=="close") {
             int table_num=stol(splitBySpace[1]);
@@ -277,9 +266,6 @@ void Restaurant::start() {
             closeAction->act(*this);
             addToActionsLog(closeAction);
 
-            //delete closeAction;
-            //Close closeAction(table_num);
-            //closeAction.act(*this);
 
         }
 
@@ -338,7 +324,7 @@ Table* Restaurant::getTable(int ind) {
 
     if((size_t)ind>=tables.size())//not a valid index
     {
-        //return  a pointer to nullptr
+        //return  nullptr
         return nullptr;
     } else {
         return tables[ind];

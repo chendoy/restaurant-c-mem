@@ -4,12 +4,12 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/liavb/CLionProjects/SPL_ass1/src/Action.cpp" "/home/liavb/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles/SPL_ass1.dir/src/Action.cpp.o"
-  "/home/liavb/CLionProjects/SPL_ass1/src/Customer.cpp" "/home/liavb/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles/SPL_ass1.dir/src/Customer.cpp.o"
-  "/home/liavb/CLionProjects/SPL_ass1/src/Dish.cpp" "/home/liavb/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles/SPL_ass1.dir/src/Dish.cpp.o"
-  "/home/liavb/CLionProjects/SPL_ass1/src/Main.cpp" "/home/liavb/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles/SPL_ass1.dir/src/Main.cpp.o"
-  "/home/liavb/CLionProjects/SPL_ass1/src/Restaurant.cpp" "/home/liavb/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles/SPL_ass1.dir/src/Restaurant.cpp.o"
-  "/home/liavb/CLionProjects/SPL_ass1/src/Table.cpp" "/home/liavb/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles/SPL_ass1.dir/src/Table.cpp.o"
+  "/home/chen/CLionProjects/SPL_ass1/src/Action.cpp" "/home/chen/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles/SPL_ass1.dir/src/Action.cpp.o"
+  "/home/chen/CLionProjects/SPL_ass1/src/Customer.cpp" "/home/chen/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles/SPL_ass1.dir/src/Customer.cpp.o"
+  "/home/chen/CLionProjects/SPL_ass1/src/Dish.cpp" "/home/chen/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles/SPL_ass1.dir/src/Dish.cpp.o"
+  "/home/chen/CLionProjects/SPL_ass1/src/Main.cpp" "/home/chen/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles/SPL_ass1.dir/src/Main.cpp.o"
+  "/home/chen/CLionProjects/SPL_ass1/src/Restaurant.cpp" "/home/chen/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles/SPL_ass1.dir/src/Restaurant.cpp.o"
+  "/home/chen/CLionProjects/SPL_ass1/src/Table.cpp" "/home/chen/CLionProjects/SPL_ass1/cmake-build-debug/CMakeFiles/SPL_ass1.dir/src/Table.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
