@@ -6,6 +6,16 @@
 
 #IncludeRegexTransform: 
 
+../include/Action.h
+string
+-
+iostream
+-
+Customer.h
+../include/Customer.h
+Table.h
+../include/Table.h
+
 ../include/Customer.h
 vector
 -
@@ -17,6 +27,18 @@ Dish.h
 ../include/Dish.h
 string
 -
+
+../include/Restaurant.h
+vector
+-
+string
+-
+Dish.h
+../include/Dish.h
+Table.h
+../include/Table.h
+Action.h
+../include/Action.h
 
 ../include/Table.h
 vector
@@ -26,13 +48,33 @@ Customer.h
 Dish.h
 ../include/Dish.h
 
-/home/liavb/CLionProjects/SPL_ass1/src/Table.cpp
+/home/chen/CLionProjects/SPL_ass1/src/Action.cpp
+Action.h
+/home/chen/CLionProjects/SPL_ass1/src/Action.h
+Restaurant.h
+/home/chen/CLionProjects/SPL_ass1/src/Restaurant.h
+Customer.h
+/home/chen/CLionProjects/SPL_ass1/src/Customer.h
 Table.h
-/home/liavb/CLionProjects/SPL_ass1/src/Table.h
-Dish.h
-/home/liavb/CLionProjects/SPL_ass1/src/Dish.h
+/home/chen/CLionProjects/SPL_ass1/src/Table.h
 vector
 -
+Dish.h
+/home/chen/CLionProjects/SPL_ass1/src/Dish.h
+string
+-
+Action.h
+-
+
+/home/chen/CLionProjects/SPL_ass1/src/Customer.cpp
+Customer.h
+/home/chen/CLionProjects/SPL_ass1/src/Customer.h
+string
+-
 iostream
+-
+algorithm
+-
+Customer.h
 -
 

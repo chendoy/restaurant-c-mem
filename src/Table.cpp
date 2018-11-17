@@ -39,7 +39,7 @@ void Table::addCustomer(Customer *customer) { this->customersList.push_back(cust
 void Table::removeCustomer(int id) {
     //remove customer from customer list
     bool isDelted=false;
-    for(size_t i=0;i<((size_t)customersList.size())&(!isDelted);i=i+1)
+    for(size_t i=0;(i<(size_t)customersList.size())&(!isDelted);i=i+1)
     {
         if(customersList[i]->getId()==id)
         {
@@ -179,7 +179,7 @@ Dish Table::getDishById(const std::vector<Dish> &menu, const int dishId) const {
 bool Table::isCustomerAtTable(int customerId) {
     vector<Customer*>customers=getCustomers();
     bool exist=false;
-    for(size_t i=0;i<(size_t)customers.size()&!exist;i=i+1)
+    for(size_t i=0;(i<(size_t)customers.size())&(!exist);i=i+1)
     {
         if(customers[i]->getId()==customerId)
             exist=true;

@@ -153,6 +153,8 @@ BaseAction &BaseAction::operator=(BaseAction &&baseAction)
 {
     errorMsg=baseAction.getErrorMsg();
     status=baseAction.getStatus();
+
+    return *this;
 }
 
 
@@ -207,7 +209,7 @@ RestoreResturant &RestoreResturant::operator=(const RestoreResturant &restoreRes
 //END------------------------------COPY ASSIGNMENT OPERATORS----------------------
 
 
-OpenTable::OpenTable (int id, vector<Customer *> &customersList):tableId(id), BaseAction(), customers(customersList)
+OpenTable::OpenTable (int id, vector<Customer *> &customersList):BaseAction(),tableId(id),customers(customersList)
 {
 
 }
