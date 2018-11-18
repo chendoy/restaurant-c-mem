@@ -580,7 +580,7 @@ void PrintActionsLog::act(Restaurant &restaurant)
 string PrintActionsLog::toString() const
 {
     string toReturn;
-    toReturn.append("Print actions log: ");
+    toReturn.append("log");
     toReturn.append(actionStatusToString(getStatus()));
     toReturn.append(getErrorMsg());
     toReturn.append("\n");

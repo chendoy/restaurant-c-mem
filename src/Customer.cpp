@@ -143,9 +143,12 @@ vector<int> SpicyCustomer::order(const std::vector<Dish> &menu) {
             if ((menu[i].getType() == SPC) & (menu[i].getPrice() > orderedSpcPrice)) {
                 orderedSpcPrice = menu[i].getPrice();
                 orderedSpc = i;
-                firstOrder = false;
-                orderedDishes.push_back(orderedSpc);
             }
+        }
+        if(orderedSpcPrice!=-1) //found mose expenise spc dish
+        {
+            orderedDishes.push_back(orderedSpc);
+            firstOrder = false;
         }
 
 

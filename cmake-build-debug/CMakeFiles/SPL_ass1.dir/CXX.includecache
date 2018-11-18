@@ -66,27 +66,15 @@ string
 Action.h
 -
 
-/users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Restaurant.cpp
-Restaurant.h
-/users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Restaurant.h
-iostream
--
-fstream
--
+/users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Customer.cpp
+Customer.h
+/users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Customer.h
 string
 -
-vector
--
-Dish.h
-/users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Dish.h
-
-/users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Table.cpp
-Table.h
-/users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Table.h
-Dish.h
-/users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/src/Dish.h
-vector
--
 iostream
+-
+algorithm
+-
+Customer.h
 -
 

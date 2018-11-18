@@ -228,10 +228,6 @@ void Restaurant::start() {
                 OpenTable *openTableAction = new OpenTable(tableId, customersList);
                 openTableAction->act(*this);
 
-                /*for (size_t i = 0; i < customersList.size(); i = i + 1) {
-                    delete customersList[i];
-                    customersList[i] = nullptr;
-                }*/
                 customersList.clear();
                 addToActionsLog(openTableAction);
 
@@ -335,7 +331,7 @@ Table* Restaurant::getTable(int ind) {
 
 }
 
-//assigmnet operator
+//assignment operator
 Restaurant& Restaurant::operator=(const Restaurant &rest)
         {
 
@@ -402,7 +398,7 @@ Restaurant &Restaurant::operator=(Restaurant&& otherRest) {
     actionsLog=otherRest.getAllBaseActions();
     menu=otherRest.getDishes();
     numOfTables=otherRest.getNumOfTables();
-    //Detache resources from other
+    //Detach resources from other
     for(size_t i=0;i<(size_t)otherRest.getNumOfTables();i=i+1) {
         otherRest.setTablePointer(nullptr,i);
     }
