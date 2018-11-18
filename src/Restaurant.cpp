@@ -142,6 +142,9 @@ try{
                         tables.push_back(new Table(tableCapacity));
                         line.erase(0,pos+delimiter.length());
                     }
+                    line.erase(0,pos+delimiter.length());
+                    token=line.substr(0,pos);
+                    tableCapacity=stoul(token);
                     tables.push_back(new Table(tableCapacity));
                     }
                     region++;

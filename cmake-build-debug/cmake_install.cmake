@@ -1,4 +1,4 @@
-# Install script for directory: /home/chen/CLionProjects/SPL_ass1
+# Install script for directory: /users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/chen/CLionProjects/SPL_ass1/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/users/studs/bsc/2019/liavba/CLionProjects/SPL_ass1/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

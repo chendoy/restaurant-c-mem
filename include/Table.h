@@ -32,6 +32,7 @@ public:
     void openTable();
     void closeTable();
     int getBill();
+    bool isFull() const;
     bool isOpen() const;
     int getNumOfCustomers() const;
     int getNumOfOrders()const ;

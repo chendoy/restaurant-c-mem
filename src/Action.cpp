@@ -340,8 +340,7 @@ void MoveCustomer::act(Restaurant &restaurant) {
     Table *tblSrc=restaurant.getTable(srcTable);
     Table *tblDest=restaurant.getTable(dstTable);
 
-    if((tblSrc== nullptr)||(tblDest==nullptr)||(!tblSrc->isOpen())|(!tblDest->isOpen())|(!tblSrc->isCustomerAtTable(id))|
-                                                       ((size_t)tblDest->getCapacity()==(size_t)tblDest->getCustomers().size()))
+    if((tblSrc== nullptr)||(tblDest==nullptr)||(!tblSrc->isOpen())|(!tblDest->isOpen())|(!tblSrc->isCustomerAtTable(id))|tblDest->isFull())
     {
         error("Cannot move customer");
         string toPrint;
@@ -480,7 +479,7 @@ void PrintMenu::act(Restaurant &restaurant)
         toPrint.append(restaurant.getMenu()[i].getName()+" ");
         toPrint.append(dishtypeToString(restaurant.getMenu()[i].getType())+" ");
         toPrint.append(to_string(restaurant.getMenu()[i].getPrice()));
-        toPrint.append("NIS+\n");
+        toPrint.append("NIS\n");
     }
     toPrint=toPrint.substr(0,toPrint.length()-1); //removes last /n
     cout<<toPrint<<endl;
@@ -490,7 +489,7 @@ void PrintMenu::act(Restaurant &restaurant)
 string PrintMenu::toString() const {
 
     string toReturn;
-    toReturn.append("Menu printed ");
+    toReturn.append("menu");
     toReturn.append(actionStatusToString(getStatus()));
     toReturn.append(getErrorMsg());
     toReturn.append("\n");
@@ -601,7 +600,6 @@ void BackupRestaurant::act(Restaurant &restaurant)
     }
     //using copy assignment operator
     backup=new Restaurant(restaurant);
-    //restaurant.addToActionsLog(this);
     complete();
 }
 
@@ -623,7 +621,7 @@ RestoreResturant::RestoreResturant():BaseAction() {}
 
 void RestoreResturant::act(Restaurant &restaurant) {
 
-
+string errorMsg;
     //using copy assignment operator
     if (backup != nullptr) {
         restaurant = *backup;
@@ -631,7 +629,10 @@ void RestoreResturant::act(Restaurant &restaurant) {
         complete();
     } else {
         error("No backup available");
-        cout<<getErrorMsg()<<endl;
+        errorMsg.append(actionStatusToString(getStatus()));
+        errorMsg=errorMsg.substr(1,errorMsg.length()-1);
+        errorMsg.append("No backup available");
+        cout<<errorMsg<<endl;
     }
 }
 

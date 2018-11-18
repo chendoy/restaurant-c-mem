@@ -118,6 +118,7 @@ void Table::closeTable() {
 }
 
 bool Table::isOpen() const { return open;}
+bool Table::isFull() const {return customersList.size()==(size_t)capacity;}
 
 //the function returns the sum of all dishes order at this table
 int Table::getBill(){
